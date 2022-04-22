@@ -1,0 +1,146 @@
+{% extends "index.html" %}
+{% block content %}
+    {% load static %}
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">Stock Details</h3>
+                        <ul class="breadcrumb">
+                            <li class="">
+                                <a href="{% url 'adminapp:adminhome' %}">Dashboard /</a>
+                            </li>
+                            <li class="breadcrumb-item active">Stock</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-body ">
+                            <div class="dash-widget-header">
+                                <span class="dash-widget-icon bg-1">
+                                    <i class="material-icons">
+                                        local_pharmacy
+                                    </i>
+                                </span>
+                                <div class="dash-count">
+                                    <div class="dash-title">Branch Name</div>
+                                    <div class="dash-counts">
+                                        <p>
+                                            Branch Id
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{% url 'adminapp:stocklist' %}">
+                                <p class="text-muted mt-3 mb-0" style="float: right;">
+                                    <span class="text-success me-1"><i class="fa fa-arrow-right"></i>
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-body ">
+                            <div class="dash-widget-header">
+                                <span class="dash-widget-icon bg-2">
+                                    <i class="material-icons">
+                                        local_pharmacy
+                                    </i>
+                                </span>
+                                <div class="dash-count">
+                                    <div class="dash-title">Branch Name</div>
+                                    <div class="dash-counts">
+                                        <p>
+                                            Branch Id
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{% url 'adminapp:stocklist' %}">
+                                <p class="text-muted mt-3 mb-0" style="float: right;">
+                                    <span class="text-success me-1"><i class="fa fa-arrow-right"></i>
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-body ">
+                            <div class="dash-widget-header">
+                                <span class="dash-widget-icon bg-3">
+                                    <i class="material-icons">
+                                        local_pharmacy
+                                    </i>
+                                </span>
+                                <div class="dash-count">
+                                    <div class="dash-title">Branch Name</div>
+                                    <div class="dash-counts">
+                                        <p>
+                                            Branch Id
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{% url 'adminapp:stocklist' %}">
+                                <p class="text-muted mt-3 mb-0" style="float: right;">
+                                    <span class="text-success me-1"><i class="fa fa-arrow-right"></i>
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-body ">
+                            <div class="dash-widget-header">
+                                <span class="dash-widget-icon bg-4">
+                                    <i class="material-icons">
+                                        local_pharmacy
+                                    </i>
+                                </span>
+                                <div class="dash-count">
+                                    <div class="dash-title">Branch Name</div>
+                                    <div class="dash-counts">
+                                        <p>
+                                            Branch Id
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{% url 'adminapp:stocklist' %}">
+                                <p class="text-muted mt-3 mb-0" style="float: right;">
+                                    <span class="text-success me-1"><i class="fa fa-arrow-right"></i>
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+//    toggle
+
+        $(document).on('click', '#toggle_btn', function () {
+            if ($('body').hasClass('mini-sidebar')) {
+                $('body').removeClass('mini-sidebar');
+                $('.subdrop + ul').slideDown();
+            } else {
+                $('body').addClass('mini-sidebar');
+                $('.subdrop + ul').slideUp();
+            }
+            setTimeout(function () {
+                mA.redraw();
+                mL.redraw();
+            }, 300);
+            return false;
+        });
+    </script>
+{% endblock %}

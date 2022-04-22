@@ -1,0 +1,111 @@
+{% extends "master.html" %}
+
+{% block content %}
+{% load static %}
+
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">
+                        Products
+                    </h3>
+                    <ul class="breadcrumb">
+                        <li class="">
+                            <a href="{% url 'branch:branchhome' %}">Dashboard /</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Bank
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-auto">
+                    <a href="{% url 'branch:addbank' %}" class="btn btn-primary me-1">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="dash-widget-header">
+                            <img src="{% static 'axis.png' %}" alt="" class="dash-widget-icon bg-1">
+                            <!-- <span class="dash-widget-icon bg-1">
+                                <i class="fas fa-building"></i>
+                            </span> -->
+                            <div class="dash-count">
+                                <div class="dash-title">AXIS BANK</div>
+                                <div class="dash-counts">
+                                    <p>
+                                        Total Amount 
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card ">
+                    <div class="card-body ">
+                        <div class="dash-widget-header">
+                            <img src="{% static 'sbi.png' %}" alt="" class="dash-widget-icon bg-1">
+                            <div class="dash-count">
+                                <div class="dash-title">SBI</div>
+                                <div class="dash-counts">
+                                    <p>Total Amount</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="dash-widget-header">
+                            <img src="{% static 'federal.png' %}" alt="" class="dash-widget-icon bg-1">
+                            <div class="dash-count">
+                                <div class="dash-title">FEDERAL BANK</div>
+                                <div class="dash-counts">
+                                    <p>Total Amount</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+//    toggle
+
+        $(document).on('click', '#toggle_btn', function () {
+            if ($('body').hasClass('mini-sidebar')) {
+                $('body').removeClass('mini-sidebar');
+                $('.subdrop + ul').slideDown();
+            } else {
+                $('body').addClass('mini-sidebar');
+                $('.subdrop + ul').slideUp();
+            }
+            setTimeout(function () {
+                mA.redraw();
+                mL.redraw();
+            }, 300);
+            return false;
+        });
+</script>
+
+{% endblock %}

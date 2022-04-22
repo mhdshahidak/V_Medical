@@ -1,0 +1,446 @@
+{% extends "master.html" %}
+{% block content %}
+{% load static %}
+
+
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row" style="align-content: center;">
+            <div class="col-md-2 col-sm-6 col-12">
+                <div class="card bg-warning">
+                    <div class="card-body ">
+                        <div class="dash-widget-header">
+                            <span class="dash-widget-icon bg-1">
+                                <i class="fas fa-dollar-sign"></i>
+                            </span>
+                            <div class="dash-count">
+                                <div class="dash-title">Income</div>
+                                <div class="dash-counts">
+                                    <p>1,642</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-12">
+                <div class="card " style="background-color: rgb(86, 181, 205);">
+                    <div class="card-body">
+                        <div class="dash-widget-header">
+                            <span class="dash-widget-icon bg-2">
+                                <i class="fas fa-users"></i>
+                            </span>
+                            <div class="dash-count">
+                                <div class="dash-title">Expence</div>
+                                <div class="dash-counts">
+                                    <p>3,642</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-12">
+                <div class="card bg-info">
+                    <div class="card-body">
+                        <div class="dash-widget-header">
+                            <span class="dash-widget-icon bg-2">
+                                <i class="fa fa-building"></i>
+                            </span>
+                            <div class="dash-count">
+                                <div class="dash-title">Bank</div>
+                                <div class="dash-counts">
+                                    <p>1,041</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-12">
+                <div class="card bg-success">
+                    <div class="card-body">
+                        <div class="dash-widget-header">
+                            <span class="dash-widget-icon bg-3">
+                                <i class="fas fa-file-alt"></i>
+                            </span>
+                            <div class="dash-count">
+                                <div class="dash-title">Cash</div>
+                                <div class="dash-counts">
+                                    <p>1,041</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-12">
+                <div class="card" style="background-color: #de80e3;">
+                    <div class="card-body">
+                        <div class="dash-widget-header">
+                            <span class="dash-widget-icon bg-4">
+                                <i class="far fa-file"></i>
+                            </span>
+                            <div class="dash-count">
+                                <div class="dash-title">UPI</div>
+                                <div class="dash-counts">
+                                    <p>2,150</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-12">
+                <div class="card" style="background-color: #b8b6b8;">
+                    <div class="card-body">
+                        <div class="dash-widget-header">
+                            <span class="dash-widget-icon bg-7">
+                                <i class="material-icons">
+                                    account_balance
+                                </i>
+                            </span>
+                            <div class="dash-count">
+                                <div class="dash-title">Staff</div>
+                                <div class="dash-counts">
+                                    <p>2,150</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title">Recent Invoices</h5>
+                            </div>
+                            <div class="col-auto">
+                                <a href="{% url 'branch:invoicelist' %}" class="btn-right btn btn-sm btn-outline-primary">
+                                    View All
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        
+                        <div class="table-responsive">
+                            <table class="table table-stripped table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Invoice ID</th>
+                                        <th>Customer</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th class="text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>20222</td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                Barbara Moore
+                                            </h2>
+                                        </td>
+                                        <td>$118</td>
+                                        <td>23 Nov 2020</td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-h"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">                                                   
+                                                    <a class="dropdown-item" href="{% url 'branch:invoicedetails' %}"><i
+                                                            class="far fa-eye me-2"></i>View</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);"><i
+                                                            class="far fa-paper-plane me-2"></i>Send Invoice</a>
+                                                    
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>666565</td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                Barbara Moore
+                                            </h2>
+                                        </td>
+                                        <td>$118</td>
+                                        <td>23 Nov 2020</td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-h"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">                                                   
+                                                    <a class="dropdown-item" href="view-invoice.html"><i
+                                                            class="far fa-eye me-2"></i>View</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);"><i
+                                                            class="far fa-paper-plane me-2"></i>Send Invoice</a>
+                                                    
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>220555</td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                Barbara Moore
+                                            </h2>
+                                        </td>
+                                        <td>$118</td>
+                                        <td>23 Nov 2020</td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-h"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">                                                   
+                                                    <a class="dropdown-item" href="view-invoice.html"><i
+                                                            class="far fa-eye me-2"></i>View</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);"><i
+                                                            class="far fa-paper-plane me-2"></i>Send Invoice</a>
+                                                    
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5555554</td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                Barbara Moore
+                                            </h2>
+                                        </td>
+                                        <td>$118</td>
+                                        <td>23 Nov 2020</td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-h"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">                                                   
+                                                    <a class="dropdown-item" href="view-invoice.html"><i
+                                                            class="far fa-eye me-2"></i>View</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);"><i
+                                                            class="far fa-paper-plane me-2"></i>Send Invoice</a>
+                                                    
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>936625</td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                Barbara Moore
+                                            </h2>
+                                        </td>
+                                        <td>$118</td>
+                                        <td>23 Nov 2020</td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-h"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">                                                   
+                                                    <a class="dropdown-item" href="view-invoice.html"><i
+                                                            class="far fa-eye me-2"></i>View</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);"><i
+                                                            class="far fa-paper-plane me-2"></i>Send Invoice</a>
+                                                    
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title">Recent Expenses</h5>
+                            </div>
+                            <div class="col-auto">
+                                <a href="{% url 'branch:expenses' %}" class="btn-right btn btn-sm btn-outline-primary">
+                                    View All
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Expiry Date</th>
+                                        <th>Amount</th>
+                                        <th class="text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            rent
+                                        </td>
+                                        <td>5 Nov 2020</td>
+                                        <td>$175</td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-h"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="{% url 'branch:editexpence' %}"><i
+                                                            class="far fa-edit me-2"></i>Edit</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);"><i
+                                                            class="far fa-trash-alt me-2"></i>Delete</a>
+                                                    <a class="dropdown-item" href="view-estimate.html"><i
+                                                            class="far fa-eye me-2"></i>View</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            rent
+                                        </td>
+                                        <td>5 Nov 2020</td>
+                                        <td>$175</td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-h"></i></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a class="dropdown-item" href="{% url 'branch:editexpence' %}"><i
+                                                                    class="far fa-edit me-2"></i>Edit</a>
+                                                            <a class="dropdown-item" href="javascript:void(0);"><i
+                                                                    class="far fa-trash-alt me-2"></i>Delete</a>
+                                                            <a class="dropdown-item" href="view-estimate.html"><i
+                                                                    class="far fa-eye me-2"></i>View</a>
+                                                        </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            rent
+                                        </td>
+                                        <td>5 Nov 2020</td>
+                                        <td>$175</td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-h"></i></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a class="dropdown-item" href="{% url 'branch:editexpence' %}"><i
+                                                                    class="far fa-edit me-2"></i>Edit</a>
+                                                            <a class="dropdown-item" href="javascript:void(0);"><i
+                                                                    class="far fa-trash-alt me-2"></i>Delete</a>
+                                                            <a class="dropdown-item" href="view-estimate.html"><i
+                                                                    class="far fa-eye me-2"></i>View</a>
+                                                        </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            rent
+                                        </td>
+                                        <td>5 Nov 2020</td>
+                                        <td>$175</td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-h"></i></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a class="dropdown-item" href="{% url 'branch:editexpence' %}"><i
+                                                                    class="far fa-edit me-2"></i>Edit</a>
+                                                            <a class="dropdown-item" href="javascript:void(0);"><i
+                                                                    class="far fa-trash-alt me-2"></i>Delete</a>
+                                                            <a class="dropdown-item" href="view-estimate.html"><i
+                                                                    class="far fa-eye me-2"></i>View</a>
+                                                        </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            rent
+                                        </td>
+                                        <td>5 Nov 2020</td>
+                                        <td>$175</td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-h"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="{% url 'branch:editexpence' %}"><i
+                                                            class="far fa-edit me-2"></i>Edit</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);"><i
+                                                            class="far fa-trash-alt me-2"></i>Delete</a>
+                                                    <a class="dropdown-item" href="view-estimate.html"><i
+                                                            class="far fa-eye me-2"></i>View</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                   
+                                    
+                                    
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+//    toggle
+
+        $(document).on('click', '#toggle_btn', function () {
+            if ($('body').hasClass('mini-sidebar')) {
+                $('body').removeClass('mini-sidebar');
+                $('.subdrop + ul').slideDown();
+            } else {
+                $('body').addClass('mini-sidebar');
+                $('.subdrop + ul').slideUp();
+            }
+            setTimeout(function () {
+                mA.redraw();
+                mL.redraw();
+            }, 300);
+            return false;
+        });
+</script>
+
+{% endblock %}

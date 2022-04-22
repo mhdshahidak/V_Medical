@@ -1,0 +1,73 @@
+{% extends "index.html" %}
+{% block content %}
+    {% load static %}
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">Stock Details</h3>
+                        <ul class="breadcrumb">
+                            <li class="">
+                                <a href="{% url 'adminapp:adminhome' %}">Dashboard /</a>
+                            </li>
+                            <li class="">
+                                <a href="{% url 'adminapp:stock' %}">Stock /</a>
+                            </li>
+                            <li class="breadcrumb-item active">Stock list</li>
+                        </ul>
+                    </div>
+                    <div class="col-auto">
+                        <a class="btn btn-primary filter-btn"
+                           href="javascript:void(0);"
+                           id="filter_search">
+                            <i class="fas fa-filter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="filter_inputs" class="card filter-card">
+                <div class="card-body pb-0">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group">
+                                <label>Medicine Name</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card card-table">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-center table-hover datatable">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Medicine Id</th>
+                                            <th>Name</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>$295</td>
+                                            <td>16 Nov 2020</td>
+                                            <td>$295</td>
+                                            <td>16 Nov 2020</td>
+                                            <td>qwertyuioppplkjhgfdsa</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

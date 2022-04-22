@@ -1,0 +1,95 @@
+{% extends "master.html" %}
+
+{% block content %}
+{% load static %}
+
+<div class="page-wrapper">
+                <div class="content container-fluid">
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="page-title">
+                                    Edit Product
+                                </h3>
+                                <ul class="breadcrumb">
+                                    <li class="">
+                                        <a href="{% url 'branch:branchhome' %}">Dashboard /</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{% url 'branch:products' %}">Products /</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        Edit Products
+                                    </li>
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        Basic Info
+                                    </h4>
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Medicine name
+                                                    </label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>
+                                                        Purchase Cost
+                                                    </label>
+                                                    <input type="email" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>
+                                                        Quantity
+                                                    </label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Medicine ID
+                                                    </label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>
+                                                        Selling cost
+                                                    </label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>
+                                                        Description
+                                                    </label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                      
+                                        <div class="text-end mt-4">
+                                            <button type="submit" class="btn btn-primary">
+                                                Edit Product
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+{% endblock %}

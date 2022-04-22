@@ -1,0 +1,115 @@
+{% extends "index.html" %}
+{% block content %}
+{% load static %}
+
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">
+                        Staff Transfer
+                    </h3>
+                    <ul class="breadcrumb">
+                        <li class="">
+                            <a href="{% url 'adminapp:adminhome' %}">Dashboard /</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Transfer
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            Staff Transfer
+                        </h4>
+                        <form action="#">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>From:</label>
+                                        <select class="select cal-icon form-control">
+                                            <option>Select Place</option>
+                                            <option>Brian Johnson</option>
+                                            <option>Marie Canales</option>
+                                            <option>Barbara Moore</option>
+                                            <option>Greg Lynch</option>
+                                            <option>Karlene Chaidez</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>To:</label>
+                                        <select class="select cal-icon form-control">
+                                            <option>Select Place</option>
+                                            <option>Brian Johnson</option>
+                                            <option>Marie Canales</option>
+                                            <option>Barbara Moore</option>
+                                            <option>Greg Lynch</option>
+                                            <option>Karlene Chaidez</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>From</label>
+                                        <div class="cal-icon">
+                                            <input class="form-control datetimepicker" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>To</label>
+                                        <div class="cal-icon">
+                                            <input class="form-control datetimepicker" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Staff Name:</label>
+                                        <select class="select cal-icon form-control">
+                                            <option>Select Staff</option>
+                                            <option>Brian Johnson</option>
+                                            <option>Marie Canales</option>
+                                            <option>Barbara Moore</option>
+                                            <option>Greg Lynch</option>
+                                            <option>Karlene Chaidez</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Staff ID:</label>
+                                       <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-end mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Transfer
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

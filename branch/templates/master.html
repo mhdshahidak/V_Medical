@@ -1,0 +1,347 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>V_Med Multy Store Pharmacy</title>
+
+
+    <!-- Avathar image Link  -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+
+    <!-- Bootstrap Link  -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+    <!-- Fontawesome Icon Link -->
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome/css/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome/css/all.min.css' %}">
+
+    <!-- Google material CDN -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
+    <!-- Stylesheet Link -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- datatable -->
+    <link rel="stylesheet" href="{% static 'plugins/datatables/datatables.min.css' %}">
+
+    <!-- datepicker -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
+
+    <!-- selectBox -->
+    <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+
+</head>
+
+<body class="nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme">
+
+    <div class="main-wrapper">
+
+        <div class="header header-one">
+
+            <div class="header-left header-left-one">
+                <a href="index.html" class="logo">
+                    <img src="{% static 'img/logo.png' %}" alt="Logo">
+                </a>
+                <a href="index.html" class="white-logo">
+                    <img src="{% static 'img/logo-white.png' %}" alt="Logo">
+                </a>
+                <a href="index.html" class="logo logo-small">
+                    <img src="{% static 'img/logo-small.png' %}" alt="Logo" width="30" height="30">
+                </a>
+            </div>
+
+
+            <a href="javascript:void(0);" id="toggle_btn">
+                <i class="fas fa-bars"></i>
+            </a>
+
+
+            <div class="top-nav-search">
+                <form>
+                    <input type="text" class="form-control" placeholder="Search here">
+                    <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+
+
+            <a class="mobile_btn" id="mobile_btn">
+                <i class="fas fa-bars"></i>
+            </a>
+
+
+            <ul class="nav nav-tabs user-menu">
+
+                <li class="nav-item has-arrow">
+                    <a class="nav-link" href="{% url 'branch:purchaselist' %}">
+                        <span>Purchase List</span>
+                    </a>
+                </li>
+
+                <li class="nav-item has-arrow bg-light">
+                    <a class="nav-link" href="{% url 'branch:requests' %}">
+                        <span>Request</span>
+                    </a>
+                </li>
+
+
+                <li class="nav-item dropdown has-arrow main-drop">
+                    <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                        <span class="user-img">
+                            <img src="{% static 'img/profiles/avatar-01.jpg' %}" alt="">
+                            <span class="status online"></span>
+                        </span>
+                        <span>Branch</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'branch:branchprofile' %}"><i
+                                class="material-icons">person</i>&nbsp;
+                            Profile</a>
+                        <a class="dropdown-item" href="settings.html"><i class="material-icons">settings</i>&nbsp;
+                            Settings</a>
+                        <a class="dropdown-item" href="login.html">
+                            <i class="material-icons">power_settings_new</i>
+                            Logout</a>
+                    </div>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li class="menu-title"><span>Main</span></li>
+
+                        <li {% if is_branchhome %} class="active" {% endif %}>
+                            <a href="{% url 'branch:branchhome' %}">
+                                <i class="fa fa-th"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li {% if is_customers %} class="active" {% endif %} {% if is_addcustomers %} class="active" {% endif %}>
+                            <a href="{% url 'branch:customers' %}">
+                                <i class="fa fa-user-circle"></i>
+                                <span>Customers</span>
+                            </a>
+                        </li>
+
+                        <li {% if is_staff %} class="active" {% endif %} {% if is_addstaff %} class="active" {% endif %}>
+                            <a href="{% url 'branch:staff' %}">
+                                <i class="fa fa-users"></i>
+                                <span>Staff</span>
+                            </a>
+                        </li>
+
+                        <li {% if is_products %} class="active" {% endif %} {% if is_addmedicine %} class="active" {% endif %}>
+                            <a href="{% url 'branch:products' %}">
+                                <i class="fa fa-cart-plus"></i>
+                                <span> Products</span></a>
+                        </li>
+
+                        <li {% if is_billing %} class="active" {% endif %}>
+                            <a href="{% url 'branch:billing' %}">
+                                <i class="fa fa-clipboard"></i>
+                                <span>Billing</span></a>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="#">
+                                <i class="fa fa-th-list"></i>
+                                <span> Invoices</span> <span class="menu-arrow"></span>
+                            </a>
+                            <ul>
+                                <li {% if is_invoicelist %} class="active" {% endif %}>
+                                    <a href="{% url 'branch:invoicelist' %}">Innovice List</a>
+                                </li>
+                                <li {% if is_invoicedetails %} class="active" {% endif %}>
+                                    <a href="{% url 'branch:invoicedetails' %}">Invoices Details</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li {% if is_searchmedicine %} class="active" {% endif %}>
+                            <a href="{% url 'branch:searchmedicine' %}">
+                                <i class="fa fa-search"></i>
+                                <span>Stock Search/Request </span>
+                            </a>
+                        </li>
+
+                        <li {% if is_bank %} class="active" {% endif %} {% if is_addbank %} class="active" {% endif %}>
+                            <a href="{% url 'branch:bank' %}">
+                                <i class="fa fa-suitcase"></i>
+                                <span>Bank</span>
+                            </a>
+                        </li>
+
+                        <li {% if is_income %} class="active" {% endif %}>
+                            <a href="{% url 'branch:income' %}">
+                                <i class="material-icons fa-md">monetization_on</i>
+                                <span>Income</span>
+                            </a>
+                        </li>
+
+                        <li {% if is_expenses %} class="active" {% endif %} {% if is_addexpenses %} class="active" {% endif %}>
+                            <a href="{% url 'branch:expenses' %}">
+                                <i class="fas fa-chart-area"></i>
+                                <span>Expence</span>
+                            </a>
+                        </li>
+
+                        <li {% if is_profitloss %} class="active" {% endif %}>
+                            <a href="{% url 'branch:profitloss' %}">
+                                <i class="fas fa-sitemap"></i>
+                                <span>Profit And Loss</span>
+                            </a>
+                        </li>
+
+                        <li {% if is_purchaselist %} class="active" {% endif %}>
+                            <a href="{% url 'branch:purchaselist' %}">
+                                <i class="material-icons">format_list_numbered</i>
+                                <span>Purchase list</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        {% block content %}
+
+        {% endblock %}
+
+
+
+    </div>
+
+    <!-- index -->
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/feather.min.js' %}"></script>
+    <script src="{% static 'plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+    <script src="{% static 'plugins/apexchart/apexcharts.min.js' %}"></script>
+    <script src="{% static 'plugins/apexchart/chart-data.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+
+    <!-- home -->
+    <script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables/datatables.min.js' %}"></script>
+
+    <!-- datepicker -->
+    <script src="{% static 'plugins/moment/moment.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+
+    <!-- selectbox -->
+    <script src="{% static 'plugins/select2/js/select2.min.js' %}"></script>
+
+    <script>
+
+        // datatable
+        if ($('.datatable').length > 0) {
+            $('.datatable').DataTable({
+                language: {
+                    search: '<i class="fas fa-search"></i>',
+                    searchPlaceholder: "Search"
+                }
+            });
+        }
+        // end datatable
+
+
+        if ($('.datetimepicker').length > 0) {
+            $('.datetimepicker').datetimepicker({
+                format: 'DD-MM-YYYY',
+                icons: {
+                    up: "fas fa-angle-up",
+                    down: "fas fa-angle-down",
+                    next: 'fas fa-angle-right',
+                    previous: 'fas fa-angle-left'
+                }
+            });
+        }
+
+        //    toggle
+        $(document).on('click', '#toggle_btn', function () {
+            if ($('body').hasClass('mini-sidebar')) {
+                $('body').removeClass('mini-sidebar');
+                $('.subdrop + ul').slideDown();
+            } else {
+                $('body').addClass('mini-sidebar');
+                $('.subdrop + ul').slideUp();
+            }
+            setTimeout(function () {
+                mA.redraw();
+                mL.redraw();
+            }, 300);
+            return false;
+        });
+
+
+        // filters
+        $(document).on('click', '#filter_search', function () {
+            $('#filter_inputs').show();
+        });
+        //    add + in add invoice
+        $(".add-table-items").on('click', '.remove-btn', function () {
+            $(this).closest('.add-row').remove();
+            return false;
+        });
+
+        $(document).on("click", ".add-btn", function () {
+            var experiencecontent = '<tr class="add-row">' +
+                '<td>' +
+                '<input type="text" class="form-control" readonly>' +
+                '</td>' +
+                '<td>' +
+                '<input type="text" class="form-control">' +
+                '</td>' +
+                '<td>' +
+                '<input type="text" class="form-control">' +
+                '</td>' +
+                '<td>' +
+                '<input type="text" class="form-control">' +
+                '</td>' +
+
+                '<td>' +
+                '<input type="text" class="form-control">' +
+                '</td>' +
+                '<td class="add-remove text-end">' +
+                '<a href="javascript:void(0);" class="add-btn me-2"><i class="fas fa-plus-circle"></i></a> ' +
+                '<a href="javascript:void(0);" class="remove-btn"><i class="fas fa-trash"></i></a>' +
+                '</td>' +
+                '</tr>';
+
+            $(".add-table-items").append(experiencecontent);
+            return false;
+        });
+        // end  + in add invoice
+
+        // selectbox
+        $('.app-listing .selectBox').on("click", function () {
+            $(this).parent().find('#checkBoxes').fadeToggle();
+            $(this).parent().parent().siblings().find('#checkBoxes').fadeOut();
+        });
+
+        $('.invoices-main-form .selectBox').on("click", function () {
+            $(this).parent().find('#checkBoxes-one').fadeToggle();
+            $(this).parent().parent().siblings().find('#checkBoxes-one').fadeOut();
+        });
+        // end selectbox
+
+
+    </script>
+
+
+</body>
+
+</html>
