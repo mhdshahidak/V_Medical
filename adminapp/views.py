@@ -11,12 +11,19 @@ from adminapp.models import Branch
 
 @auth_admin
 def admin_home(request):
-    context = {"is_adminhome": True}
-    return render(request, 'admin_home.html', context)
+    branches=Branch.objects.all()
+    context = {"is_adminhome": True,
+        "branches":branches
+    }
+
+    
+    return render(request, 'admin_home.html',context)
 
 
 def branch_details(request):
     context = {"is_branchdetails": True}
+
+    
     return render(request, 'branchdetails.html', context)
 
 
@@ -25,11 +32,11 @@ def addbranch(request):
 
     # msg=""
     rand=random.randint(10000,999999)
-    branch_id='VM'+str(rand)
+    branchid='VM'+str(rand)
     
     if request.method == 'POST':
         Branch_Name=request.POST['bname']
-        branch_id=branch_id
+        branch_id=branchid
         email=request.POST['email']
         phone=request.POST['phone']
         place=request.POST['place']
