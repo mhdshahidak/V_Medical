@@ -126,5 +126,3 @@ def edit_staff(request):
 def edit_product(request):
     return render(request,'editproduct.html')
 
-# def view_invoice(request):
-#     return render(request,'viewinvoice.html')
