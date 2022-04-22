@@ -1,5 +1,6 @@
 from multiprocessing import context
 from django.shortcuts import render
+from django.shortcuts import redirect
 
 from v_med.decorators import auth_admin
 
@@ -44,3 +45,8 @@ def stock(request):
 def stock_list(request):
     context = {"is_stocklist": True}
     return render(request, 'stock_list.html', context)
+
+def admin_logout(request):
+    del request.session['admin']
+    request.session.flush()
+    return redirect('branch:login')

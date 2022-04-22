@@ -21,7 +21,7 @@ def login(request):
 
         else:
             msg = "user name or password incorrect"
-            return render(request, 'customer_login.html', {'msg':msg,})
+            return render(request, 'login.html', {'msg':msg,})
 
     return render(request,'login.html')
 

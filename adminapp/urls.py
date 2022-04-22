@@ -12,5 +12,7 @@ urlpatterns = [
     path('transfer', views.transfer, name='transfer'),
     path('stock', views.stock, name='stock'),
     path('stocklist', views.stock_list, name='stocklist'),
+    path('adminlogout', views.admin_logout, name='adminlogout'),
+
 
 ]
