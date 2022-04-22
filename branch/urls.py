@@ -32,7 +32,8 @@ urlpatterns = [
     path('editcustomer',views.edit_customer,name="editcustomer"),
     path('editstaff',views.edit_staff,name="editstaff"),
     path('editproduct',views.edit_product,name="editproduct"),
-    # path('viewinvoice',views.view_invoice,name="viewinvoice"),
+    path('branchlogout', views.branch_logout, name='branchlogout'),
+    
 
 
 
