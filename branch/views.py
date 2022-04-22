@@ -1,7 +1,28 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
+
+from adminapp.models import AdminLogin
 
 # Create your views here.
 def login(request):
+    msg = ""
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        admin_exist = AdminLogin.objects.filter(
+            username=username, password=password).exists()
+        if admin_exist:
+            admin_data = AdminLogin.objects.get(
+                username=username, password=password)
+            # passing customer id as session value
+            request.session['admin'] = admin_data.id
+            return redirect('adminapp:adminhome')
+
+        else:
+            msg = "user name or password incorrect"
+            return render(request, 'customer_login.html', {'msg':msg,})
+
     return render(request,'login.html')
 
 def forgotpassword(request):

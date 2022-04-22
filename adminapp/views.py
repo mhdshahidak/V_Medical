@@ -1,9 +1,11 @@
 from multiprocessing import context
 from django.shortcuts import render
 
+from v_med.decorators import auth_admin
+
 # Create your views here.
 
-
+@auth_admin
 def admin_home(request):
     context = {"is_adminhome": True}
     return render(request, 'admin_home.html', context)
