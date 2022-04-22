@@ -1,7 +1,9 @@
+import random
 from django.shortcuts import render
 from django.shortcuts import redirect
 
-from adminapp.models import AdminLogin
+from adminapp.models import AdminLogin, Branch, Staff
+from v_med.decorators import auth_branch
 
 # Create your views here.
 def login(request):
@@ -12,13 +14,17 @@ def login(request):
 
         admin_exist = AdminLogin.objects.filter(
             username=username, password=password).exists()
+        branch_exist = Branch.objects.filter(branch_id=username, password=password).exists()
         if admin_exist:
             admin_data = AdminLogin.objects.get(
                 username=username, password=password)
             # passing customer id as session value
             request.session['admin'] = admin_data.id
             return redirect('adminapp:adminhome')
-
+        elif branch_exist:
+            branch = Branch.objects.get(branch_id=username, password=password)
+            request.session['branch'] = branch.id
+            return redirect('branch:branchhome')
         else:
             msg = "user name or password incorrect"
             return render(request, 'login.html', {'msg':msg,})
@@ -28,6 +34,7 @@ def login(request):
 def forgotpassword(request):
     return render(request,'forgotpassword.html')
 
+@auth_branch
 def branch_home(request):
     context={"is_branchhome":True}
     return render(request,'branch_home.html',context)
@@ -45,7 +52,33 @@ def staff(request):
     return render(request,'staff.html',context)
 
 def add_staff(request):
-    context={"is_addstaff":True}
+    msg=""
+    rand=random.randint(10000,999999)
+    staff_id='VMS'+str(rand)
+    
+    if request.method == 'POST':
+        Name = request.POST['name']
+        staff_id = staff_id
+        email = request.POST['email']
+        phone = request.POST['phone']
+        place = request.POST['place']
+        state = request.POST['state']
+        address = request.POST['address']
+        pincode = request.POST['pincode']
+        date = request.POST['date']
+        print(date)
+        branch = Branch.objects.get(id=request.session['branch'])
+
+        new_staff=Staff(name=Name,staff_id=staff_id,email=email,phone=phone,place=place,state=state,address=address,pincode=pincode,date=date,branch=branch)
+        new_staff.save()
+        msg="ADDED SUCESSFULLY"
+   
+    context = {"is_addstaff": True,
+        "msg":msg,
+        "branch_id":staff_id
+    
+    }
+
     return render(request,'addstaff.html',context)
 
 def all_products(request):
@@ -125,4 +158,9 @@ def edit_staff(request):
 
 def edit_product(request):
     return render(request,'editproduct.html')
+
+def branch_logout(request):
+    del request.session['branch']
+    request.session.flush()
+    return redirect('branch:login')
 

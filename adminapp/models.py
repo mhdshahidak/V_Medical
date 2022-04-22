@@ -27,3 +27,19 @@ class Branch(models.Model):
 
     class Meta:
         db_table='branch'
+
+
+class Staff(models.Model):
+    name = models.CharField(max_length=50)
+    staff_id = models.CharField(max_length=20)
+    email = models.CharField(max_length=30)
+    phone = models.CharField(max_length=18)
+    place = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    pincode = models.IntegerField()
+    address = models.CharField(max_length=200)
+    date = models.DateField()
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table='staff' 
