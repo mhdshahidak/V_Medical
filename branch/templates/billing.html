@@ -201,9 +201,15 @@
                                                         <tr class="add-row">
                                                             <td>
                                                                 <input type="text" class="form-control" readonly value="1">
+                                                                
                                                             </td>
                                                             <td>
-                                                                <input type="text" class="form-control">
+                                                                <input type="text" class="form-control" name="medicine" list="medicine">
+                                                                    <datalist id="medicine">
+                                                                    {% for p in product %}
+                                                                        <option value="{{p.product.name}}">
+                                                                    {% endfor %}
+                                                                    </datalist>
                                                             </td>
                                                             <td>
                                                                 <input type="text" class="form-control">

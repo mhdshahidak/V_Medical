@@ -54,8 +54,8 @@ def addcustomers(request):
 
 
 def staff(request):
-    staffs=Staff.objects.filter(branch_id=request.session['branch'])
-    context={"is_staff":True,
+    staffs = Staff.objects.filter(branch_id=request.session['branch'])
+    context = {"is_staff":True,
         "staffs":staffs,
     }
     return render(request,'staff.html',context)
@@ -135,7 +135,10 @@ def add_medicine(request):
     return render(request,'addmedicine.html',context)
 
 def billing(request):
-    context={"is_billing":True}
+    product = BranchProducts.objects.filter(branch=request.session['branch'])
+    context={"is_billing":True,
+        "product":product
+    }
     return render(request,'billing.html',context)
 
 def bank(request):
