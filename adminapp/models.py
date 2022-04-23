@@ -17,13 +17,14 @@ class AdminLogin(models.Model):
 
 class Branch(models.Model):
     # id=models.AutoField(primary_key=True)
-    branch_name=models.CharField(max_length=50)
-    branch_id=models.CharField(max_length=20)
-    email=models.CharField(max_length=30)
-    phone=models.CharField(max_length=18)
-    place=models.CharField(max_length=50)
-    address=models.CharField(max_length=200)
-    password=models.CharField(max_length=30)
+    branch_name = models.CharField(max_length=50)
+    branch_id = models.CharField(max_length=20)
+    email = models.CharField(max_length=30)
+    phone = models.CharField(max_length=18)
+    place = models.CharField(max_length=50)
+    address = models.CharField(max_length=200)
+    status = models.CharField(max_length=15, default="Active")
+    password = models.CharField(max_length=30)
 
     class Meta:
         db_table='branch'
@@ -40,6 +41,9 @@ class Staff(models.Model):
     address = models.CharField(max_length=200)
     date = models.DateField()
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    status = models.CharField(max_length=15,default="Active")
 
     class Meta:
         db_table='staff' 
+
+
