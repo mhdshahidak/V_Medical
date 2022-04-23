@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 
 from adminapp.models import AdminLogin, Branch, Staff
+from branch.models import BranchProducts, Product
 from v_med.decorators import auth_branch
 
 # Create your views here.
@@ -93,7 +94,44 @@ def all_products(request):
     return render(request,'products.html',context)
 
 def add_medicine(request):
-    context={"is_addmedicine":True}
+    msg = ""
+    rand=random.randint(10000,999999)
+    product_id='VMP'+str(rand)
+
+    if request.method == 'POST':
+        name = request.POST['name']
+        medicine_id = product_id
+        quantity = request.POST['quantity']
+        p_cost = request.POST['pcost']
+        s_cost = request.POST['scost']
+        description = request.POST['description']
+        purchase_date = request.POST['pdate']
+        expiry_date = request.POST['edate']
+        branch = Branch.objects.get(id=request.session['branch'])
+
+        medicine_exists = Product.objects.filter(name=name).exists()
+        if medicine_exists:
+            product = Product.objects.get(name=name)
+            medicine_in_branch_exists = BranchProducts.objects.filter(product=product,branch=branch).exists()
+            if medicine_in_branch_exists:
+                qproduct = BranchProducts.objects.get(product=product,branch=branch)
+                qproduct.quantity = qproduct.quantity + int(quantity)
+                qproduct.save()
+                BranchProducts.objects.filter(product=product,branch=branch).update(purchase_date=purchase_date,expiry_date=expiry_date)
+                msg = "Stock updated succesfully"
+            else:
+                medicine = BranchProducts(product=product,quantity=quantity,purchase_date=purchase_date,expiry_date=expiry_date,branch=branch)
+                medicine.save()
+        else:
+            new_product = Product(product_id=medicine_id,name=name,purchase_cost=p_cost,selling_cost=s_cost,description=description)
+            new_product.save()
+            branchproduct = BranchProducts(product=new_product,quantity=quantity,purchase_date=purchase_date,expiry_date=expiry_date,branch=branch)
+            branchproduct.save()
+            msg = "Product Added Successfully"
+
+    context={"is_addmedicine":True,
+        'msg':msg
+    }
     return render(request,'addmedicine.html',context)
 
 def billing(request):
