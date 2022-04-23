@@ -69,22 +69,24 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+
+                                        {% for branch in branches %}
                                         <tr>
                                             <td>
                                                 <h2 class="table-avatar">
                                                     <a href="profile.html" class="avatar avatar-sm me-2">
                                                         <img class="avatar-img rounded-circle"
-                                                             src="{% static 'img/profiles/avatar-02.jpg' %}"
+                                                             src="{% static 'img/profiles/avatar-03.jpg' %}"
                                                              alt="User Image">
                                                     </a>
-                                                    <a href="profile.html">Brian Johnson <span>9876543210</span></a>
+                                                    <a href="profile.html">{{branch.branch_name}} <span>{{branch.branch_id}}</span></a>
                                                 </h2>
                                             </td>
-                                            <td>branch1@gmail.com</td>
-                                            <td>2025858555</td>
-                                            <td>Calicut</td>
+                                            <td>{{branch.email}}</td>
+                                            <td>{{branch.phone}}</td>
+                                            <td>{{branch.place}}</td>
                                             <td>
-                                                <span class="badge badge-pill bg-success-light">Active</span>
+                                                <span class="badge badge-pill bg-danger-light">Inactive</span>
                                             </td>
                                             <td class="text-end">
                                                 <a href="edit-customer.html"
@@ -93,7 +95,9 @@
                                                    class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Delete</a>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        {% endfor %}
+                                        
+                                        {% comment %} <tr>
                                             <td>
                                                 <h2 class="table-avatar">
                                                     <a href="profile.html" class="avatar avatar-sm me-2">
@@ -116,7 +120,7 @@
                                                 <a href="javascript:void(0);"
                                                    class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Delete</a>
                                             </td>
-                                        </tr>
+                                        </tr> {% endcomment %}
                                     </tbody>
                                 </table>
                             </div>

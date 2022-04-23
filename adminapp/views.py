@@ -21,7 +21,11 @@ def admin_home(request):
 
 
 def branch_details(request):
-    context = {"is_branchdetails": True}
+
+    branches=Branch.objects.all()
+    context = {"is_branchdetails": True,
+                'branches':branches,
+    }
 
     
     return render(request, 'branchdetails.html', context)
@@ -54,7 +58,7 @@ def addbranch(request):
     
     context = {"is_addbranch": True,
         "msg":msg,
-        "branch_id":branch_id
+        # "branch_id":branch_id
     
     }
 
