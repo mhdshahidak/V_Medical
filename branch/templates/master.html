@@ -94,7 +94,7 @@
                             <img src="{% static 'img/profiles/avatar-01.jpg' %}" alt="">
                             <span class="status online"></span>
                         </span>
-                        <span>Branch</span>
+                        <span>{{branch.branch_name}} </span>
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{% url 'branch:branchprofile' %}"><i

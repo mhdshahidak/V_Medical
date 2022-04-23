@@ -36,7 +36,11 @@ def forgotpassword(request):
 
 @auth_branch
 def branch_home(request):
-    context={"is_branchhome":True}
+    branch=Branch.objects.get(id=request.session['branch'])
+    # print(branch.brach_name)
+    context={"is_branchhome":True,
+        'branch':branch
+    }
     return render(request,'branch_home.html',context)
 
 def customers(request):
@@ -47,8 +51,12 @@ def addcustomers(request):
     context={"is_addcustomers":True}
     return render(request,'addcustomers.html',context)
 
+
 def staff(request):
-    context={"is_staff":True}
+    staffs=Staff.objects.filter(branch_id=request.session['branch'])
+    context={"is_staff":True,
+        "staffs":staffs,
+    }
     return render(request,'staff.html',context)
 
 def add_staff(request):

@@ -84,9 +84,6 @@
                                                         Contact Number
                                                     </th>
                                                     <th>
-                                                        Salary
-                                                    </th>
-                                                    <th>
                                                         Joined Date
                                                     </th>
                                                     <th>
@@ -98,6 +95,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                {% for staff in staffs %}
                                                 <tr>
                                                     <td>
                                                         <h2 class="table-avatar">
@@ -106,20 +104,17 @@
                                                                      src="{% static 'img/profiles/avatar-02.jpg' %}"
                                                                      alt="User Image">
                                                             </a>
-                                                            <a href="profile.html">Brian Johnson <span>9876543210</span></a>
+                                                            <a href="profile.html">{{staff.name}} <span>{{staff.phone}}</span></a>
                                                         </h2>
                                                     </td>
                                                     <td>
-                                                        mhd@hghfb
+                                                        {{staff.email}}
                                                     </td>
                                                     <td>
-                                                        $295
+                                                        {{staff.phone}}
                                                     </td>
                                                     <td>
-                                                        16 Nov 2020
-                                                    </td>
-                                                    <td>
-                                                        $295
+                                                        {{staff.date}}
                                                     </td>
                                                     <td>
                                                         16 Nov 2020
@@ -133,7 +128,8 @@
                                                         <a href="javascript:void(0);"
                                                            class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Delete</a>
                                                     </td>
-                                                </tr> 
+                                                </tr>
+                                                {% endfor %} 
                                             </tbody>
                                         </table>
                                     </div>
