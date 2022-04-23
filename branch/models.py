@@ -21,3 +21,13 @@ class BranchProducts(models.Model):
 
     class Meta:
         db_table = 'branchproducts'
+
+
+class Customers(models.Model):
+    name = models.CharField(max_length = 30)
+    phone = models.CharField(max_length = 15)
+    email = models.CharField(max_length = 50)
+    place = models.CharField(max_length = 60)
+
+    class Meta:
+        db_table = 'customers'

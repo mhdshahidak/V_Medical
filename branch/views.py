@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 
 from adminapp.models import AdminLogin, Branch, Staff
+from branch.models import Customers
 from v_med.decorators import auth_branch
 
 # Create your views here.
@@ -31,8 +32,13 @@ def login(request):
 
     return render(request,'login.html')
 
+
+
+
 def forgotpassword(request):
     return render(request,'forgotpassword.html')
+
+
 
 @auth_branch
 def branch_home(request):
@@ -43,13 +49,42 @@ def branch_home(request):
     }
     return render(request,'branch_home.html',context)
 
+
+
+
 def customers(request):
-    context={"is_customers":True}
+    customers=Customers.objects.all()
+    context={"is_customers":True,
+        'customers':customers,
+    }
     return render(request,'customers.html',context)
 
+
+
+
 def addcustomers(request):
-    context={"is_addcustomers":True}
-    return render(request,'addcustomers.html',context)
+    if request.method == 'POST':
+        customer_name = request.POST['name']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        place = request.POST['place']
+
+        customer_exist=Customers.objects.filter(name=customer_name,phone=phone).exists()
+
+        if not customer_exist:
+            new_customer=Customers(name=customer_name,email=email,phone=phone,place=place)
+            new_customer.save()
+            return render(request,'addcustomers.html',{'status':1,})
+
+        else:
+            msg="branch already exist"
+            context={"is_addcustomers":True,
+                "status": 0
+            }
+            return render(request,'addcustomers.html',context)
+    return render(request,'addcustomers.html')
+
+
 
 
 def staff(request):
@@ -59,8 +94,9 @@ def staff(request):
     }
     return render(request,'staff.html',context)
 
+
+
 def add_staff(request):
-    msg=""
     rand=random.randint(10000,999999)
     staff_id='VMS'+str(rand)
     
@@ -78,19 +114,25 @@ def add_staff(request):
 
         new_staff=Staff(name=Name,staff_id=staff_id,email=email,phone=phone,place=place,state=state,address=address,pincode=pincode,date=date,branch=branch)
         new_staff.save()
-        msg="ADDED SUCESSFULLY"
+        # msg="ADDED SUCESSFULLY"
+        return render(request,'addstaff.html',{'status':1,})
    
-    context = {"is_addstaff": True,
-        "msg":msg,
-        "branch_id":staff_id
-    
-    }
+    else:
+        context = {"is_addstaff": True,
+            "status":0,
+            "branch_id":staff_id
+        }
+        return render(request,'addstaff.html',context)
 
     return render(request,'addstaff.html',context)
+
 
 def all_products(request):
     context={"is_products":True}
     return render(request,'products.html',context)
+
+
+
 
 def add_medicine(request):
     context={"is_addmedicine":True}

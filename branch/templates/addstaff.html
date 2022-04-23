@@ -1,8 +1,19 @@
 {% extends "master.html" %}
 {% block content %}
     {% load static %}
+
+
+    
+
     <div class="page-wrapper">
         <div class="content container-fluid">
+
+            {% if status == 1 %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Successfully added the <strong>Staff</strong>
+                </div>
+            {% endif %}
+
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-12">
@@ -111,7 +122,7 @@
                                             <label>Joined Date:</label>
                                             {% comment %} <input class="form-control datetimepicker" type="text" name="date"> {% endcomment %}
                                             <input class="form-control " type="date" name="date">
-                                            {{ msg }}
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -119,6 +130,8 @@
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                     
                                 </div>
+
+                                
                             </form>
                         </div>
                     </div>
