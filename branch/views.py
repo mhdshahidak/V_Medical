@@ -66,7 +66,6 @@ def add_staff(request):
         address = request.POST['address']
         pincode = request.POST['pincode']
         date = request.POST['date']
-        print(date)
         branch = Branch.objects.get(id=request.session['branch'])
 
         new_staff=Staff(name=Name,staff_id=staff_id,email=email,phone=phone,place=place,state=state,address=address,pincode=pincode,date=date,branch=branch)
