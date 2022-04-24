@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 
 from adminapp.models import Branch
@@ -9,14 +10,16 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     purchase_cost = models.IntegerField()
     selling_cost = models.IntegerField()
+    description = models.CharField(max_length=200, default="Null")
 
     class Meta:
         db_table = 'product'
 
 class BranchProducts(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    purchase_date = models.DateField()
+    purchase_date = models.DateField(default=datetime.date.today)
     expiry_date = models.DateField()
+    quantity = models.IntegerField(default=0)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
 
     class Meta:

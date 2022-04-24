@@ -32,20 +32,21 @@
                                     <h4 class="card-title">
                                         Basic Info
                                     </h4>
-                                    <form action="#">
+                                    <form action="#" method="POST">
+                                        {% csrf_token %}
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>
                                                         Name
                                                     </label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="name" value="{{customers.name|capfirst}}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>
                                                         Email
                                                     </label>
-                                                    <input type="email" class="form-control">
+                                                    <input type="email" class="form-control" name="email" value="{{customers.email}}">
                                                 </div>
                                                 
                                             </div>
@@ -55,17 +56,17 @@
                                                     <label>
                                                         Phone
                                                     </label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="phone" value="{{customers.phone}}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>
                                                         Place
                                                     </label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="place" value="{{customers.place}}">
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>   
+                                      
                                         <div class="text-end mt-4">
                                             <button type="submit" class="btn btn-primary">
                                                 Edit

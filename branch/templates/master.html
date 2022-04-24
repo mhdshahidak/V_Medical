@@ -140,7 +140,7 @@
                             </a>
                         </li>
 
-                        <li {% if is_products %} class="active" {% endif %} {% if is_addmedicine %} class="active" {% endif %}>
+                        <li {% if is_products %} class="active" {% endif %} {% if is_addmedicine %} class="active" {% endif %} {% if is_editproduct %} class="active" {% endif %}>
                             <a href="{% url 'branch:products' %}">
                                 <i class="fa fa-cart-plus"></i>
                                 <span> Products</span></a>
