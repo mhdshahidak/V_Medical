@@ -240,7 +240,10 @@ def edit_product(request):
 
 
 def billing(request):
-    context={"is_billing":True}
+    product = BranchProducts.objects.filter(branch=request.session['branch'])
+    context={"is_billing":True,
+        "product":product
+    }
     return render(request,'billing.html',context)
 
 def bank(request):
