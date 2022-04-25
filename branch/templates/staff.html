@@ -3,6 +3,7 @@
 {% block content %}
 {% load static %}
 
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
 <div class="page-wrapper">
     <div class="content container-fluid">
@@ -61,6 +62,8 @@
                 </div>
             </div>
         </div>
+
+               
         <div class="row">
             <div class="col-sm-12">
                 <div class="card card-table">
@@ -84,6 +87,7 @@
                                         <th>
                                             Account Number
                                         </th>
+                                        <th>Status</th>
                                         <th class="text-center">
                                             Actions
                                         </th>
@@ -108,7 +112,7 @@
                                                         alt="User Image">
                                                     {% endif %}
                                                 </a>
-                                                <a href="profile.html">{{staff.staff.name}} <span>{{staff.staff.phone}}</span></a>
+                                                <a href="profile.html">{{staff.staff.name|title}} <span>{{staff.staff.phone}}</span></a>
                                             </h2>
                                         </td>
                                         <td>
@@ -123,14 +127,21 @@
                                         <td>
                                             {{staff.account_number}}
                                         </td>
+                                        <td > 
+                                            {% if staff.staff.status == 'Active'  %} 
+                                                <span class="badge badge-pill bg-success-light">{{  staff.staff.status }}</span>
+                                                {% else %} 
+                                                <span class="badge badge-pill bg-danger-light">{{  staff.staff.status }}</span> 
+                                                {% endif %}    
+                                        </td>
                                         <td class="text-end">
                                             <a class="btn btn-sm btn-white text-primary" href="#"
-                                                 data-bs-toggle="modal"
-                                                data-bs-target="#viewstaff"><i class="fa fa-eye me-1"></i>View</a>
-                                            <a href="{% url 'branch:editstaff' staff.id %}"
+                                                 data-bs-toggle="modal" onclick="viewdata({{staff.sid}})"
+                                                data-bs-target="#viewstaff" ><i class="fa fa-eye me-1"></i>View</a>
+                                            <a href="{% url 'branch:editstaff' staff.id staff.staff.id%}"
                                                 class="btn btn-sm btn-white text-success me-2"><i
                                                     class="far fa-edit me-1"></i> Edit</a>
-                                            <a href="javascript:void(0);"
+                                            <a href="{% url 'branch:deletestaff' staff.staff.id %}"
                                                 class="btn btn-sm btn-white text-danger me-2"><i
                                                     class="far fa-trash-alt me-1"></i>Delete</a>
                                         </td>
@@ -144,7 +155,7 @@
             </div>
         </div>
 
-        <!-- onclick="viewdata({{i.id}})" -->
+        <!--  -->
 
         <div class="modal custom-modal fade" id="viewstaff" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -154,25 +165,25 @@
         
                             <h4 class="mb-0 text-center">
                                 <div class="profile-pic-div">
-                                    <img src="" alt="" srcset="" class="img-fluid">
+                                    <img src="" alt="" srcset="" class="img-fluid" id="sprofile">
                                 </div>
                             </h4>
                             
                             <ul class="list-inline">
                                 <li class="list-inline-item">
-                                    <i class="fa fa-map-marker"></i> <span>sdfghnjm </span>
+                                    <i class="fa fa-map-marker"></i> <span id="splace"> sdfghnjm </span>
                                 </li>
                                 <li class="list-inline-item">
-                                    <i class="fa fa-envelope"></i> <span>asdfghjk</span>
+                                    <i class="fa fa-envelope"></i> <span id="semail">asdfghjk</span>
                                 </li>
                                 <li class="list-inline-item">
-                                    <i class="fa fa-phone"></i> <span>asdfghjkl</span>
+                                    <i class="fa fa-phone"></i> <span id="sphone">asdfghjkl</span>
                                 </li>
                             </ul><br>
 
                             <div class="row justify-content-center container text-center">
-                                <h4 class="mb-0 text-primary" id="prName">Staff Name</h4>
-                                <h5>Staff id</h5>
+                                <h4 class="mb-0 text-primary" id="sname">Staff Name</h4>
+                                <h5 id="sid">Staff id</h5>
                             </div>
                         </div>
                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -185,17 +196,17 @@
                     <div class="modal-body">
                         <div class="d-flex justify-content-center container">
                             <div class="card p-3 py-4">
-                                <h5 class="mb-0 em" id="prCategory">Basic Details</h5>
-                                <span id="prDecreption" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                <h5 class="mb-0 em">Basic Details</h5>
+                                <span id="scity" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                     <strong>City: </strong>
                                 </span>
-                                <span id="prDecreption" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                <span id="splace" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                     <strong>Place: </strong>
                                 </span>
-                                <span id="prDecreption" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                <span id="saddress" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                     <strong>Address: </strong>
                                 </span>
-                                <span id="prDecreption" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                <span id="sdate" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                     <strong>Join Date: </strong>
                                 </span>
                             </div>
@@ -203,17 +214,17 @@
                                 <div class="vr"></div>
                               </div>
                             <div class="card p-3 py-4">
-                                <h5 class="mb-0 em" id="prCategory">Bank Details</h5>
-                                <span id="prDecreption" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                <h5 class="mb-0 em">Bank Details</h5>
+                                <span id="sbranchname" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                     <strong>Branch Name: </strong>
                                 </span>
-                                <span id="prDecreption" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                <span id="sbankname" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                     <strong>Bank Name:</strong>
                                 </span>
-                                <span id="prDecreption" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                <span id="saccnum" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                     <strong>Account Number :</strong>
                                 </span>
-                                <span id="prDecreption" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                <span id="sifsc" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                     <strong>IFSC :</strong>
                                 </span>
                                 
@@ -243,4 +254,35 @@
     margin-left: 55px;
 }
 </style>
+
+
+<script>
+    function viewdata(sid) {
+        $.ajax({
+            url: "/branchapp/getproductGet/" + sid,
+            type: 'GET',
+
+            success: function (responce) {
+
+
+                // console.log(responce)
+                $('#sprofile').html(responce.staffs.staff.profile)
+                $('#splace').html(responce.staffs.staff.place)
+                $('#semail').html(responce.staffs.staff.email)
+                $('#sphone').html(responce.staffs.staff.phone)
+                $('#sname').html(responce.staffs.staff.name)
+                $('#sid').html(responce.staffs.staff.staff_id)
+                // $('#scity').html(responce.product.priceper_head)
+                $('#saddress').html(responce.staffs.staff.address)
+                $('#sdate').html(responce.staffs.staff.date)
+                $('#sbranchname').html(responce.staffs.branch)
+                $('#sbankname').html(responce.staffs.bank_name)
+                $('#saccnum').html(responce.staffs.account_number)
+                $('#sifsc').html(responce.staffs.ifsc)
+                // $('#saddress').html(responce.product.priceper_kg)
+            }
+
+        })
+    }
+</script>
 {% endblock %}
