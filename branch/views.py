@@ -146,7 +146,7 @@ def add_staff(request):
         }
         return render(request,'addstaff.html',context)
 
-    return render(request,'addstaff.html',context)
+    # return render(request,'addstaff.html',context)
 
 
 def edit_staff(request,sid):

@@ -47,3 +47,14 @@ class Staff(models.Model):
         db_table='staff' 
 
 
+class Transfer(models.Model):
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    from_branch = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name='frombranch')
+    to_branch = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name='tobranch')
+    from_date = models.DateField()
+    to_date = models.DateField()
+    status = models.CharField(max_length=20, default="requested")
+
+    class Meta:
+        db_table='transfer'
+

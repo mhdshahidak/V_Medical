@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 
 from v_med.decorators import auth_admin
 
-from adminapp.models import Branch
+from adminapp.models import Branch, Staff, Transfer
 
 # Create your views here.
 
@@ -63,10 +63,39 @@ def addbranch(request):
     }
     return render(request, 'addbranch.html', context)
 
+
+def edit_branch(request,bid):
+    if request.method == 'POST':
+        branch_Name=request.POST['bname']
+        email=request.POST['email']
+        phone=request.POST['phone']
+        place=request.POST['place']
+        address=request.POST['address']
+        # branch= Branch.objects.get(id=request.session['branch'])
+        Branch.objects.filter(id=bid).update(branch_name=branch_Name,email=email,phone=phone,place=place,address=address)
+        return redirect('adminapp:branchdetails')
+    else:
+        edit_branch=Branch.objects.get(id=bid)
+        context={
+            "is_editbranch":True,
+            "editbranch":edit_branch,
+        }
+    return render(request,'editbranch.html', context)
+
+
+def delete_branch(request,bid):
+    status = "InActive"
+    branch = Branch.objects.get(id=bid)
+    branch.status = status
+    branch.save()
+    return redirect('adminapp:branchdetails')
    
 
 def staff_details(request):
-    context = {"is_staffdetails": True}
+    staffs = Staff.objects.all()
+    context = {"is_staffdetails": True,
+        'staff':staffs
+    }
     return render(request, 'staffdetails.html', context)
 
 
@@ -75,9 +104,49 @@ def add_staff(request):
     return render(request, 'add_staff.html', context)
 
 
+def delete_staff(request,sid):
+    status = "InActive"
+    staff = Staff.objects.get(id=sid)
+    staff.status = status
+    staff.save()
+    return redirect('adminapp:branchdetails')
+
+
 def transfer(request):
-    context = {"is_transfer": True}
+    if request.method == 'POST':
+        fbranch = request.POST['from']
+        tbranch = request.POST['to']
+        fdate = request.POST['fdate']
+        tdate = request.POST['tdate']
+        tstaff = request.POST['sname']
+        objfb = Branch.objects.get(id=fbranch)
+        objtb = Branch.objects.get(id=tbranch)
+        obstaff = Staff.objects.get(id=tstaff)
+        send_request = Transfer(staff=obstaff,from_branch=objfb,to_branch=objtb,from_date=fdate,to_date=tdate)
+        send_request.save()
+        return render(request, 'transfer.html',{'status':1,})
+
+    staff = Staff.objects.all()
+    branch = Branch.objects.all()
+    context = {"is_transfer": True,
+        'status':0,
+        'staff':staff,
+        'branch':branch
+    }
     return render(request, 'transfer.html', context)
+
+def name_search(request):
+    id=request.GET['id']
+    staff_data = Staff.objects.filter(branch=id)
+    return render(request,'staffnames.html',{'staff_data':staff_data})
+
+def staff_id(request):
+    id=request.GET['id']
+    print(id)
+    staff_data = Staff.objects.get(id=id)
+    # staffid = staff_data.staff_id
+    # return render(request,'staffid.html',{'staffid':staffid})
+    return render(request,'staffid.html',{'staff_data':staff_data})
 
 
 def stock(request):

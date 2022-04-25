@@ -26,6 +26,10 @@
         <!-- datepicker -->
         <link rel="stylesheet"
               href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
+
+        {% comment %} ajax cdn {% endcomment %}
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
     </head>
     <body class="nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme">
         <div class="main-wrapper">
@@ -86,8 +90,11 @@
                             <li {% if is_adminhome %} class="active"{% endif %}>
                                 <a href="{% url 'adminapp:adminhome' %}"><i class="fa fa-th"></i> <span>Dashboard</span></a>
                             </li>
-                            <li {% if is_branchdetails %} class="active"{% endif %}
-                                {% if is_addbranch %} class="active"{% endif %}>
+                            <li {% if is_branchdetails %} class="active"
+                                {% elif is_addbranch %} class="active"
+                                {% elif is_editbranch %} class="active"
+                                {% endif %}
+                                >
                                 <a href="{% url 'adminapp:branchdetails' %}"><i class="fa fa-building"></i>
                                 <span>Branch</span></a>
                             </li>
