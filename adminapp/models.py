@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 
 # Create your models here.
@@ -31,6 +32,7 @@ class Branch(models.Model):
 
 
 class Staff(models.Model):
+    profile=models.ImageField(upload_to='staff/',default='default.png')
     name = models.CharField(max_length=50)
     staff_id = models.CharField(max_length=20)
     email = models.CharField(max_length=30)
@@ -45,5 +47,17 @@ class Staff(models.Model):
 
     class Meta:
         db_table='staff' 
+
+
+class StaffBankDetails(models.Model):
+    staff=models.ForeignKey(Staff,on_delete=models.CASCADE)
+    holder_name=models.CharField(max_length=50)
+    bank_name=models.CharField(max_length=150)
+    account_number=models.CharField(max_length=50)
+    ifsc=models.CharField(max_length=50)
+    branch=models.CharField(max_length=150,default="")
+
+    class Meta:
+        db_table='staffbank'
 
 

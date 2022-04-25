@@ -1,16 +1,27 @@
 {% extends "master.html" %}
 {% block content %}
-    {% load static %}
+{% load static %}
 
-
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
     
 
     <div class="page-wrapper">
         <div class="content container-fluid">
 
             {% if status == 1 %}
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <!-- <div class="alert alert-success alert-dismissible fade show" role="alert">
                     Successfully added the <strong>Staff</strong>
+                </div> -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Alert</div>
+                        </div>
+                        <div class="card-body">
+                            <a href="javascript: void(0);" id="alert"
+                                class="btn btn-primary waves-effect waves-light">Click me</a>
+                        </div>
+                    </div>
                 </div>
             {% endif %}
 
@@ -35,8 +46,19 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Basic Info</h4>
-                            <form action="#" method="POST">
+                            <form action="#" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="profile-pic-div">
+                                            <img src="" class="img-fluid"  id="photo">
+                                            <input type="file" id="file" name="profile">
+                                            <label for="file" id="uploadBtn">Choose Photo</label>
+                                        </div>
+                                    </div>
+                                </div>
+            
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -86,10 +108,6 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>City</label>
-                                            {% comment %} <select class="select cal-icon form-control">
-                                                                <option>malappuram</option>
-                                                                <option>Calicut</option>
-                                            </select> {% endcomment %}
                                             <input type="text" class="form-control" name="city">
                                         </div>
                                         <div class="form-group">
@@ -98,34 +116,48 @@
                                         </div>
                                     </div>
                                 </div>
-                                {% comment %} <h4 class="card-title mt-4">Branch Address</h4>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Branch Name:</label>
-                                                        <input type="text" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Branch ID:</label>
-                                                        <input type="text" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                {% endcomment %}
+                                
                                 <h4 class="card-title mt-4">Joining Details</h4>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Joined Date:</label>
-                                            {% comment %} <input class="form-control datetimepicker" type="text" name="date"> {% endcomment %}
+                                           
                                             <input class="form-control " type="date" name="date">
                                             
                                         </div>
                                     </div>
                                 </div>
+
+                                <h4 class="card-title mt-4">Bank Details</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Holder Name</label>
+                                            <input type="text" class="form-control" name="hname">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Branch</label>
+                                            <input type="text" class="form-control" name="branchname">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>IFSC</label>
+                                            <input type="text" class="form-control" name="ifsc">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Bank Name</label>
+                                            <input type="text" class="form-control" name="bname">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Account Number</label>
+                                            <input type="text" class="form-control" name="accnum">
+                                        </div>
+                                    </div>
+                                </div>
+
+
                                 <div class="text-end mt-4">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                     
@@ -139,4 +171,59 @@
             </div>
         </div>
     </div>
-{% endblock %}
+
+    <style>
+     body {
+    color: #566787;
+    background: #f5f5f5;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 13px;
+}
+.profile-pic-div {
+    height: 150px; 
+    width: 150px;
+    position:relative;
+    top: 80px;
+    left: 20%;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;
+    overflow:hidden;
+    border: 1px solid grey;
+}
+
+#photo{
+    height: 100%;
+    width: 100%;
+}
+#photo{
+    height: 100%;
+    width: 100%;
+}
+
+#file{
+    display: none;
+}
+#file1{
+    display: none;
+}
+
+#uploadBtn{
+    height: 40px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    color: wheat;
+    line-height: 30px;
+    font-family: sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    }
+
+    </style>
+
+
+    {% endblock %}

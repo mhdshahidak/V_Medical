@@ -2,7 +2,7 @@ import random
 from django.shortcuts import render
 from django.shortcuts import redirect
 
-from adminapp.models import AdminLogin, Branch, Staff
+from adminapp.models import AdminLogin, Branch, Staff, StaffBankDetails
 from branch.models import BranchProducts, Customers, Product
 from v_med.decorators import auth_branch
 
@@ -56,14 +56,17 @@ def branch_home(request):
 # Customers
 def customers(request):
     customers=Customers.objects.all().order_by('name')
+    branch=Branch.objects.get(id=request.session['branch'])
     context={"is_customers":True,
         'customers':customers,
+        'branch':branch
     }
     return render(request,'customers.html',context)
 
 
 
 def addcustomers(request):
+    branch=Branch.objects.get(id=request.session['branch'])
     if request.method == 'POST':
         customer_name = request.POST['name']
         email = request.POST['email']
@@ -78,9 +81,9 @@ def addcustomers(request):
             return render(request,'addcustomers.html',{'status':1,})
 
         else:
-            msg="branch already exist"
             context={"is_addcustomers":True,
-                "status": 0
+                "status": 0,
+                'branch':branch
             }
             return render(request,'addcustomers.html',context)
     return render(request,'addcustomers.html')
@@ -88,6 +91,7 @@ def addcustomers(request):
 
 
 def edit_customer(request,cid):
+    branch=Branch.objects.get(id=request.session['branch'])
     if request.method == 'POST':
         customer_name = request.POST['name']
         email = request.POST['email']
@@ -102,17 +106,26 @@ def edit_customer(request,cid):
     context={
         "is_editcustomer":True,
         "customers":customers,
+        'branch':branch
         }
     return render(request,'editcustomer.html',context)
-    
 
+
+def delete_customer(request,cust_delid):
+    Customers.objects.filter(id=cust_delid).delete()
+    return redirect('branch:customers')
+
+    
 
 
 # Staff 
 def staff(request):
-    staffs=Staff.objects.filter(branch_id=request.session['branch']).order_by('name')
+    branch=Branch.objects.get(id=request.session['branch'])
+    staffs=StaffBankDetails.objects.filter(staff__branch=request.session['branch'])
+    # print(staffs.staff)
     context={"is_staff":True,
         "staffs":staffs,
+        'branch':branch,
     }
     return render(request,'staff.html',context)
 
@@ -121,6 +134,7 @@ def staff(request):
 def add_staff(request):
     rand=random.randint(10000,999999)
     staff_id='VMS'+str(rand)
+    profile=""
     
     if request.method == 'POST':
         Name = request.POST['name']
@@ -133,10 +147,22 @@ def add_staff(request):
         pincode = request.POST['pincode']
         date = request.POST['date']
         branch = Branch.objects.get(id=request.session['branch'])
+        holder_name=request.POST['hname']
+        bank_name=request.POST['bname']
+        branchname=request.POST['branchname']
+        account_num=request.POST['accnum']
+        ifsc=request.POST['ifsc']
+        
+        if request.FILES['profile']:
+            profile=request.FILES['profile']
 
-        new_staff=Staff(name=Name,staff_id=staff_id,email=email,phone=phone,place=place,state=state,address=address,pincode=pincode,date=date,branch=branch)
-        new_staff.save()
-        # msg="ADDED SUCESSFULLY"
+        staff_exist=Staff.objects.filter(name=Name,staff_id=staff_id,phone=phone).exists()
+
+        if not staff_exist:
+            new_staff=Staff(profile=profile,name=Name,staff_id=staff_id,email=email,phone=phone,place=place,state=state,address=address,pincode=pincode,date=date,branch=branch)
+            new_staff.save()
+            new_staff_bank=StaffBankDetails(staff=new_staff,holder_name=holder_name,bank_name=bank_name,account_number=account_num,ifsc=ifsc,branch=branchname)
+            new_staff_bank.save()
         return render(request,'addstaff.html',{'status':1,})
    
     else:
@@ -150,20 +176,32 @@ def add_staff(request):
 
 
 def edit_staff(request,sid):
+    print(sid)
+    staff=request.session['branch']
+    print(staff)
     if request.method == 'POST':
         Name = request.POST['name']
-        staff_id = request.POST['id']
+        # staff_id = request.POST['id']
         email = request.POST['email']
         phone = request.POST['phone']
         place = request.POST['place']
         state = request.POST['state']
         address = request.POST['address']
-        pincode = request.POST['pincode']
-        branch= Branch.objects.get(id=request.session['branch'])
-        Staff.objects.filter(id=sid).update(name=Name,staff_id=staff_id,email=email,phone=phone,place=place,state=state,address=address,pincode=pincode,branch=branch)
+        pincode =request.POST['pincode']
+        holder_name=request.POST['hname']
+        bank_name=request.POST['bname']
+        branchname=request.POST['branchname']
+        account_num=request.POST['accnum']
+        ifsc=request.POST['ifsc']
+        # staff=request.session['branch']
+        # print(staff)
+        # branch= Branch.objects.get(branch=request.session['branch'])
+        # print(branch)
+        Staff.objects.filter(id=sid).update(name=Name,email=email,phone=phone,place=place,state=state,address=address,pincode=pincode)
+        StaffBankDetails.objects.filter(id=sid).update(holder_name=holder_name,bank_name=bank_name,account_number=account_num,ifsc=ifsc,branch=branchname)
         return redirect('branch:staff')
     else:
-        edit_staff=Staff.objects.get(id=sid)
+        edit_staff=StaffBankDetails.objects.get(id=sid)
         context={
             "is_editstaff":True,
             "editstaff":edit_staff,
