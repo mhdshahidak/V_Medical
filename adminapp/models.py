@@ -49,6 +49,7 @@ class Staff(models.Model):
         db_table='staff' 
 
 
+<<<<<<< HEAD
 class StaffBankDetails(models.Model):
     staff=models.ForeignKey(Staff,on_delete=models.CASCADE)
     holder_name=models.CharField(max_length=50)
@@ -60,4 +61,16 @@ class StaffBankDetails(models.Model):
     class Meta:
         db_table='staffbank'
 
+=======
+class Transfer(models.Model):
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    from_branch = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name='frombranch')
+    to_branch = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name='tobranch')
+    from_date = models.DateField()
+    to_date = models.DateField()
+    status = models.CharField(max_length=20, default="requested")
+
+    class Meta:
+        db_table='transfer'
+>>>>>>> 4f1e9825031f90560d0c44d53d1cf0fff3968360
 

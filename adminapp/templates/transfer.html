@@ -5,6 +5,11 @@
 
 <div class="page-wrapper">
     <div class="content container-fluid">
+            {% if status == 1 %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Successfully send request <strong>Staff</strong>
+                </div>
+            {% endif %}
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-12">
@@ -29,31 +34,26 @@
                         <h4 class="card-title">
                             Staff Transfer
                         </h4>
-                        <form action="#">
+                        <form action="#" method="POST">
+                            {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>From:</label>
-                                        <select class="select cal-icon form-control">
-                                            <option>Select Place</option>
-                                            <option>Brian Johnson</option>
-                                            <option>Marie Canales</option>
-                                            <option>Barbara Moore</option>
-                                            <option>Greg Lynch</option>
-                                            <option>Karlene Chaidez</option>
+                                        <select class="select cal-icon form-control" name="from" id="fbranch">
+                                        {% for fb in branch %}
+                                            <option value="{{fb.id}}">{{fb.branch_name}}</option>
+                                        {% endfor %}
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>To:</label>
-                                        <select class="select cal-icon form-control">
-                                            <option>Select Place</option>
-                                            <option>Brian Johnson</option>
-                                            <option>Marie Canales</option>
-                                            <option>Barbara Moore</option>
-                                            <option>Greg Lynch</option>
-                                            <option>Karlene Chaidez</option>
+                                        <select class="select cal-icon form-control" name="to" id="tbranch">
+                                        {% for fb in branch %}
+                                            <option value="{{fb.id}}">{{fb.branch_name}}</option>
+                                        {% endfor %}
                                         </select>
                                     </div>
                                 </div>
@@ -61,37 +61,34 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>From</label>
-                                        <div class="cal-icon">
-                                            <input class="form-control datetimepicker" type="text">
-                                        </div>
+                                        <!-- <div class="cal-icon"> -->
+                                            <input class="form-control " type="date" name="fdate">
+                                        <!-- </div> -->
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>To</label>
-                                        <div class="cal-icon">
-                                            <input class="form-control datetimepicker" type="text">
-                                        </div>
+                                        <!-- <div class="cal-icon"> -->
+                                            <input class="form-control " type="date" name="tdate">
+                                        <!-- </div> -->
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Staff Name:</label>
-                                        <select class="select cal-icon form-control">
-                                            <option>Select Staff</option>
-                                            <option>Brian Johnson</option>
-                                            <option>Marie Canales</option>
-                                            <option>Barbara Moore</option>
-                                            <option>Greg Lynch</option>
-                                            <option>Karlene Chaidez</option>
+                                        <select class="select cal-icon form-control" id="sname" name="sname">
+                                            {% for s in staff_data %}
+                                                <option value="{{s.id}}">{{s.name}}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Staff ID:</label>
-                                       <input type="text" class="form-control">
+                                       <input type="text" class="form-control" id="sid" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -109,6 +106,48 @@
     </div>
 </div>
 
+
+<script>
+    
+    // for name list 
+
+        $(document).ready(function(){
+           $('#fbranch').change(function(){
+            $.ajax({
+                url:'http://127.0.0.1:8000/namesearch',
+                data:{
+                    'id':$(this).val()
+                },
+                type:'get',
+                success:function(response){
+
+                        $('#sname').html(response)
+                }
+            })
+           })
+        })
+
+    // for staff id
+
+        $(document).ready(function(){
+           $('#sname').change(function(){
+            $.ajax({
+                url:'http://127.0.0.1:8000/staffid',
+                data:{
+                    'id':$(this).val()
+                },
+                type:'get',
+                success:function(response){
+                    // var staff_id = response
+
+                    $('#sid').val(response)
+                }
+            })
+           })
+        })
+
+
+</script>
 
 
 
