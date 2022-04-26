@@ -1,101 +1,92 @@
 {% extends "master.html" %}
-
 {% block content %}
+
 {% load static %}
 
 <div class="page-wrapper">
-                <div class="content container-fluid">
+    <div class="content container-fluid">
 
-                {% if status == 1 %}
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        Successfully added the <strong>customer</strong>
-                    </div>
-                {% elif status == 0 %}
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong>customer</strong>already exists
-                    </div>
-                {% endif %}
+        {% if status == 1 %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Successfully added the <strong>customer</strong>
+        </div>
+        {% elif status == 0 %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>customer</strong>already exists
+        </div>
+        {% endif %}
 
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h3 class="page-title">
-                                    Customers
-                                </h3>
-                                <ul class="breadcrumb">
-                                    <li class="">
-                                        <a href="{% url 'branch:branchhome' %}">Dashboard /</a>
-                                    </li>
-                                    <li class="">
-                                        <a href="{% url 'branch:customers' %}">Customers /</a>
-                                    </li>
-                                    <li class="breadcrumb-item active">
-                                        Add Customers
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        Basic Info
-                                    </h4>
-                                    <form action="#" method="POST" onclick="show_alert()">
-                                        {% csrf_token %}
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>
-                                                        Name
-                                                    </label>
-                                                    <input type="text" name="name" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>
-                                                        Email
-                                                    </label>
-                                                    <input type="email" name="email" class="form-control">
-                                                </div>
-                                                
-                                            </div>
-                                            <div class="col-md-6">
-                                                
-                                                <div class="form-group">
-                                                    <label>
-                                                        Phone
-                                                    </label>
-                                                    <input type="text" name="phone" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>
-                                                        Place
-                                                    </label>
-                                                    <input type="text" name="place" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>   
-                                        <div class="text-end mt-4">
-                                            <button type="submit" class="btn btn-primary">
-                                                Add Customer
-                                            </button>
-                                        </div>
-                                    </form>
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">
+                        Customers
+                    </h3>
+                    <ul class="breadcrumb">
+                        <li class="">
+                            <a href="{% url 'branch:branchhome' %}">Dashboard /</a>
+                        </li>
+                        <li class="">
+                            <a href="{% url 'branch:customers' %}">Customers /</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Add Customers
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            Basic Info
+                        </h4>
+                        <form action="#" method="POST" onclick="show_alert()">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Name
+                                        </label>
+                                        <input type="text" name="name" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Email
+                                        </label>
+                                        <input type="email" name="email" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Phone
+                                        </label>
+                                        <input type="text" name="phone" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Place
+                                        </label>
+                                        <input type="text" name="place" class="form-control">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="text-end mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Add Customer
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
-
-    <script>
-        function show_alert(){
-            alert(msg)
-        }
-
-    </script>
 
 {% endblock %}

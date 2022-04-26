@@ -1,4 +1,5 @@
 import random
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
 
@@ -64,7 +65,6 @@ def customers(request):
     return render(request,'customers.html',context)
 
 
-
 def addcustomers(request):
     branch=Branch.objects.get(id=request.session['branch'])
     if request.method == 'POST':
@@ -122,10 +122,13 @@ def delete_customer(request,cust_delid):
 def staff(request):
     branch=Branch.objects.get(id=request.session['branch'])
     staffs=StaffBankDetails.objects.filter(staff__branch=request.session['branch'])
+    # active_staff=StaffBankDetails.objects.filter(staff__status="Active",id=request.session['branch'])
+    # print(active_staff)
     # print(staffs.staff)
     context={"is_staff":True,
         "staffs":staffs,
         'branch':branch,
+        # 'activestaff':active_staff,
     }
     return render(request,'staff.html',context)
 
@@ -175,7 +178,8 @@ def add_staff(request):
     # return render(request,'addstaff.html',context)
 
 
-def edit_staff(request,sid):
+def edit_staff(request,sbid,sid):
+    print(sbid)
     print(sid)
     staff=request.session['branch']
     print(staff)
@@ -198,10 +202,10 @@ def edit_staff(request,sid):
         # branch= Branch.objects.get(branch=request.session['branch'])
         # print(branch)
         Staff.objects.filter(id=sid).update(name=Name,email=email,phone=phone,place=place,state=state,address=address,pincode=pincode)
-        StaffBankDetails.objects.filter(id=sid).update(holder_name=holder_name,bank_name=bank_name,account_number=account_num,ifsc=ifsc,branch=branchname)
+        StaffBankDetails.objects.filter(id=sbid).update(holder_name=holder_name,bank_name=bank_name,account_number=account_num,ifsc=ifsc,branch=branchname)
         return redirect('branch:staff')
     else:
-        edit_staff=StaffBankDetails.objects.get(id=sid)
+        edit_staff=StaffBankDetails.objects.get(id=sbid)
         context={
             "is_editstaff":True,
             "editstaff":edit_staff,
@@ -209,8 +213,35 @@ def edit_staff(request,sid):
     return render(request,'editstaff.html',context)
 
 
-## Prdouct View functions
+def delete_staff(rquest,staff_delid):
+    Staff.objects.filter(id=staff_delid).update(status='InActive')
+    return redirect('branch:staff')
 
+
+def getstaffGet(request,sid):
+
+    staffs=StaffBankDetails.objects.get(id=id)
+
+    data={
+        "profile":staffs.staff.profile,
+        "name":staffs.staff.name,
+        "sid":staffs.staff.staff_id,
+        "email":staffs.staff.email,
+        "phone":staffs.staff.phone,
+        # "city":staffs.staff.staff_id,
+        "place":staffs.staff.place,
+        "address":staffs.staff.address,
+        "joindate":staffs.staff.date,
+        "branchname":staffs.branch,
+        "bankname":staffs.bank_name,
+        "accnumber":staffs.account_number,
+        "ifsc":staffs.ifsc,
+
+    }
+    return JsonResponse({'staff': data})
+
+
+## Prdouct View functions
 def all_products(request):
     products=BranchProducts.objects.filter(branch_id=request.session['branch']).order_by('product__name')
     context={"is_products":True,
@@ -263,7 +294,6 @@ def add_medicine(request):
     return render(request,'addmedicine.html',context)
 
 
-
 def edit_product(request):
     products=BranchProducts.objects.filter(branch_id=request.session['branch'])
     context={
@@ -284,6 +314,9 @@ def billing(request):
     }
     return render(request,'billing.html',context)
 
+
+
+# Bank
 def bank(request):
     context={"is_bank":True}
     return render(request,'bank.html',context)
