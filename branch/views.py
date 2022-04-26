@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
 
-from adminapp.models import AdminLogin, Branch, Staff, StaffBankDetails
+from adminapp.models import AdminLogin, Branch, Staff, StaffBankDetails, Transfer
 from branch.models import BranchProducts, Customers, Product
 from v_med.decorators import auth_branch
 
@@ -47,8 +47,10 @@ def forgotpassword(request):
 def branch_home(request):
     branch=Branch.objects.get(id=request.session['branch'])
     # print(branch.brach_name)
+    staff_transfer_request = Transfer.objects.filter(from_branch=branch)
     context={"is_branchhome":True,
-        'branch':branch
+        'branch':branch,
+        's_transfer':staff_transfer_request
     }
     return render(request,'branch_home.html',context)
 
@@ -368,7 +370,31 @@ def branch_profile(request):
     
 
 def med_requests(request):
-    return render(request,'request.html')
+    return render(request,'med_request.html')
+
+def staff_request(request):
+    status = "requested"
+    branch=Branch.objects.get(id=request.session['branch'])
+    staff_transfer_request = Transfer.objects.filter(from_branch=branch,status=status)
+    return render(request,'staff_request.html',{'s_transfer':staff_transfer_request,})
+
+def staff_transfer_accept(request,sid):
+    status = "accpeted"
+    staff_transfer = Transfer.objects.get(id=sid)
+    staff_to_transfer=Staff.objects.get(id=staff_transfer.staff.id)
+    staff_to_transfer.branch=staff_transfer.to_branch
+    staff_transfer.status=status
+    staff_to_transfer.save()
+    staff_transfer.save()
+    
+
+    # Transfer.objects.filter(id=sid).update(staff__branch=staff_transfer.to_branch)
+    # staff = Staff.objects.get(staff=staff_transfer.staff)
+    # print(staff_transfer)
+    # print(staff)
+    return redirect('branch:staffrequest')
+    
+
 
 def profit_loss(request):
     context={"is_profitloss":True}
@@ -376,9 +402,6 @@ def profit_loss(request):
 
 def edit_expence(request):
     return render(request,'editexpence.html')
-
-
-
 
 
 

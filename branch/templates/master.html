@@ -81,10 +81,26 @@
                     </a>
                 </li>
 
-                <li class="nav-item has-arrow bg-light">
+                {% comment %} <li class="nav-item has-arrow bg-light">
                     <a class="nav-link" href="{% url 'branch:requests' %}">
                         <span>Request</span>
                     </a>
+                    
+                </li> {% endcomment %}
+
+                <li class="nav-item dropdown has-arrow main-drop">
+                    <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                       
+                        <span>Requests</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'branch:requests' %}"><i
+                                class="fa fa-ambulance"></i>&nbsp; Medicine request
+                            </a>
+                        <a class="dropdown-item" href="{% url 'branch:staffrequest' %}"><i class="fa fa-user-times"></i>&nbsp;
+                            Staff request</a>
+                        
+                    </div>
                 </li>
 
 
