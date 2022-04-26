@@ -384,8 +384,25 @@ def income(request):
 def add_income(request):
     return render(request,'add_income.html')
 
+
+# search medicine
+
 def search_medicine(request):
-    context={"is_searchmedicine":True}
+    if request.POST :
+        med_name = request.POST['name']
+        medicines = Product.objects.all()
+        medicine_list = BranchProducts.objects.filter(product__name=med_name)
+        # prod = medicine_list.product
+        context={"is_searchmedicine":True,
+            'medicines':medicines,
+            'medicine_list':medicine_list
+        }
+
+        return render(request,'search.html',context)
+    medicines = Product.objects.all()
+    context={"is_searchmedicine":True,
+        'medicines':medicines
+    }
     return render(request,'search.html',context)
 
 def expenses(request):
@@ -432,7 +449,6 @@ def staff_transfer_accept(request,sid):
     staff_to_transfer.save()
     staff_transfer.save()
     
-
     # Transfer.objects.filter(id=sid).update(staff__branch=staff_transfer.to_branch)
     # staff = Staff.objects.get(staff=staff_transfer.staff)
     # print(staff_transfer)

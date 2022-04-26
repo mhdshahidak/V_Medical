@@ -34,13 +34,23 @@
                 <div class="col">
                     <div class="input-group">
                         <div class="form-outline">
-                            <input type="search" id="form1" class="form-control" placeholder="search medicine">
-                        </div>&nbsp;&nbsp;
-                        <div>
-                            <button type="button" class="btn btn-success">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
+                         <form method="POST">
+                            {% csrf_token %}
+                            {% comment %} <input type="search" id="form1" class="form-control" placeholder="search medicine"> {% endcomment %}
+                            <input type="text" class="form-control" name="name"  list="medicinelist" placeholder="search medicine" >
+                            <datalist id="medicinelist">
+                                {% for m in medicines  %}
+                                    <option value="{{m.name}}" >{{m.name}} </option>    
+                                {% endfor %}
+                            </datalist>
+                            </div>&nbsp;&nbsp;
+                            <div>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                                
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -75,21 +85,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                
+                                {% for ml in medicine_list %}
                                     <tr>
                                         <td>
-                                            Calicut
+                                            {{ml.branch.branch_name}}
                                         </td>
                                         <td>
                                             802525525
                                         </td>
                                         <td>
-                                            $295
+                                            {{ml.quantity}}
                                         </td>
                                         <td>
-                                            16 Nov 2020
+                                            {{ml.expiry_date}}
                                         </td>
                                         <td>
-                                            <input type="number" placeholder="Enter qty" min="0" class="form-control">
+                                            <input type="number" placeholder="Enter qty" min="1" class="form-control" max="{{ml.quantity}}">
                                         </td>
                                         <td class="text-center">
 
@@ -98,30 +110,8 @@
                                                     class="fa fa-share me-1"></i>Request</a>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            Kondotty
-                                        </td>
-                                        <td>
-                                            2022525252
-                                        </td>
-                                        <td>
-                                            $1750
-                                        </td>
-                                        <td>
-                                            8 Nov 2020
-                                        </td>
-                                        <td>
-                                            <input type="number" placeholder="Enter qty" min="0" class="form-control">
-                                        </td>
-                                        <td class="text-center">
-
-                                            <a href="javascript:void(0);"
-                                                class="btn btn-sm btn-white text-success me-2"><i
-                                                    class="fa fa-share me-1 "></i>Request</a>
-                                        </td>
-                                    </tr>
-
+                                    
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>
