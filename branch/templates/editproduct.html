@@ -5,6 +5,21 @@
 
 <div class="page-wrapper">
                 <div class="content container-fluid">
+
+                    {% if status == 1 %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Successfully</strong>  Update the quantity of product.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    {% elif status == 0 %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Product</strong> already exists.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    {% endif %}
+
                     <div class="page-header">
                         <div class="row">
                             <div class="col-sm-12">
@@ -33,26 +48,27 @@
                                     <h4 class="card-title">
                                         Basic Info
                                     </h4>
-                                    <form action="#">
+                                    <form action="#" method="POST">
+                                        {% csrf_token %}
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>
                                                         Medicine name
                                                     </label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" value="{{editproduct.product.name}}" name="name">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>
                                                         Purchase Cost
                                                     </label>
-                                                    <input type="email" class="form-control">
+                                                    <input type="text" class="form-control" name="pcost" value="{{editproduct.product.purchase_cost}}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>
                                                         Quantity
                                                     </label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="quantity" value="{{editproduct.quantity}}">
                                                 </div>
                                                 
                                             </div>
@@ -61,19 +77,19 @@
                                                     <label>
                                                         Medicine ID
                                                     </label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="mid" value="{{editproduct.product.product_id}}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>
                                                         Selling cost
                                                     </label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="scost" value="{{editproduct.product.selling_cost}}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>
                                                         Description
                                                     </label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="description" value="{{editproduct.product.description}}">
                                                 </div>
                                             </div>
                                         </div>

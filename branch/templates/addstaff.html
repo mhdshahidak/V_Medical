@@ -13,7 +13,14 @@
                     Successfully added the <strong>Staff</strong>
                 </div> -->
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Successfully</strong> add the customer.
+                    <strong>Successfully</strong> add the staff.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+                </div>
+
+            {% elif status == 0 %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Successfully</strong> add the staff.
                     <button type="button" class="btn-close" data-bs-dismiss="alert"
                         aria-label="Close"></button>
                 </div>

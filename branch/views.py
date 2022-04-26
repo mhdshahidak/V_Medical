@@ -260,6 +260,7 @@ def add_medicine(request):
     msg = ""
     rand=random.randint(10000,999999)
     product_id='VMP'+str(rand)
+
     if request.method == 'POST':
         name = request.POST['name']
         medicine_id = product_id
@@ -281,10 +282,11 @@ def add_medicine(request):
                 qproduct.save()
                 BranchProducts.objects.filter(product=product,branch=branch).update(purchase_date=purchase_date,expiry_date=expiry_date)
                 msg = "Stock updated succesfully"
-                return render(request,'addmedicine.html',{'status':1})
+                return render(request,'addmedicine.html',{'status':2})
             else:
                 medicine = BranchProducts(product=product,quantity=quantity,purchase_date=purchase_date,expiry_date=expiry_date,branch=branch)
                 medicine.save()
+                return render(request,'addmedicine.html',{'status':1})
         else:
             new_product = Product(product_id=medicine_id,name=name,purchase_cost=p_cost,selling_cost=s_cost,description=description)
             new_product.save()
@@ -294,18 +296,45 @@ def add_medicine(request):
             return render(request,'addmedicine.html',{'status':1})
 
     context={"is_addmedicine":True,
-        'msg':msg
+        'msg':msg,
+
     }
     return render(request,'addmedicine.html',context)
 
 
-def edit_product(request):
-    products=BranchProducts.objects.filter(branch_id=request.session['branch'])
+def edit_product(request,bpid,prid):
+    # print(bpid)
+    # print(prid)
+    staff=request.session['branch']
+    # print(staff)
+    # products=BranchProducts.objects.filter(branch_id=request.session['branch'])
+    if request.method == 'POST':
+        name = request.POST['name']
+        quantity = request.POST['quantity']
+        p_cost = request.POST['pcost']
+        s_cost = request.POST['scost']
+        description = request.POST['description']
+        branch = Branch.objects.get(id=request.session['branch']) 
+        product = Product.objects.get(name=name)
+        qproduct = BranchProducts.objects.get(product=product,branch=branch)
+        qproduct.quantity = qproduct.quantity + int(quantity)
+        qproduct.save()
+        BranchProducts.objects.filter(id=bpid).update(branch=branch)
+        Product.objects.filter(id=prid).update(name=name,purchase_cost=p_cost,selling_cost=s_cost,description=description)
+        return redirect('branch:products')  
+    else:
+        edit_product=BranchProducts.objects.get(id=bpid)                                   
     context={
         "is_editproduct":True,
-        "products":products,
+        "editproduct":edit_product,
+        "status":0,
     }
     return render(request,'editproduct.html',context)
+
+
+def delete_product(request,pr_delid):
+    Product.objects.filter(id=pr_delid).delete()
+    return redirect('branch:products')
 
 
 

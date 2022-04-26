@@ -18,6 +18,8 @@ urlpatterns = [
      path('getstaffGet/<int:sid>',views.getstaffGet,name="getstaffGet"),
     path('products', views.all_products, name='products'),
     path('addmedicine', views.add_medicine, name='addmedicine'),
+    path('editproduct/<int:bpid>/<int:prid>',views.edit_product,name="editproduct"),
+    path('deleteproduct/<int:pr_delid>',views.delete_product,name='deleteproduct'),
     path('billing', views.billing, name='billing'),
     path('bank',views.bank,name="bank"),
     path('addbank', views.add_bank, name='addbank'),
@@ -40,7 +42,7 @@ urlpatterns = [
 
     path('profitloss',views.profit_loss,name="profitloss"),
     path('editexpence',views.edit_expence,name="editexpence"),
-    path('editproduct',views.edit_product,name="editproduct"),
+    
     path('branchlogout', views.branch_logout, name='branchlogout'),
     
 
