@@ -40,21 +40,33 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>From:</label>
-                                        <select class="select cal-icon form-control" name="from" id="fbranch">
+                                        {% comment %} <select class="select cal-icon form-control" name="from" id="fbranch">
                                         {% for fb in branch %}
                                             <option value="{{fb.id}}">{{fb.branch_name}}</option>
                                         {% endfor %}
-                                        </select>
+                                        </select> {% endcomment %}
+                                        <input type="text" class="form-control" name="from"  list="branchlist" id="fbranch" >
+                                        <datalist id="branchlist">
+                                        {% for fb in branch %}
+                                            <option value="{{fb.branch_name}}" >{{fb.branch_name}} </option>    
+                                        {% endfor %}
+                                        </datalist>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>To:</label>
-                                        <select class="select cal-icon form-control" name="to" id="tbranch">
+                                        {% comment %} <select class="select cal-icon form-control" name="to" id="tbranch">
                                         {% for fb in branch %}
                                             <option value="{{fb.id}}">{{fb.branch_name}}</option>
                                         {% endfor %}
-                                        </select>
+                                        </select> {% endcomment %}
+                                        <input type="text" class="form-control" name="to" id="tbranch" list="tbranchlist" >
+                                        <datalist id="tbranchlist">
+                                        {% for fb in branch  %}
+                                            <option value="{{fb.branch_name}}" >{{fb.branch_name}} </option>    
+                                        {% endfor %}
+                                        </datalist>
                                     </div>
                                 </div>
 
@@ -106,7 +118,6 @@
     </div>
 </div>
 
-
 <script>
     
     // for name list 
@@ -116,7 +127,7 @@
             $.ajax({
                 url:'http://127.0.0.1:8000/namesearch',
                 data:{
-                    'id':$(this).val()
+                    'name':$(this).val()
                 },
                 type:'get',
                 success:function(response){
