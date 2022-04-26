@@ -98,10 +98,10 @@
                                     {% for product in products %}
                                     <tr>
                                         <td>
-                                            <a href="view-estimate.html">{{product.product.product_id}}</a>
+                                            <a href="view-estimate.html">{{product.product.product_id|upper}}</a>
                                         </td>
                                         <td>
-                                            {{product.product.name}} 
+                                            {{product.product.name|capfirst}} 
                                         </td>
                                         <td>{{product.product.purchase_cost}}</td>
                                         <td>{{product.product.selling_cost}}</td>
@@ -112,12 +112,12 @@
                                             {{product.quantity}}
                                         </td>
                                         <td>
-                                            {{product.product.description}}
+                                            {{product.product.description|title}}
                                         </td>
                                         <td class="text-center">
-                                            <a href="{% url 'branch:editproduct' %}"
+                                            <a href="{% url 'branch:editproduct' product.id product.product.id %}"
                                                 class="btn btn-sm btn-white text-success me-2"><i class="far fa-edit me-1"></i> Edit</a>
-                                            <a href="javascript:void(0);"
+                                            <a href="{% url 'branch:deleteproduct' product.id %}"
                                                 class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Delete</a>
                                         </td>
                                     </tr>
