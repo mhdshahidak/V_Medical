@@ -63,7 +63,7 @@
                                         </select> {% endcomment %}
                                         <input type="text" class="form-control" name="to" id="tbranch" list="tbranchlist" >
                                         <datalist id="tbranchlist">
-                                        {% for fb in branch  %}
+                                        {% for m in medicines  %}
                                             <option value="{{fb.branch_name}}" >{{fb.branch_name}} </option>    
                                         {% endfor %}
                                         </datalist>
