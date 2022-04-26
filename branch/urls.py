@@ -33,13 +33,17 @@ urlpatterns = [
     path('editinnvoice',views.edit_innvoice,name="editinnvoice"),
     
     path('branchprofile', views.branch_profile, name='branchprofile'),
+
+    # requests
+
     path('requests', views.med_requests, name='requests'),
+    path('staffrequest', views.staff_request, name='staffrequest'),
+    path('staffaccept/<int:sid>', views.staff_transfer_accept, name='staffaccept'),
+
     path('profitloss',views.profit_loss,name="profitloss"),
     path('editexpence',views.edit_expence,name="editexpence"),
     path('purchaselist',views.purchase_list,name="purchaselist"),
     path('branchlogout', views.branch_logout, name='branchlogout'),
     
-
-
 
 ]
