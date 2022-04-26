@@ -2,8 +2,23 @@
 {% block content %}
 {% load static %}
 
+
+
 <div class="page-wrapper">
     <div class="content container-fluid">
+
+        <!-- <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Confirm</div>
+                </div>
+                <div class="card-body">
+                    <a href="javascript: void(0);" id="alert-confirm"
+                        class="btn btn-primary waves-effect waves-light">Click me</a>
+                </div>
+            </div>
+        </div> -->
+
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-12">
@@ -128,7 +143,7 @@
                                         Branch Name:
                                     </label>
                                     <input type="text" class="form-control" name="branchname"
-                                        value="{{editstaff.staff.branch.branch_name}}">
+                                        value="{{editstaff.staff.branch.branch_name}}" disabled>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -137,7 +152,7 @@
                                         Branch ID:
                                     </label>
                                     <input type="text" class="form-control" name="branchid"
-                                        value="{{editstaff.staff.branch.branch_id}}">
+                                        value="{{editstaff.staff.branch.branch_id}}" disabled>
                                 </div>
                             </div>
                         </div>
@@ -211,4 +226,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}

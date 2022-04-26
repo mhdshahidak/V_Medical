@@ -12,16 +12,10 @@
                 <!-- <div class="alert alert-success alert-dismissible fade show" role="alert">
                     Successfully added the <strong>Staff</strong>
                 </div> -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">Alert</div>
-                        </div>
-                        <div class="card-body">
-                            <a href="javascript: void(0);" id="alert"
-                                class="btn btn-primary waves-effect waves-light">Click me</a>
-                        </div>
-                    </div>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Successfully</strong> add the customer.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                        aria-label="Close"></button>
                 </div>
             {% endif %}
 
@@ -75,7 +69,7 @@
                                                 </div> -->
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
+                                        <div class="form-group" hidden>
                                             <label>Staff ID</label>
                                             <input type="text" class="form-control" name="staffid">
                                         </div>

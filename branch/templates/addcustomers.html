@@ -8,8 +8,13 @@
 
         {% if status == 1 %}
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            Successfully added the <strong>customer</strong>
+            <strong>Successfully</strong> add the customer.
+            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                aria-label="Close"></button>
         </div>
+        {% comment %} <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Successfully added the <strong>customer</strong>
+        </div> {% endcomment %}
         {% elif status == 0 %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>customer</strong>already exists

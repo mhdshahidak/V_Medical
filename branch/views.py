@@ -122,13 +122,16 @@ def delete_customer(request,cust_delid):
 def staff(request):
     branch=Branch.objects.get(id=request.session['branch'])
     staffs=StaffBankDetails.objects.filter(staff__branch=request.session['branch'])
-    # active_staff=StaffBankDetails.objects.filter(staff__status="Active",id=request.session['branch'])
-    # print(active_staff)
+    active_staff=StaffBankDetails.objects.filter(staff__branch=request.session['branch'],staff__status='Active')
+    print(active_staff)
+    inactive_staff=StaffBankDetails.objects.filter(staff__branch=request.session['branch'],staff__status='InActive')
+    print(inactive_staff)
     # print(staffs.staff)
     context={"is_staff":True,
         "staffs":staffs,
         'branch':branch,
-        # 'activestaff':active_staff,
+        'activestaff':active_staff,
+        'inactivestaff':inactive_staff,
     }
     return render(request,'staff.html',context)
 
