@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 
 from adminapp.models import AdminLogin, Branch, Staff, StaffBankDetails, Transfer
-from branch.models import BranchProducts, Customers, Product
+from branch.models import BranchBank, BranchProducts, Customers, Product
 from v_med.decorators import auth_branch
 
 # Create your views here.
@@ -350,12 +350,32 @@ def billing(request):
 
 # Bank
 def bank(request):
-    context={"is_bank":True}
+    banks=BranchBank.objects.filter(branch=request.session['branch'])
+    context={
+        "is_bank":True,
+        "banks":banks,
+        }
     return render(request,'bank.html',context)
 
 def add_bank(request):
-    context={"is_addbank":True}
+    if request.method=='POST':
+        holdername=request.POST['accholdername']
+        accountnum=request.POST['accnum']
+        bankname=request.POST['bankname']
+        branchname=request.POST['bname']
+        ifsc=request.POST['ifsc']
+        branch=Branch.objects.get(id=request.session['branch'])
+
+        new_bank=BranchBank(Accholder_name=holdername,account_number=accountnum,bank_name=bankname,branch_name=branchname,ifsc=ifsc,branch=branch)
+        new_bank.save()
+    context={
+        "is_addbank":True,
+        "status":1,
+        }
     return render(request,'addbank.html',context)
+
+
+
 
 def income(request):
     context={"is_income":True}
@@ -429,7 +449,6 @@ def edit_expence(request):
     return render(request,'editexpence.html')
 
 
-<<<<<<< HEAD
 # Purchase list
 def purchase_list(request):
     productpurchase = BranchProducts.objects.filter(quantity__lte=100)
@@ -439,8 +458,6 @@ def purchase_list(request):
     }
     return render(request,'purchaselist.html',context)
 
-=======
->>>>>>> b6d6f252ca7fcbfbf23a74ce67531cbeca317442
 
 
 def branch_logout(request):

@@ -7,11 +7,13 @@
 <div class="page-wrapper">
     <div class="content container-fluid">
 
-        <!-- {% if status == 1 %}
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Successfully added the <strong>customer</strong>
-                </div>
-            {% endif %} -->
+        {% if status == 1 %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Successfully</strong> add the customer.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+            </div>
+        {% endif %}
 
         <div class="page-header">
             <div class="row">
@@ -40,26 +42,27 @@
                         <h4 class="card-title">
                             Basic Info
                         </h4>
-                        <form action="#">
+                        <form action="#" method="POST">
+                            {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>
                                             Account Holder Name
                                         </label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="accholdername">
                                     </div>
                                     <div class="form-group">
                                         <label>
                                             Account Number
                                         </label>
-                                        <input type="email" class="form-control">
+                                        <input type="text" class="form-control" name="accnum">
                                     </div>
                                     <div class="form-group">
                                         <label>
                                             Re-enter Account Number
                                         </label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="reaccnum">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -67,22 +70,27 @@
                                         <label>
                                             Bank name
                                         </label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="bankname">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Branch Name
+                                        </label>
+                                        <input type="text" class="form-control" name="bname">
                                     </div>
                                     <div class="form-group">
                                         <label>
                                             IFSC Code
                                         </label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="ifsc">
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                        <div class="text-end mt-4">
-                            <button type="submit" class="btn btn-primary">
-                                Add Bank
-                            </button>
-                        </div>
+                            <div class="text-end mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Add Bank
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>

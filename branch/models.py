@@ -34,3 +34,15 @@ class Customers(models.Model):
 
     class Meta:
         db_table = 'customers'
+
+
+class BranchBank(models.Model):
+    branch=models.ForeignKey(Branch,on_delete=models.CASCADE)
+    Accholder_name=models.CharField(max_length=70)
+    account_number=models.CharField(max_length=50)
+    bank_name=models.CharField(max_length=50)
+    branch_name=models.CharField(max_length=50)
+    ifsc=models.CharField(max_length=30)
+
+    class Meta:
+        db_table = 'branchBank'
