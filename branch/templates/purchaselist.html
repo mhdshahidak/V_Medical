@@ -54,18 +54,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    
+                                    {% for purchase in prPurchase %}
                                     <tr>
                                         <td>
-                                            <a href="view-estimate.html">EST-17ER281</a>
+
                                         </td>
                                         <td>
-                                             Marie Canales</a>
-                                            
+                                            {{purchase.product.product_id}}
                                         </td>
-                                        <td>500</td>
-                                        <td>1000</td>
+                                        <td>
+                                            {{purchase.product.name}}
+                                        </td>
+                                        <td>{{purchase.quantity}}</td>
                                     </tr>
-                                    
+                                    {% endfor %}
 
                                 </tbody>
                             </table>
@@ -76,4 +79,22 @@
         </div>
     </div>
 </div>
+
+<style>
+    body
+		{
+		    counter-reset: Serial;          
+		}
+
+		table
+		{
+		    border-collapse: separate;
+		}
+
+		tr td:first-child:before
+		{
+		  counter-increment: Serial;      
+		  content: counter(Serial); 
+		}
+</style>
 {% endblock %}

@@ -31,12 +31,12 @@ urlpatterns = [
     path('invoicelist', views.invoices_list, name='invoicelist'),
     path('invoicedetails', views.invoices_details, name='invoicedetails'),
     path('editinnvoice',views.edit_innvoice,name="editinnvoice"),
-    path('purchaselist',views.purchase_list,name="purchaselist"),
+    
     path('branchprofile', views.branch_profile, name='branchprofile'),
     path('requests', views.med_requests, name='requests'),
     path('profitloss',views.profit_loss,name="profitloss"),
     path('editexpence',views.edit_expence,name="editexpence"),
-    
+    path('purchaselist',views.purchase_list,name="purchaselist"),
     path('branchlogout', views.branch_logout, name='branchlogout'),
     
 

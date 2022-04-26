@@ -336,9 +336,7 @@ def delete_product(request,pr_delid):
 
 
 
-
-
-
+# billing section
 def billing(request):
     product = BranchProducts.objects.filter(branch=request.session['branch'])
     context={"is_billing":True,
@@ -388,9 +386,7 @@ def invoices_details(request):
     context={"is_invoicedetails":True}
     return render(request,'invoices_details.html',context)
 
-def purchase_list(request):
-    context={"is_purchaselist":True}
-    return render(request,'purchaselist.html',context)
+
 
 def branch_profile(request):
     return render(request,'branchprofile.html')
@@ -407,8 +403,14 @@ def edit_expence(request):
     return render(request,'editexpence.html')
 
 
-
-
+# Purchase list
+def purchase_list(request):
+    productpurchase = BranchProducts.objects.filter(quantity__lte=100)
+    context={
+        "is_purchaselist":True,
+        "prPurchase":productpurchase,
+    }
+    return render(request,'purchaselist.html',context)
 
 
 
