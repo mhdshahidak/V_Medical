@@ -115,15 +115,19 @@ def delete_staff(request,sid):
 def transfer(request):
     if request.method == 'POST':
         fbranch = request.POST['from']
+        # datatest = request.POST['bfrom']
         tbranch = request.POST['to']
         fdate = request.POST['fdate']
         tdate = request.POST['tdate']
         tstaff = request.POST['sname']
-        objfb = Branch.objects.get(id=fbranch)
-        objtb = Branch.objects.get(id=tbranch)
+        objfb = Branch.objects.get(branch_name=fbranch)
+        objtb = Branch.objects.get(branch_name=tbranch)
         obstaff = Staff.objects.get(id=tstaff)
         send_request = Transfer(staff=obstaff,from_branch=objfb,to_branch=objtb,from_date=fdate,to_date=tdate)
         send_request.save()
+        # print(datatest)
+        # print(objfb)
+        # print(tbranch)
         return render(request, 'transfer.html',{'status':1,})
 
     staff = Staff.objects.all()
@@ -136,8 +140,9 @@ def transfer(request):
     return render(request, 'transfer.html', context)
 
 def name_search(request):
-    id=request.GET['id']
-    staff_data = Staff.objects.filter(branch=id)
+    name=request.GET['name']
+    staff_data = Staff.objects.filter(branch__branch_name=name)
+    # print(staff_data)
     return render(request,'staffnames.html',{'staff_data':staff_data})
 
 def staff_id(request):
