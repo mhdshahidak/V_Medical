@@ -445,7 +445,6 @@ def edit_expence(request):
     return render(request,'editexpence.html')
 
 
-<<<<<<< HEAD
 # Purchase list
 def purchase_list(request):
     productpurchase = BranchProducts.objects.filter(quantity__lte=100)
@@ -455,8 +454,6 @@ def purchase_list(request):
     }
     return render(request,'purchaselist.html',context)
 
-=======
->>>>>>> b6d6f252ca7fcbfbf23a74ce67531cbeca317442
 
 
 def branch_logout(request):
