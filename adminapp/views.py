@@ -1,11 +1,13 @@
 from multiprocessing import context
 import random
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
+from branch.models import BranchProducts
 
 from v_med.decorators import auth_admin
 
-from adminapp.models import Branch, Staff, Transfer
+from adminapp.models import Branch, Staff, StaffBankDetails, Transfer
 
 # Create your views here.
 
@@ -15,19 +17,19 @@ def admin_home(request):
     context = {"is_adminhome": True,
         "branches":branches
     }
-
-    
     return render(request, 'admin_home.html',context)
 
 
 def branch_details(request):
-
     branches=Branch.objects.all()
+    active_branch=Branch.objects.filter(status="Active")
+    inactive_branch=Branch.objects.filter(status="InActive")
+    # print(active_branch)
     context = {"is_branchdetails": True,
                 'branches':branches,
+                'activebranch':active_branch,
+                'inactivebranch':inactive_branch
     }
-
-    
     return render(request, 'branchdetails.html', context)
 
 
@@ -50,19 +52,14 @@ def addbranch(request):
         if not branch_exist:
             new_branch=Branch(branch_name=Branch_Name,branch_id=branch_id,email=email,phone=phone,place=place,address=address,password=password)
             new_branch.save()
-            msg="ADDED SUCESSFULLY"
-
-        else:
-            msg="branch already exist"
-
-    
-    context = {"is_addbranch": True,
-        "msg":msg,
-        # "branch_id":branch_id
-    
-    }
+            return render(request, 'addbranch.html',{'status':1,})
+    else:
+        context = {
+            "is_addbranch": True,
+            "status":0,
+        }
     return render(request, 'addbranch.html', context)
-
+    
 
 def edit_branch(request,bid):
     if request.method == 'POST':
@@ -91,10 +88,17 @@ def delete_branch(request,bid):
     return redirect('adminapp:branchdetails')
    
 
+
+# staff details
 def staff_details(request):
     staffs = Staff.objects.all()
-    context = {"is_staffdetails": True,
-        'staff':staffs
+    active_staff=Staff.objects.filter(status="Active")
+    inactive_staff=Staff.objects.filter(status="InActive")
+    context = {
+        "is_staffdetails": True,
+        'staff':staffs,
+        "activestaff":active_staff,
+        "inactivestaff":inactive_staff,
     }
     return render(request, 'staffdetails.html', context)
 
@@ -103,15 +107,36 @@ def add_staff(request):
     context = {"is_addstaff": True}
     return render(request, 'add_staff.html', context)
 
+def getstaffGet(request,id):
+    staffs=StaffBankDetails.objects.get(id=id)
+    data={
+        "profile":staffs.staff.profile,
+        "name":staffs.staff.name,
+        "sid":staffs.staff.staff_id,
+        "email":staffs.staff.email,
+        "phone":staffs.staff.phone,
+        # "city":staffs.staff.staff_id,
+        "place":staffs.staff.place,
+        "address":staffs.staff.address,
+        "joindate":staffs.staff.date,
+        "branchname":staffs.branch,
+        "bankname":staffs.bank_name,
+        "accnumber":staffs.account_number,
+        "ifsc":staffs.ifsc,
+
+    }
+    return JsonResponse({'staff': data,})
 
 def delete_staff(request,sid):
     status = "InActive"
     staff = Staff.objects.get(id=sid)
     staff.status = status
     staff.save()
-    return redirect('adminapp:branchdetails')
+    return redirect('adminapp:staffdetails')
 
 
+
+# transfer Staff from one branch to another branch
 def transfer(request):
     if request.method == 'POST':
         fbranch = request.POST['from']
@@ -154,13 +179,24 @@ def staff_id(request):
     return render(request,'staffid.html',{'staff_data':staff_data})
 
 
+
+# branch stock list
 def stock(request):
-    context = {"is_stock": True}
+    branch=Branch.objects.all()
+    context = {
+        "is_stock": True,
+        "branches":branch,
+    }
     return render(request, 'stock.html', context)
 
 
-def stock_list(request):
-    context = {"is_stocklist": True}
+def stock_list(request,bid):
+    branchproduct=BranchProducts.objects.filter(branch=bid)
+    print(branchproduct)
+    context = {
+        "is_stocklist": True,
+        "products":branchproduct,
+    }
     return render(request, 'stock_list.html', context)
 
 def admin_logout(request):

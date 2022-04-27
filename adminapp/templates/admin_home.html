@@ -9,32 +9,31 @@
 
             
             {% for branch in branches %}
-            
-            <div class="col-xl-3 col-sm-6 col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="dash-widget-header">
-                            <span class="{% cycle 'bg3' 'bg-2' 'bg-1' 'bg-1' as rowcolor %}"></span>
-                            <span class="{{rowcolr}} dash-widget-icon"  >
-                                <i class="fas fa-building"></i>
-                            </span>
-                            <div class="dash-count">
-                                <div class="dash-title">{{ branch.branch_id }}</div>
-                                <div class="dash-counts">
-                                    <p>
-                                        {{ branch.branch_name }}
-                                    </p>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card ">
+                        <div class="card-body ">
+                            <div class="dash-widget-header">
+                                
+                                <span class="dash-widget-icon bg-2">
+                                    <i class="fas fa-building"></i>
+                                </span>
+                                <div class="dash-count">
+                                    <div class="dash-title">{{ branch.branch_id }}</div>
+                                    <div class="dash-counts">
+                                        <p>
+                                            {{ branch.branch_name }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
+                            <a href="{% url 'branch:branchhome' %}">
+                                <p class="text-muted mt-3 mb-0" style="float: right;">
+                                    <span class="text-success me-1"><i class="fa fa-arrow-right"></i>
+                                </p>
+                            </a>
                         </div>
-                        <a href="{% url 'branch:branchhome' %}">
-                            <p class="text-muted mt-3 mb-0" style="float: right;">
-                                <span class="text-success me-1"><i class="fa fa-arrow-right"></i>
-                            </p>
-                        </a>
                     </div>
                 </div>
-            </div>
             {% endfor %}
 
 
