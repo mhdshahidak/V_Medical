@@ -117,7 +117,7 @@
                                                             <td>
                                                                 <h2 class="table-avatar">
                                                                     <a href="profile.html" class="avatar avatar-sm me-2">
-                                                                        {% if staff.satff.profile %}
+                                                                        {% if staff.satff.profile.url %}
                                                                         <img class="avatar-img rounded-circle img-fluid"
                                                                             src="{{staff.profile.url}}"
                                                                             alt="User Image">
@@ -151,7 +151,7 @@
                                                             </td>
                                                             <td class="text-end">
                                                                 <a class="btn btn-sm btn-white text-primary" href="#"
-                                                                     data-bs-toggle="modal" onclick="viewdata({{staff.sid}})"
+                                                                     data-bs-toggle="modal" onclick="viewdata({{sid}})"
                                                                     data-bs-target="#viewstaff" ><i class="fa fa-eye me-1"></i>View</a>
                                                                 <a href="{% url 'branch:editstaff' staff.id staff.staff.id%}"
                                                                     class="btn btn-sm btn-white text-success me-2"><i
@@ -352,97 +352,6 @@
             </div>
         </div>
 
-               
-        <!-- <div class="row">
-            <div class="col-sm-12">
-                <div class="card card-table">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-center table-hover datatable">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>
-                                            Name
-                                        </th>
-                                        <th>
-                                            Email
-                                        </th>
-                                        <th>
-                                            Contact Number
-                                        </th>
-                                        <th>
-                                            Joined Date
-                                        </th>
-                                        <th>
-                                            Account Number
-                                        </th>
-                                        <th>Status</th>
-                                        <th class="text-center">
-                                            Actions
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for staff in staffs %}
-                                    <tr>
-                                        <td>
-                                            <h2 class="table-avatar">
-                                                <a href="profile.html" class="avatar avatar-sm me-2">
-                                                    {% if staff.satff.profile %}
-                                                    <img class="avatar-img rounded-circle img-fluid"
-                                                        src="{{staff.profile.url}}"
-                                                        alt="User Image">
-                                                    {% elif staff.staff.profile %}
-                                                    <img class="avatar-img rounded-circle img-fluid"
-                                                        src="{% static 'default.png' %}"
-                                                        alt="User Image">
-                                                    {% endif %}
-                                                </a>
-                                                <a href="profile.html">{{staff.staff.name|title}} <span>{{staff.staff.phone}}</span></a>
-                                            </h2>
-                                        </td>
-                                        <td>
-                                            {{staff.staff.email}}
-                                        </td>
-                                        <td>
-                                            {{staff.staff.phone}}
-                                        </td>
-                                        <td>
-                                            {{staff.staff.date}}
-                                        </td>
-                                        <td>
-                                            {{staff.account_number}}
-                                        </td>
-                                        <td > 
-                                            {% if staff.staff.status == 'Active'  %} 
-                                                <span class="badge badge-pill bg-success-light">{{  staff.staff.status }}</span>
-                                                {% else %} 
-                                                <span class="badge badge-pill bg-danger-light">{{  staff.staff.status }}</span> 
-                                                {% endif %}    
-                                        </td>
-                                        <td class="text-end">
-                                            <a class="btn btn-sm btn-white text-primary" href="#"
-                                                 data-bs-toggle="modal" onclick="viewdata({{staff.sid}})"
-                                                data-bs-target="#viewstaff" ><i class="fa fa-eye me-1"></i>View</a>
-                                            <a href="{% url 'branch:editstaff' staff.id staff.staff.id%}"
-                                                class="btn btn-sm btn-white text-success me-2"><i
-                                                    class="far fa-edit me-1"></i> Edit</a>
-                                            <a href="{% url 'branch:deletestaff' staff.staff.id %}"
-                                                class="btn btn-sm btn-white text-danger me-2"><i
-                                                    class="far fa-trash-alt me-1"></i>Delete</a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-        <!--  -->
-
         <div class="modal custom-modal fade" id="viewstaff" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
@@ -487,7 +396,8 @@
                                     <strong>City: </strong>
                                 </span>
                                 <span id="splace" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
-                                    <strong>Place: </strong>
+                                    
+                                    <strong> </strong>
                                 </span>
                                 <span id="saddress" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                     <strong>Address: </strong>
@@ -552,18 +462,18 @@
 
 
                 // console.log(responce)
-                $('#sprofile').html(responce.staffs.staff.profile)
+                $('#sprofile').html(responce.staffs.staff.profile.url)
                 $('#splace').html(responce.staffs.staff.place)
                 $('#semail').html(responce.staffs.staff.email)
                 $('#sphone').html(responce.staffs.staff.phone)
                 $('#sname').html(responce.staffs.staff.name)
                 $('#sid').html(responce.staffs.staff.staff_id)
                 // $('#scity').html(responce.product.priceper_head)
-                $('#saddress').html(responce.staffs.staff.address)
-                $('#sdate').html(responce.staffs.staff.date)
-                $('#sbranchname').html(responce.staffs.branch)
+                $('#saddress').html(responce.staffs.address)
+                $('#sdate').html(responce.staffs.joindate)
+                $('#sbranchname').html(responce.staffs.staffbank.branchname)
                 $('#sbankname').html(responce.staffs.bank_name)
-                $('#saccnum').html(responce.staffs.account_number)
+                $('#saccnum').html(responce.staffs.accnumber)
                 $('#sifsc').html(responce.staffs.ifsc)
                 // $('#saddress').html(responce.product.priceper_kg)
             }

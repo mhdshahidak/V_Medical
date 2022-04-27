@@ -53,11 +53,11 @@ def addbranch(request):
             new_branch=Branch(branch_name=Branch_Name,branch_id=branch_id,email=email,phone=phone,place=place,address=address,password=password)
             new_branch.save()
             return render(request, 'addbranch.html',{'status':1,})
-    else:
-        context = {
-            "is_addbranch": True,
-            "status":0,
-        }
+        else:
+            context = {
+                "is_addbranch": True,
+                "status":0,
+            }
     return render(request, 'addbranch.html', context)
     
 
@@ -105,7 +105,33 @@ def staff_details(request):
 
 
 def add_staff(request):
-    context = {"is_addstaff": True}
+    branch=Branch.objects.all()
+    # rand=random.randint(10000,99999)
+    # staffid='VMS'+str(rand)
+    # if request.method == 'POST':
+    #     name=request.POST['name']
+    #     email=request.POST['email']
+    #     city=request.POST['city']
+    #     state=request.POST['state']
+    #     branchname=Branch.objects.get(id=request.session['branch'])
+    #     phone=request.POST['phone']
+    #     district=request.POST['dist']
+    #     date=request.POST['joindate']
+    #     address=request.POST['address']
+    #     staffid=staffid
+
+    #     staff_exist= Staff.objects.filter(name=name,phone=phone).exists()
+    #     if not staff_exist:
+    #         new_staff=Staff(name=name,staff_id=staffid,email=email,phone=phone,place=city,state=state,address=address,date=date,branch=branchname)
+    #         new_staff.save()
+    #         return render(request, 'add_staff.html',{'status':1,})
+
+
+
+    context = {
+        "is_addstaff": True,
+        "branch":branch,
+        }
     return render(request, 'add_staff.html', context)
 
 def getStaffGet(request,id):
@@ -117,17 +143,16 @@ def getStaffGet(request,id):
     data={
         "profile":staffs.profile.url,
         "name":staffs.name,
-        "sid":staffs.staff_id,
+        "staff_id":staffs.staff_id,
         "email":staffs.email,
         "phone":staffs.phone,
         "place":staffs.place,
         "address":staffs.address,
-        "joindate":staffs.date,
-        "branchname":staffbank.branch,
-        "bankname":staffbank.bank_name,
-        "accnumber":staffbank.account_number,
+        "date":staffs.date,
+        "branch":staffbank.branch,
+        "bank_name":staffbank.bank_name,
+        "account_number":staffbank.account_number,
         "ifsc":staffbank.ifsc,
-
     }
     return JsonResponse({'staffs': data,})
 

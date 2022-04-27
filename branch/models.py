@@ -45,7 +45,7 @@ class BranchBank(models.Model):
     ifsc=models.CharField(max_length=30)
 
     class Meta:
-        db_table = 'branchBank'
+        db_table = 'branchbank'
 
 
 class MedicineTransfer(models.Model):
