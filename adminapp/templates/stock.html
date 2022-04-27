@@ -17,110 +17,35 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-3 col-sm-6 col-12">
-                    <div class="card">
-                        <div class="card-body ">
-                            <div class="dash-widget-header">
-                                <span class="dash-widget-icon bg-1">
-                                    <i class="material-icons">
-                                        local_pharmacy
-                                    </i>
-                                </span>
-                                <div class="dash-count">
-                                    <div class="dash-title">Branch Name</div>
-                                    <div class="dash-counts">
-                                        <p>
-                                            Branch Id
-                                        </p>
+                {% for branch in branches %}
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card">
+                            <div class="card-body ">
+                                <div class="dash-widget-header">
+                                    <span class="dash-widget-icon bg-2">
+                                        <i class="material-icons">
+                                            local_pharmacy
+                                        </i>
+                                    </span>
+                                    <div class="dash-count">
+                                        <div class="dash-title"><b>{{branch.branch_name|capfirst}}</b></div>
+                                        <div class="dash-counts">
+                                            <p>
+                                                {{branch.branch_id}}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
+                                <a href="{% url 'adminapp:stocklist' branch.id %}">
+                                    <p class="text-muted mt-3 mb-0" style="float: right;">
+                                        <span class="text-success me-1"><i class="fa fa-arrow-right"></i>
+                                    </p>
+                                </a>
                             </div>
-                            <a href="{% url 'adminapp:stocklist' %}">
-                                <p class="text-muted mt-3 mb-0" style="float: right;">
-                                    <span class="text-success me-1"><i class="fa fa-arrow-right"></i>
-                                </p>
-                            </a>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-12">
-                    <div class="card">
-                        <div class="card-body ">
-                            <div class="dash-widget-header">
-                                <span class="dash-widget-icon bg-2">
-                                    <i class="material-icons">
-                                        local_pharmacy
-                                    </i>
-                                </span>
-                                <div class="dash-count">
-                                    <div class="dash-title">Branch Name</div>
-                                    <div class="dash-counts">
-                                        <p>
-                                            Branch Id
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="{% url 'adminapp:stocklist' %}">
-                                <p class="text-muted mt-3 mb-0" style="float: right;">
-                                    <span class="text-success me-1"><i class="fa fa-arrow-right"></i>
-                                </p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-12">
-                    <div class="card">
-                        <div class="card-body ">
-                            <div class="dash-widget-header">
-                                <span class="dash-widget-icon bg-3">
-                                    <i class="material-icons">
-                                        local_pharmacy
-                                    </i>
-                                </span>
-                                <div class="dash-count">
-                                    <div class="dash-title">Branch Name</div>
-                                    <div class="dash-counts">
-                                        <p>
-                                            Branch Id
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="{% url 'adminapp:stocklist' %}">
-                                <p class="text-muted mt-3 mb-0" style="float: right;">
-                                    <span class="text-success me-1"><i class="fa fa-arrow-right"></i>
-                                </p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-12">
-                    <div class="card">
-                        <div class="card-body ">
-                            <div class="dash-widget-header">
-                                <span class="dash-widget-icon bg-4">
-                                    <i class="material-icons">
-                                        local_pharmacy
-                                    </i>
-                                </span>
-                                <div class="dash-count">
-                                    <div class="dash-title">Branch Name</div>
-                                    <div class="dash-counts">
-                                        <p>
-                                            Branch Id
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="{% url 'adminapp:stocklist' %}">
-                                <p class="text-muted mt-3 mb-0" style="float: right;">
-                                    <span class="text-success me-1"><i class="fa fa-arrow-right"></i>
-                                </p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
+                
             </div>
         </div>
     </div>

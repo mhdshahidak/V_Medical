@@ -20,7 +20,7 @@
                         </a>
                         <a class="btn btn-primary filter-btn"
                            href="javascript:void(0);"
-                           id="filter_search">
+                           id="filter_search" >
                             <i class="fas fa-filter"></i>
                         </a>
                     </div>
@@ -31,13 +31,13 @@
                     <div class="row">
                         <div class="col-sm-6 col-md-3">
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Branch Name</label>
                                 <input type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-3">
                             <div class="form-group">
-                                <label>Email</label>
+                                <label>Staff Name</label>
                                 <input type="text" class="form-control">
                             </div>
                         </div>
@@ -51,55 +51,265 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12">
-                    <div class="card card-table">
+                <div class="col-md-12">
+                    <div class="card bg-white">
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-center table-hover datatable">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>branch Name</th>
-                                            <th>Email</th>
-                                            <th>Contact Number</th>
-                                            <th>Salary</th>
-                                            <th>Joined Date</th>
-                                            <th>Status</th>
-                                            <th class="text-center">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for s in staff %}
-                                        <tr>
-                                            <td>
-                                                <h2 class="table-avatar">
-                                                    <a href="profile.html" class="avatar avatar-sm me-2">
-                                                        <img class="avatar-img rounded-circle"
-                                                             src="{% static 'img/profiles/avatar-02.jpg' %}"
-                                                             alt="User Image">
-                                                    </a>
-                                                    <a href="profile.html">{{s.name}} <span>{{s.phone}}</span></a>
-                                                </h2>
-                                            </td>
-                                            <td>{{s.branch.branch_name}}</td>
-                                            <td>{{s.email}}</td>
-                                            <td>{{s.phone}}</td>
-                                            <td>$295</td>
-                                            <td>{{s.date}}</td>
-                                            <td>
-                                                {% if s.status == 'Active'  %} <span class="badge badge-pill bg-success-light">{{  s.status }}</span>{% elif s.status == 'InActive' %} <span class="badge badge-pill bg-danger-light">{{  s.status }}</span> {% else %} <span class="badge badge-pill bg-danger-light">{{ s.status }}</span> {% endif %}
-                                            </td>
-                                            <td class="text-end">
-                                                <a href="edit-customer.html"
-                                                   class="btn btn-sm btn-white text-success me-2"><i class="fa fa-eye me-1"></i><span>View</span></a>
-                                                <a href="{% url  'adminapp:deletestaff' s.id %}"
-                                                   class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Delete</a>
-                                            </td>
-                                        </tr>
-                                        
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                            <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded">
+                                <li class="nav-item"><a class="nav-link active" href="#solid-rounded-tab1"
+                                        data-bs-toggle="tab">All Staff</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#solid-rounded-tab2"
+                                        data-bs-toggle="tab">Active Staff</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#solid-rounded-tab3"
+                                        data-bs-toggle="tab">Inactive Staff</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+
+                                <div class="tab-pane show active" id="solid-rounded-tab1">
+                                    <div class="card card-table">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-center table-hover datatable">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>branch Name</th>
+                                                            <th>Email</th>
+                                                            <th>Place</th>
+                                                            <th>Salary</th>
+                                                            <th>Joined Date</th>
+                                                            <th>Status</th>
+                                                            <th class="text-center">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for s in staff %}
+                                                        <tr>
+                                                            <td>
+                                                                <h2 class="table-avatar">
+                                                                    <a href="profile.html" class="avatar avatar-sm me-2">
+                                                                        <img class="avatar-img rounded-circle"
+                                                                             src="{% static 'img/profile.jpg' %}"
+                                                                             alt="User Image">
+                                                                    </a>
+                                                                    <a href="profile.html">{{s.name|capfirst}} <span>{{s.phone}}</span></a>
+                                                                </h2>
+                                                            </td>
+                                                            <td>{{s.branch.branch_name|capfirst}}</td>
+                                                            <td>{{s.email}}</td>
+                                                            <td>{{s.place}}</td>
+                                                            <td>$295</td>
+                                                            <td>{{s.date}}</td>
+                                                            <td>
+                                                                {% if s.status == 'Active'  %} <span class="badge badge-pill bg-success-light">{{  s.status }}</span>{% elif s.status == 'InActive' %} <span class="badge badge-pill bg-danger-light">{{  s.status }}</span> {% else %} <span class="badge badge-pill bg-danger-light">{{ s.status }}</span> {% endif %}
+                                                            </td>
+                                                            <td class="text-end">
+                                                                <a class="btn btn-sm btn-white text-primary" href="#"
+                                                                     data-bs-toggle="modal"
+                                                                    data-bs-target="#viewstaff" ><i class="fa fa-eye me-1"></i>View</a>
+                                                                <a href="{% url  'adminapp:deletestaff' s.id %}"
+                                                                   class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Delete</a>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane" id="solid-rounded-tab2">
+                                    <div class="card card-table">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-center table-hover datatable">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>branch Name</th>
+                                                            <th>Email</th>
+                                                            <th>Contact Number</th>
+                                                            <th>Salary</th>
+                                                            <th>Joined Date</th>
+                                                            <th>Status</th>
+                                                            <th class="text-center">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for s in activestaff %}
+                                                        <tr>
+                                                            <td>
+                                                                <h2 class="table-avatar">
+                                                                    <a href="profile.html" class="avatar avatar-sm me-2">
+                                                                        <img class="avatar-img rounded-circle"
+                                                                             src="{% static 'img/profile.jpg' %}"
+                                                                             alt="User Image">
+                                                                    </a>
+                                                                    <a href="profile.html">{{s.name|capfirst}} <span>{{s.phone}}</span></a>
+                                                                </h2>
+                                                            </td>
+                                                            <td>{{s.branch.branch_name|capfirst}}</td>
+                                                            <td>{{s.email}}</td>
+                                                            <td>{{s.place}}</td>
+                                                            <td>$295</td>
+                                                            <td>{{s.date}}</td>
+                                                            <td>
+                                                                {% if s.status == 'Active'  %} <span class="badge badge-pill bg-success-light">{{  s.status }}</span>{% elif s.status == 'InActive' %} <span class="badge badge-pill bg-danger-light">{{  s.status }}</span> {% else %} <span class="badge badge-pill bg-danger-light">{{ s.status }}</span> {% endif %}
+                                                            </td>
+                                                            <td class="text-end">
+                                                                <a class="btn btn-sm btn-white text-primary" href="#"
+                                                                     data-bs-toggle="modal"
+                                                                    data-bs-target="#viewstaff" ><i class="fa fa-eye me-1"></i>View</a>
+                                                                <a href="{% url  'adminapp:deletestaff' s.id %}"
+                                                                   class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Delete</a>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="tab-pane" id="solid-rounded-tab3">
+                                    <div class="card card-table">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-center table-hover datatable">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>branch Name</th>
+                                                            <th>Email</th>
+                                                            <th>Contact Number</th>
+                                                            <th>Salary</th>
+                                                            <th>Joined Date</th>
+                                                            <th>Status</th>
+                                                            <th class="text-center">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for s in inactivestaff %}
+                                                        <tr>
+                                                            <td>
+                                                                <h2 class="table-avatar">
+                                                                    <a href="profile.html" class="avatar avatar-sm me-2">
+                                                                        <img class="avatar-img rounded-circle"
+                                                                             src="{% static 'img/profile.jpg' %}"
+                                                                             alt="User Image">
+                                                                    </a>
+                                                                    <a href="profile.html">{{s.name|capfirst}} <span>{{s.phone}}</span></a>
+                                                                </h2>
+                                                            </td>
+                                                            <td>{{s.branch.branch_name|capfirst}}</td>
+                                                            <td>{{s.email}}</td>
+                                                            <td>{{s.place}}</td>
+                                                            <td>$295</td>
+                                                            <td>{{s.date}}</td>
+                                                            <td>
+                                                                {% if s.status == 'Active'  %} <span class="badge badge-pill bg-success-light">{{  s.status }}</span>{% elif s.status == 'InActive' %} <span class="badge badge-pill bg-danger-light">{{  s.status }}</span> {% else %} <span class="badge badge-pill bg-danger-light">{{ s.status }}</span> {% endif %}
+                                                            </td>
+                                                            <td class="text-end">
+                                                                <a class="btn btn-sm btn-white text-primary" href="#"
+                                                                     data-bs-toggle="modal"
+                                                                    data-bs-target="#viewstaff" ><i class="fa fa-eye me-1"></i>View</a>
+                                                                <a href="{% url  'adminapp:deletestaff' s.id %}"
+                                                                   class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Delete</a>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- modal -->
+            <div class="modal custom-modal fade" id="viewstaff" role="dialog">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="form-header text-start mb-0">
+            
+                                <h4 class="mb-0 text-center">
+                                    <div class="profile-pic-div">
+                                        <img src="" alt="" srcset="" class="img-fluid" id="sprofile">
+                                    </div>
+                                </h4>
+                                
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <i class="fa fa-map-marker"></i> <span id="splace"> sdfghnjm </span>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <i class="fa fa-envelope"></i> <span id="semail">asdfghjk</span>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <i class="fa fa-phone"></i> <span id="sphone">asdfghjkl</span>
+                                    </li>
+                                </ul><br>
+    
+                                <div class="row justify-content-center container text-center">
+                                    <h4 class="mb-0 text-primary" id="sname">Staff Name</h4>
+                                    <h5 id="sid">Staff id</h5>
+                                </div>
+                            </div>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            
+                        </div>
+    
+    
+                        <div class="modal-body">
+                            <div class="d-flex justify-content-center container">
+                                <div class="card p-3 py-4">
+                                    <h5 class="mb-0 em">Basic Details</h5>
+                                    <span id="scity" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                        <strong>City: </strong>
+                                    </span>
+                                    <span id="splace" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                        <strong>Place: </strong>
+                                    </span>
+                                    <span id="saddress" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                        <strong>Address: </strong>
+                                    </span>
+                                    <span id="sdate" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                        <strong>Join Date: </strong>
+                                    </span>
+                                </div>
+                                <div class="d-flex" style="height: 300px;">
+                                    <div class="vr"></div>
+                                  </div>
+                                <div class="card p-3 py-4">
+                                    <h5 class="mb-0 em">Bank Details</h5>
+                                    <span id="sbranchname" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                        <strong>Branch Name: </strong>
+                                    </span>
+                                    <span id="sbankname" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                        <strong>Bank Name:</strong>
+                                    </span>
+                                    <span id="saccnum" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                        <strong>Account Number :</strong>
+                                    </span>
+                                    <span id="sifsc" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                        <strong>IFSC :</strong>
+                                    </span>
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -107,4 +317,36 @@
             </div>
         </div>
     </div>
+
+
+
+    <script>
+        function viewdata(id) {
+            $.ajax({
+                url: "/branchapp/getStaffGet/" + id,
+                type: 'GET',
+    
+                success: function (responce) {
+    
+    
+                    // console.log(responce)
+                    $('#sprofile').html(responce.staffs.staff.profile)
+                    $('#splace').html(responce.staffs.staff.place)
+                    $('#semail').html(responce.staffs.staff.email)
+                    $('#sphone').html(responce.staffs.staff.phone)
+                    $('#sname').html(responce.staffs.staff.name)
+                    $('#sid').html(responce.staffs.staff.staff_id)
+                    // $('#scity').html(responce.product.priceper_head)
+                    $('#saddress').html(responce.staffs.staff.address)
+                    $('#sdate').html(responce.staffs.staff.date)
+                    $('#sbranchname').html(responce.staffs.branch)
+                    $('#sbankname').html(responce.staffs.bank_name)
+                    $('#saccnum').html(responce.staffs.account_number)
+                    $('#sifsc').html(responce.staffs.ifsc)
+                    // $('#saddress').html(responce.product.priceper_kg)
+                }
+    
+            })
+        }
+    </script>
 {% endblock %}

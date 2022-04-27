@@ -225,7 +225,7 @@ def delete_staff(rquest,staff_delid):
 
 def getstaffGet(request,sid):
 
-    staffs=StaffBankDetails.objects.get(id=id)
+    staffs=StaffBankDetails.objects.get(id=sid)
 
     data={
         "profile":staffs.staff.profile,
@@ -243,7 +243,7 @@ def getstaffGet(request,sid):
         "ifsc":staffs.ifsc,
 
     }
-    return JsonResponse({'staff': data})
+    return JsonResponse({'staff': data,})
 
 
 ## Prdouct View functions

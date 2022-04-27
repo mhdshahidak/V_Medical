@@ -54,13 +54,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for product in products %}
                                         <tr>
-                                            <td>$295</td>
-                                            <td>16 Nov 2020</td>
-                                            <td>$295</td>
-                                            <td>16 Nov 2020</td>
-                                            <td>qwertyuioppplkjhgfdsa</td>
+                                            <td>{{product.product.product_id}}</td>
+                                            <td>{{product.product.name}}</td>
+                                            <td>{{product.quantity}}</td>
+                                            <td>{{product.product.selling_cost}}</td>
+                                            <td>{{product.product.description}}</td>
                                         </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
