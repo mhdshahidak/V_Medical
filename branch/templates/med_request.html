@@ -90,277 +90,36 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            {% for req in reqformed %}
                                                 <tr>
                                                     <td>
                                                         <h2 class="table-avatar">
                                                             
-                                                            Nadakkavu 
+                                                            {{req.avblbranch.product.name}} 
                                                         </h2>
                                                     </td>
                                                     <td>
-                                                        Calicut
+                                                        {{req.reqbranch.branch_name}}
                                                     </td>
                                                     <td>
-                                                        9696666
+                                                        {{req.reqbranch.phone}}
                                                     </td>
                                                     <td>
-                                                        16 Nov 2021
+                                                        {{req.reqdate}}
                                                     </td>
                                                     <td>
-                                                        250
+                                                        {{req.quantity}}
                                                     </td>
                                                     <td class="text-center">
-                                                    <a href="javascript:void(0);"
+                                                    <a href=""
                                                            class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Decline</a>
-                                                        <a href="edit-customer.html"
-                                                           class="btn btn-sm btn-white text-success me-2"><i class="fa fa-check me-1"></i>Accept</a>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="table-avatar">
-                                                            
-                                                            Pottammal 
-                                                        </h2>
-                                                    </td>
-                                                    <td>
-                                                        Calicut
-                                                    </td>
-                                                    <td>
-                                                        5252555
-                                                    </td>
-                                                    <td>
-                                                        16 Nov 2020
-                                                    </td>
-                                                    <td>
-                                                        500
-                                                    </td>
-                                                    <td class="text-center">
-                                                    <a href="javascript:void(0);"
-                                                           class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Decline</a>
-                                                        <a href="edit-customer.html"
-                                                           class="btn btn-sm btn-white text-success me-2"><i class="fa fa-check me-1"></i>Accept</a>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="table-avatar">
-                                                            
-                                                            Malappuram 
-                                                        </h2>
-                                                    </td>
-                                                    <td>
-                                                        Malappuram
-                                                    </td>
-                                                    <td>
-                                                        55252525
-                                                    </td>
-                                                    <td>
-                                                        16 Nov 2020
-                                                    </td>
-                                                    <td>
-                                                        100
-                                                    </td>
-                                                    <td class="text-center">
-                                                    <a href="javascript:void(0);"
-                                                           class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Decline</a>
-                                                        <a href="edit-customer.html"
-                                                           class="btn btn-sm btn-white text-success me-2"><i class="fa fa-check me-1"></i>Accept</a>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="table-avatar">
-                                                            
-                                                            Manjeri
-                                                        </h2>
-                                                    </td>
-                                                    <td>
-                                                        Manjeri
-                                                    </td>
-                                                    <td>
-                                                        80522525
-                                                    </td>
-                                                    <td>
-                                                        16 Nov 2020
-                                                    </td>
-                                                    <td>
-                                                        300
-                                                    </td>
-                                                    <td class="text-center">
-                                                    <a href="javascript:void(0);"
-                                                           class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Decline</a>
-                                                        <a href="edit-customer.html"
-                                                           class="btn btn-sm btn-white text-success me-2"><i class="fa fa-check me-1"></i>Accept</a>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="table-avatar">
-                                                            
-                                                            Brian Johnson 
-                                                        </h2>
-                                                    </td>
-                                                    <td>
-                                                        Calicut
-                                                    </td>
-                                                    <td>
-                                                        80522525
-                                                    </td>
-                                                    <td>
-                                                        16 Nov 2020
-                                                    </td>
-                                                    <td>
-                                                        500
-                                                    </td>
-                                                    <td class="text-center">
-                                                    <a href="javascript:void(0);"
-                                                           class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Decline</a>
-                                                        <a href="edit-customer.html"
-                                                           class="btn btn-sm btn-white text-success me-2"><i class="fa fa-check me-1"></i>Accept</a>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="table-avatar">
-                                                            
-                                                            Brian Johnson 
-                                                        </h2>
-                                                    </td>
-                                                    <td>
-                                                        Calicut
-                                                    </td>
-                                                    <td>
-                                                        80522525
-                                                    </td>
-                                                    <td>
-                                                        16 Nov 2020
-                                                    </td>
-                                                    <td>
-                                                        500
-                                                    </td>
-                                                    <td class="text-center">
-                                                    <a href="javascript:void(0);"
-                                                           class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Decline</a>
-                                                        <a href="edit-customer.html"
-                                                           class="btn btn-sm btn-white text-success me-2"><i class="fa fa-check me-1"></i>Accept</a>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="table-avatar">
-                                                            
-                                                            Palazhi branch 
-                                                        </h2>
-                                                    </td>
-                                                    <td>
-                                                        Calicut
-                                                    </td>
-                                                    <td>
-                                                        5525255
-                                                    </td>
-                                                    <td>
-                                                        16 Nov 2021
-                                                    </td>
-                                                    <td>
-                                                        100
-                                                    </td>
-                                                    <td class="text-center">
-                                                    <a href="javascript:void(0);"
-                                                           class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Decline</a>
-                                                        <a href="edit-customer.html"
-                                                           class="btn btn-sm btn-white text-success me-2"><i class="fa fa-check me-1"></i>Accept</a>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="table-avatar">
-                                                            
-                                                            Kondotty branch 
-                                                        </h2>
-                                                    </td>
-                                                    <td>
-                                                        Kondotty
-                                                    </td>
-                                                    <td>
-                                                        5525252
-                                                    </td>
-                                                    <td>
-                                                        16 Nov 2022
-                                                    </td>
-                                                    <td>
-                                                        200
-                                                    </td>
-                                                    <td class="text-center">
-                                                    <a href="javascript:void(0);"
-                                                           class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Decline</a>
-                                                        <a href="edit-customer.html"
-                                                           class="btn btn-sm btn-white text-success me-2"><i class="fa fa-check me-1"></i>Accept</a>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="table-avatar">
-                                                            
-                                                            Ramanattukara 
-                                                        </h2>
-                                                    </td>
-                                                    <td>
-                                                        Calicut
-                                                    </td>
-                                                    <td>
-                                                        6636365
-                                                    </td>
-                                                    <td>
-                                                        16 Nov 2022
-                                                    </td>
-                                                    <td>
-                                                        300
-                                                    </td>
-                                                    <td class="text-center">
-                                                    <a href="javascript:void(0);"
-                                                           class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Decline</a>
-                                                        <a href="edit-customer.html"
-                                                           class="btn btn-sm btn-white text-success me-2"><i class="fa fa-check me-1"></i>Accept</a>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="table-avatar">
-                                                            
-                                                            Brian Johnson 
-                                                        </h2>
-                                                    </td>
-                                                    <td>
-                                                        Calicut
-                                                    </td>
-                                                    <td>
-                                                        80522525
-                                                    </td>
-                                                    <td>
-                                                        16 Nov 2020
-                                                    </td>
-                                                    <td>
-                                                        500
-                                                    </td>
-                                                    <td class="text-center">
-                                                    <a href="javascript:void(0);"
-                                                           class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Decline</a>
-                                                        <a href="edit-customer.html"
+                                                        <a href="{% url 'branch:medaccept' req.id %}"
                                                            class="btn btn-sm btn-white text-success me-2"><i class="fa fa-check me-1"></i>Accept</a>
                                                         
                                                     </td>
                                                 </tr>
                                                 
+                                            {% endfor %}   
                                             </tbody>
                                         </table>
                                     </div>

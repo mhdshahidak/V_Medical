@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 
 from adminapp.models import AdminLogin, Branch, Staff, StaffBankDetails, Transfer
-from branch.models import BranchBank, BranchProducts, Customers, Product
+from branch.models import BranchBank, BranchProducts, Customers, MedicineTransfer, Product
 from v_med.decorators import auth_branch
 
 # Create your views here.
@@ -429,10 +429,61 @@ def invoices_details(request):
 
 def branch_profile(request):
     return render(request,'branchprofile.html')
+
+# medicine requesting
+
+def med_requesting(request,pid):
+
+    # avblbranch = request.POST['avblbranch']
+    msg = ""
+    qty = request.GET['qty']
+    avbobj = BranchProducts.objects.get(id=pid)
+    # print('#'*20)
+    # print(request.session['branch'])
+    # branchobj = Branch.objects.get(id=request.session['branch'])
+    reqobj = Branch.objects.get(id=request.session['branch'])
+
+    new_req = MedicineTransfer(reqbranch=reqobj,avblbranch=avbobj,quantity=qty)
+    new_req.save()
+    msg = "Requested"
+
+    medicines = Product.objects.all()
+    context={"is_searchmedicine":True,
+        'medicines':medicines,
+        'msg':msg
+    }
+    return render(request,'search.html',context)
+
+def medicine_requested(request):
+    req_list = MedicineTransfer.objects.filter(reqbranch=request.session['branch'])
+    context={"is_medicinerequested":True,
+        'reqlist':req_list
+    }
+    return render(request,'medicine_requested.html',context)
     
 
 def med_requests(request):
-    return render(request,'med_request.html')
+    reqformed = MedicineTransfer.objects.filter(avblbranch__branch=request.session['branch'])
+    return render(request,'med_request.html',{'reqformed':reqformed,})
+
+def med_accept(request,pid):
+    medobj = MedicineTransfer.objects.get(id=pid)
+    qty = medobj.quantity
+    # print(qty)
+    branch=BranchProducts.objects.get(id=medobj.avblbranch.id)    #note
+    branch.quantity=medobj.avblbranch.quantity-int(qty)
+    branch.save()
+    
+
+    return redirect('branch:requests')
+
+# def med_decline(request,pid):
+#     status = "Rejected"
+#     medobj = MedicineTransfer.objects.get(id=pid)
+#     medobj.status =  status 
+#     medobj.save()
+
+
 
 def staff_request(request):
     status = "requested"
@@ -473,6 +524,8 @@ def purchase_list(request):
         "prPurchase":productpurchase,
     }
     return render(request,'purchaselist.html',context)
+
+
 
 
 
