@@ -224,6 +224,12 @@
                                 <span>Purchase list</span>
                             </a>
                         </li>
+                        <li {% if is_medicinerequested %} class="active" {% endif %}>
+                            <a href="{% url 'branch:medicinerequested' %}">
+                                <i class="fa fa-upload"></i>
+                                <span>Requested</span>
+                            </a>
+                        </li>
 
                     </ul>
                 </div>
@@ -239,6 +245,10 @@
 
 
     </div>
+
+
+
+</body>
 
     <!-- index -->
     <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
@@ -357,8 +367,6 @@
 
 
     </script>
-
-
-</body>
-
+{% block JS %}
+{% endblock %}
 </html>

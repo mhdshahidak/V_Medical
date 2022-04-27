@@ -46,3 +46,14 @@ class BranchBank(models.Model):
 
     class Meta:
         db_table = 'branchBank'
+
+
+class MedicineTransfer(models.Model):
+    reqbranch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    avblbranch = models.ForeignKey(BranchProducts, related_name='availablebranch', on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    reqdate = models.DateField(default=datetime.date.today)
+    status = models.CharField(max_length=20, default='Requested')
+
+    class Meta:
+        db_table = 'medtransfer'

@@ -15,7 +15,7 @@ urlpatterns = [
     path('addstaff', views.add_staff, name='addstaff'),
     path('editstaff/<int:sbid>/<int:sid>',views.edit_staff,name="editstaff"),
     path('deletestaff/<int:staff_delid>',views.delete_staff,name='deletestaff'),
-     path('getstaffGet/<int:sid>',views.getstaffGet,name="getstaffGet"),
+    path('getstaffGet/<int:sid>',views.getstaffGet,name="getstaffGet"),
     path('products', views.all_products, name='products'),
     path('addmedicine', views.add_medicine, name='addmedicine'),
     path('editproduct/<int:bpid>/<int:prid>',views.edit_product,name="editproduct"),
@@ -36,9 +36,18 @@ urlpatterns = [
 
     # requests
 
-    path('requests', views.med_requests, name='requests'),
     path('staffrequest', views.staff_request, name='staffrequest'),
     path('staffaccept/<int:sid>', views.staff_transfer_accept, name='staffaccept'),
+
+    # medicine request
+
+    path('requests', views.med_requests, name='requests'),
+    path('medreq/<int:pid>/', views.med_requesting, name='medreq'),
+    path('medicinerequested', views.medicine_requested, name='medicinerequested'),
+    path('medaccept/<int:pid>', views.med_accept, name='medaccept'),
+    # path('medecline/<int:pid>', views.med_decline, name='medecline'),
+
+
 
     path('profitloss',views.profit_loss,name="profitloss"),
     path('editexpence',views.edit_expence,name="editexpence"),

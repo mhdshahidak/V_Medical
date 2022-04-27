@@ -1,0 +1,79 @@
+{% extends "master.html" %}
+
+{% block content %}
+{% load static %}
+
+ 
+<div class="page-wrapper">
+    <div class="content container-fluid">
+
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Requested</h3>
+                    <ul class="breadcrumb">
+                        <li class=""><a href="{% url 'branch:branchhome' %}">Dashboard /</a></li>
+                        <li class="breadcrumb-item active">Requested</li>
+                    </ul>
+                </div>
+                {% comment %} <div class="col-auto">
+                    <a href="{% url 'branch:addincome' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                    <a class="btn btn-primary filter-btn" href="javascript:void(0);" id="filter_search">
+                        <i class="fas fa-filter"></i>
+                    </a>
+                </div> {% endcomment %}
+            </div>
+        </div>
+
+
+        
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-center table-hover datatable">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Requested Date</th>
+                                        <th>Branch Name</th>
+                                        <th>Quantity</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for re in reqlist %}
+                                    <tr>
+                                        <td>{{re.avblbranch.product.name}}</td>
+                                        <td>{{re.reqdate}}</td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                 {{re.avblbranch.branch.branch_name}}
+                                            </h2>
+                                        </td>
+                                        <td>{{re.quantity}}</td>
+                                        <td>{{re.status}}</td>
+                                        <td><a href="" 
+                                                class="btn btn-sm btn-white text-success me-2"><i
+                                                    class="fa fa-check me-1"></i>Recived</a></td>
+
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
