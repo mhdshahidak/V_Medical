@@ -1,6 +1,10 @@
 {% extends "index.html" %}
 {% block content %}
-    {% load static %}
+{% load static %}
+
+
+
+
     <div class="page-wrapper">
         <div class="content container-fluid">
             <div class="page-header">
@@ -105,7 +109,7 @@
                                                             </td>
                                                             <td class="text-end">
                                                                 <a class="btn btn-sm btn-white text-primary" href="#"
-                                                                     data-bs-toggle="modal"
+                                                                     data-bs-toggle="modal" id="viewstaffs{{s.id}}" onclick="viewdata({{s.id}})"
                                                                     data-bs-target="#viewstaff" ><i class="fa fa-eye me-1"></i>View</a>
                                                                 <a href="{% url  'adminapp:deletestaff' s.id %}"
                                                                    class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Delete</a>
@@ -160,7 +164,7 @@
                                                             </td>
                                                             <td class="text-end">
                                                                 <a class="btn btn-sm btn-white text-primary" href="#"
-                                                                     data-bs-toggle="modal"
+                                                                     data-bs-toggle="modal" id="viewstaffs{{s.id}}" onclick="viewdata({{s.id}})"
                                                                     data-bs-target="#viewstaff" ><i class="fa fa-eye me-1"></i>View</a>
                                                                 <a href="{% url  'adminapp:deletestaff' s.id %}"
                                                                    class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Delete</a>
@@ -216,7 +220,7 @@
                                                             </td>
                                                             <td class="text-end">
                                                                 <a class="btn btn-sm btn-white text-primary" href="#"
-                                                                     data-bs-toggle="modal"
+                                                                     data-bs-toggle="modal" id="viewstaffs" onclick="viewdata({{s.id}})"
                                                                     data-bs-target="#viewstaff" ><i class="fa fa-eye me-1"></i>View</a>
                                                                 <a href="{% url  'adminapp:deletestaff' s.id %}"
                                                                    class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Delete</a>
@@ -246,24 +250,24 @@
             
                                 <h4 class="mb-0 text-center">
                                     <div class="profile-pic-div">
-                                        <img src="" alt="" srcset="" class="img-fluid" id="sprofile">
+                                        <img src="" alt="" srcset="" class="img-fluid" id="profile">
                                     </div>
                                 </h4>
                                 
                                 <ul class="list-inline">
                                     <li class="list-inline-item">
-                                        <i class="fa fa-map-marker"></i> <span id="splace"> sdfghnjm </span>
+                                        <i class="fa fa-map-marker"></i> <span id="place"> dfghvhvbjh </span>
                                     </li>
                                     <li class="list-inline-item">
-                                        <i class="fa fa-envelope"></i> <span id="semail">asdfghjk</span>
+                                        <i class="fa fa-envelope"></i> <span id="email">chgkgvjv</span>
                                     </li>
                                     <li class="list-inline-item">
-                                        <i class="fa fa-phone"></i> <span id="sphone">asdfghjkl</span>
+                                        <i class="fa fa-phone"></i> <span id="phone"></span>
                                     </li>
                                 </ul><br>
     
                                 <div class="row justify-content-center container text-center">
-                                    <h4 class="mb-0 text-primary" id="sname">Staff Name</h4>
+                                    <h4 class="mb-0 text-primary" id="name">Staff Name</h4>
                                     <h5 id="sid">Staff id</h5>
                                 </div>
                             </div>
@@ -278,16 +282,16 @@
                             <div class="d-flex justify-content-center container">
                                 <div class="card p-3 py-4">
                                     <h5 class="mb-0 em">Basic Details</h5>
-                                    <span id="scity" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                    <span id="city" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                         <strong>City: </strong>
                                     </span>
-                                    <span id="splace" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
-                                        <strong>Place: </strong>
+                                    <span id="places" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                        Place:
                                     </span>
-                                    <span id="saddress" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                    <span id="address" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                         <strong>Address: </strong>
                                     </span>
-                                    <span id="sdate" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                    <span id="date" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                         <strong>Join Date: </strong>
                                     </span>
                                 </div>
@@ -296,16 +300,16 @@
                                   </div>
                                 <div class="card p-3 py-4">
                                     <h5 class="mb-0 em">Bank Details</h5>
-                                    <span id="sbranchname" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                    <span id="branchname" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                         <strong>Branch Name: </strong>
                                     </span>
-                                    <span id="sbankname" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                    <span id="bankname" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                         <strong>Bank Name:</strong>
                                     </span>
-                                    <span id="saccnum" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                    <span id="accnum" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                         <strong>Account Number :</strong>
                                     </span>
-                                    <span id="sifsc" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
+                                    <span id="ifsc" class="text-black-50 p-description d-flex justify-content-between align-items-center mt-4">
                                         <strong>IFSC :</strong>
                                     </span>
                                     
@@ -319,34 +323,75 @@
     </div>
 
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <style>
+        .profile-pic-div {
+        height: 100px; 
+        width: 100px;
+        position:relative;
+        top: 50px;
+        left: 20%;
+        transform: translate(-50%,-50%);
+        border-radius: 50%;
+        overflow:hidden;
+        border: 1px solid grey;
+        align-items: center;
+        margin-left: 55px;
+    }
+    </style>
+   
     <script>
+        
         function viewdata(id) {
+            // alert("hii")
             $.ajax({
-                url: "/branchapp/getStaffGet/" + id,
+                url: "http://127.0.0.1:8000/getStaffGet/" + id,
                 type: 'GET',
     
                 success: function (responce) {
-    
-    
-                    // console.log(responce)
-                    $('#sprofile').html(responce.staffs.staff.profile)
-                    $('#splace').html(responce.staffs.staff.place)
-                    $('#semail').html(responce.staffs.staff.email)
-                    $('#sphone').html(responce.staffs.staff.phone)
-                    $('#sname').html(responce.staffs.staff.name)
-                    $('#sid').html(responce.staffs.staff.staff_id)
-                    // $('#scity').html(responce.product.priceper_head)
-                    $('#saddress').html(responce.staffs.staff.address)
-                    $('#sdate').html(responce.staffs.staff.date)
-                    $('#sbranchname').html(responce.staffs.branch)
-                    $('#sbankname').html(responce.staffs.bank_name)
-                    $('#saccnum').html(responce.staffs.account_number)
-                    $('#sifsc').html(responce.staffs.ifsc)
-                    // $('#saddress').html(responce.product.priceper_kg)
+                    $('#profile').html(responce.staffs.profile.url)
+                    // console.log(staffs.staff.profile)
+                    $('#place').html(responce.staffs.place)
+                    $('#email').html(responce.staffs.email)
+                    $('#phone').html(responce.staffs.phone)
+                    $('#name').html(responce.staffs.name)
+                    $('#sid').html(responce.staffs.staff_id)
+                    $('#places').html(responce.staffs.place)
+                    $('#address').html(responce.staffs.address)
+                    $('#date').html(responce.staffs.date)
+                    $('#branchname').html(responce.staffbank.branch)
+                    $('#bankname').html(responce.staffbank.bank_name)
+                    $('#accnum').html(responce.staffbank.account_number)
+                    $('#ifsc').html(responce.staffbank.ifsc)
                 }
     
             })
         }
+
+        $("#submit").click(function () {
+            var text = $("#textarea").val();
+            $("#modal_body").html(text);
+        });
+
+
+    //     function viewdata(id) {
+    //     $.ajax({
+    //         url: "/user/getproductGet/" + id,
+    //         type: 'GET',
+
+    //         success: function (responce) {
+
+
+    //             // console.log(responce)
+    //             $('#prName').html(responce.product.food_name)
+    //             $('#prCategory').html(responce.product.catagory)
+    //             $('#prDecreption').html(responce.product.food_deatails)
+    //             $('#perhead').html(responce.product.priceper_head)
+    //             $('#perkg').html(responce.product.priceper_kg)
+    //         }
+
+    //     })
+    // }
     </script>
 {% endblock %}

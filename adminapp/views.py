@@ -92,6 +92,7 @@ def delete_branch(request,bid):
 # staff details
 def staff_details(request):
     staffs = Staff.objects.all()
+    print(staffs)
     active_staff=Staff.objects.filter(status="Active")
     inactive_staff=Staff.objects.filter(status="InActive")
     context = {
@@ -107,25 +108,28 @@ def add_staff(request):
     context = {"is_addstaff": True}
     return render(request, 'add_staff.html', context)
 
-def getstaffGet(request,id):
-    staffs=StaffBankDetails.objects.get(id=id)
+def getStaffGet(request,id):
+    staffs=Staff.objects.get(id=id)
+    staffbank=StaffBankDetails.objects.get(staff__id=id)
+    print(staffs)
+    print(staffbank)
+   
     data={
-        "profile":staffs.staff.profile,
-        "name":staffs.staff.name,
-        "sid":staffs.staff.staff_id,
-        "email":staffs.staff.email,
-        "phone":staffs.staff.phone,
-        # "city":staffs.staff.staff_id,
-        "place":staffs.staff.place,
-        "address":staffs.staff.address,
-        "joindate":staffs.staff.date,
-        "branchname":staffs.branch,
-        "bankname":staffs.bank_name,
-        "accnumber":staffs.account_number,
-        "ifsc":staffs.ifsc,
+        "profile":staffs.profile.url,
+        "name":staffs.name,
+        "sid":staffs.staff_id,
+        "email":staffs.email,
+        "phone":staffs.phone,
+        "place":staffs.place,
+        "address":staffs.address,
+        "joindate":staffs.date,
+        "branchname":staffbank.branch,
+        "bankname":staffbank.bank_name,
+        "accnumber":staffbank.account_number,
+        "ifsc":staffbank.ifsc,
 
     }
-    return JsonResponse({'staff': data,})
+    return JsonResponse({'staffs': data,})
 
 def delete_staff(request,sid):
     status = "InActive"
@@ -177,7 +181,7 @@ def staff_id(request):
     # staffid = staff_data.staff_id
     # return render(request,'staffid.html',{'staffid':staffid})
     return render(request,'staffid.html',{'staff_data':staff_data})
-
+  
 
 
 # branch stock list
