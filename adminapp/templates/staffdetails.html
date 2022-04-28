@@ -346,7 +346,7 @@
         function viewdata(id) {
             // alert("hii")
             $.ajax({
-                url: "http://127.0.0.1:8000/getStaffGet/" + id,
+                url: "getStaffGet/" + id,
                 type: 'GET',
     
                 success: function (responce) {
@@ -360,10 +360,10 @@
                     $('#places').html(responce.staffs.place)
                     $('#address').html(responce.staffs.address)
                     $('#date').html(responce.staffs.date)
-                    $('#branchname').html(responce.staffbank.branch)
-                    $('#bankname').html(responce.staffbank.bank_name)
-                    $('#accnum').html(responce.staffbank.account_number)
-                    $('#ifsc').html(responce.staffbank.ifsc)
+                    $('#branchname').html(responce.staffs.branch)
+                    $('#bankname').html(responce.staffs.bank_name)
+                    $('#accnum').html(responce.staffs.account_number)
+                    $('#ifsc').html(responce.staffs.ifsc)
                 }
     
             })
