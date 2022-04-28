@@ -20,7 +20,12 @@ urlpatterns = [
     path('addmedicine', views.add_medicine, name='addmedicine'),
     path('editproduct/<int:bpid>/<int:prid>',views.edit_product,name="editproduct"),
     path('deleteproduct/<int:pr_delid>',views.delete_product,name='deleteproduct'),
+    
+    # billing section
     path('billing', views.billing, name='billing'),
+    path('custsearch', views.cust_search, name='custsearch'),
+
+
     path('bank',views.bank,name="bank"),
     path('addbank', views.add_bank, name='addbank'),
     path('income', views.income, name='income'),
