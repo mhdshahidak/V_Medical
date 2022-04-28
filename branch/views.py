@@ -336,10 +336,37 @@ def delete_product(request,pr_delid):
 # billing section
 def billing(request):
     product = BranchProducts.objects.filter(branch=request.session['branch'])
+    customer = Customers.objects.all()
     context={"is_billing":True,
-        "product":product
+        "product":product,
+        "customer":customer
     }
     return render(request,'billing.html',context)
+
+def cust_search(request):
+    phone = request.GET['phone']
+    customer_ex = Customers.objects.filter(phone=phone).exists()
+    print(customer_ex)
+    if customer_ex:
+        customer = Customers.objects.get(phone=phone)
+        data={
+            "name":customer.name
+        }
+        return JsonResponse({'customer':data})
+    else:
+        pass
+
+def med_price(request):
+    med = request.GET['name']
+    medlist = Product.objects.get(name=med)
+    qtyavlbl = BranchProducts.objects.get(product=medlist.id,branch=request.session['branch'])
+    data={
+        "price":medlist.selling_cost,
+        "maxqty":qtyavlbl.quantity
+    }
+    return JsonResponse({'product':data,})
+
+
 
 
 
@@ -458,7 +485,8 @@ def medicine_requested(request):
     
 
 def med_requests(request):
-    reqformed = MedicineTransfer.objects.filter(avblbranch__branch=request.session['branch'])
+    status = "Requested"
+    reqformed = MedicineTransfer.objects.filter(avblbranch__branch=request.session['branch'],status=status)
     return render(request,'med_request.html',{'reqformed':reqformed,})
 
 def med_accept(request,pid):
@@ -468,6 +496,8 @@ def med_accept(request,pid):
     branch=BranchProducts.objects.get(id=medobj.avblbranch.id)    #note
     branch.quantity=medobj.avblbranch.quantity-int(qty)
     branch.save()
+    medobj.status = "Accepted"
+    medobj.save()
     
 
     return redirect('branch:requests')
