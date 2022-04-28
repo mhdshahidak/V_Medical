@@ -349,11 +349,29 @@ def billing(request):
 def cust_search(request):
     phone = request.GET['phone']
     customer_ex = Customers.objects.filter(phone=phone).exists()
+    print(customer_ex)
     if customer_ex:
         customer = Customers.objects.get(phone=phone)
-        return JsonResponse({'customer':customer})
+        data={
+            "name":customer.name
+        }
+        return JsonResponse({'customer':data})
     else:
         pass
+
+def med_price(request):
+    med = request.GET['name']
+    medlist = Product.objects.get(name=med)
+    qtyavlbl = BranchProducts.objects.get(product=medlist.id,branch=request.session['branch'])
+    data={
+        "price":medlist.selling_cost,
+        "maxqty":qtyavlbl.quantity
+    }
+    return JsonResponse({'product':data,})
+
+
+
+
 
 # Bank
 def bank(request):

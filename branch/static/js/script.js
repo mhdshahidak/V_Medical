@@ -421,36 +421,37 @@ Version      : 1.0
 		return false;
 	});
 
-	$(document).on("click", ".add-btn", function () {
-		var experiencecontent = '<tr class="add-row">' +
-			'<td>' +
-			'<input type="text" class="form-control">' +
-			'</td>' +
-			'<td>' +
-			'<input type="text" class="form-control">' +
-			'</td>' +
-			'<td>' +
-			'<input type="text" class="form-control">' +
-			'</td>' +
-			'<td>' +
-			'<input type="text" class="form-control">' +
-			'</td>' +
-			'<td>' +
-			'<input type="text" class="form-control">' +
-			'</td>' +
-			'<td>' +
-			'<input type="text" class="form-control">' +
-			'</td>' +
-			'<td class="add-remove text-end">' +
-			'<a href="javascript:void(0);" class="add-btn me-2"><i class="fas fa-plus-circle"></i></a> ' +
-			'<a href="#" class="copy-btn me-2"><i class="fe fe-copy"></i></a>' +
-			'<a href="javascript:void(0);" class="remove-btn"><i class="fe fe-trash-2"></i></a>' +
-			'</td>' +
-			'</tr>';
+	// $(document).on("click", ".add-btn", function () {
+	// 	var rowCount = $(".add-table-items tr").length;
+	// 	var experiencecontent = '<tr class="add-row">' +
+	// 		'<td>' +
+	// 		'<input type="text" class="form-control" value=" " '+ rowCount + '">' +
+	// 		'</td>' +
+	// 		'<td>' +
+	// 		'<input type="text" class="form-control">' +
+	// 		'</td>' +
+	// 		'<td>' +
+	// 		'<input type="text" class="form-control">' +
+	// 		'</td>' +
+	// 		'<td>' +
+	// 		'<input type="text" class="form-control">' +
+	// 		'</td>' +
+	// 		'<td>' +
+	// 		'<input type="text" class="form-control">' +
+	// 		'</td>' +
+	// 		'<td>' +
+	// 		'<input type="text" class="form-control">' +
+	// 		'</td>' +
+	// 		'<td class="add-remove text-end">' +
+	// 		'<a href="javascript:void(0);" class="add-btn me-2"><i class="fas fa-plus-circle"></i></a> ' +
+	// 		'<a href="#" class="copy-btn me-2"><i class="fe fe-copy"></i></a>' +
+	// 		'<a href="javascript:void(0);" class="remove-btn"><i class="fe fe-trash-2"></i></a>' +
+	// 		'</td>' +
+	// 		'</tr>';
 
-		$(".add-table-items").append(experiencecontent);
-		return false;
-	});
+	// 	$(".add-table-items").append(experiencecontent);
+	// 	return false;
+	// });
 
 	var right_side_views =
 

@@ -24,6 +24,9 @@ urlpatterns = [
     # billing section
     path('billing', views.billing, name='billing'),
     path('custsearch', views.cust_search, name='custsearch'),
+    path('medprice', views.med_price, name='medprice'),
+    
+    
 
 
     path('bank',views.bank,name="bank"),

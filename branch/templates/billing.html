@@ -133,23 +133,24 @@
                                                         <input type="text" class="form-control" readonly value="1">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control" name="medicine" list="medicine">
+                                                        
+                                                        <input type="text" class="form-control" name="medicinename" list="medicine" id="medicinename1" onchange=changedname(1)>
                                                         <datalist id="medicine">
                                                             {% for p in product %}<option value="{{ p.product.name }}">{% endfor %}
                                                         </datalist>
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control">
+                                                        <input type="number" class="form-control" id="qty1" min="1" onchange=changedqty(1) >
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" class="form-control" id="price1">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" class="form-control" id="itemtotal1" >
                                                     </td>
                                                     <td class="add-remove text-end">
-                                                        <a href="javascript:void(0);" class="add-btn me-2"><i class="fas fa-plus-circle"></i></a>
-                                                        <a href="javascript:void(0);" class="remove-btn"><i class="fas fa-trash"></i></a>
+                                                        <a href="javascript:void(0);" class="add-btn me-2"><i class="fas fa-plus-circle" ></i></a>
+                                                        <a href="javascript:void(0);" class="remove-btn"><i class="fas fa-trash" ></i></a>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -165,7 +166,7 @@
                                                     Payment Details
                                                 </p>
                                                 <div class="col-md-6">
-                                                    <select class="form-select">
+                                                    <select class="form-select" name="type">
                                                         <option>
                                                             CASH
                                                         </option>
@@ -187,14 +188,14 @@
                                             <div class="invoice-total-box">
                                                 <div class="invoice-total-inner">
                                                     <p>
-                                                        Tax <span>$21</span>
+                                                        Sub total <span id="subtotal">0</span>
                                                     </p>
-                                                    <p>
+                                                    {% comment %} <p>
                                                         Round Off
                                                         <input type="checkbox" id="status_1" class="check">
                                                         <label for="status_1" class="checktoggle">checkbox</label>
                                                         <span>$54</span>
-                                                    </p>
+                                                    </p> {% endcomment %}
                                                     <div class="links-info-one">
                                                         <div class="links-info">
                                                             <div class="links-cont">
@@ -204,11 +205,10 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <p>
-                                                        Discount <span>$3,300.00</span>
-                                                    </p>
+                                                    
                                                     <p class="mb-0">
-                                                        Sub total <span>$3,300.00</span>
+                                                        Tax <span id="gst"></span>
+                                                        
                                                     </p>
                                                     <div class="links-info-discount">
                                                         <div class="links-cont-discount">
@@ -220,7 +220,7 @@
                                                 </div>
                                                 <div class="invoice-total-footer">
                                                     <h4>
-                                                        Total Amount <span>$ 894.00</span>
+                                                        Total Amount <span id="total_amount">0</span>
                                                     </h4>
                                                 </div>
                                             </div>
@@ -240,7 +240,7 @@
         </div>
     </div>
     {% comment %} modal {% endcomment %}
-    <div class="modal custom-modal fade invoices-preview"
+    {% comment %} <div class="modal custom-modal fade invoices-preview"
          id="invoices_preview"
          role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-xl">
@@ -592,24 +592,35 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
     <script src="{% static 'js/billing.js' %}"></script>
     <script>
-$(document).ready(function(){
 
-$('#cphone').change(function(){
-    alert('hwllo')
- $.ajax({
-     url:'/branchapp/custsearch',
-     data:{
-         'phone':$(this).val()
-     },
-     type:'get',
-     success:function(response){
-        $('#cname').val(response.customer.name)
-     }
- })
-})
-})
+    // customer name and phone number
+
+        $(document).ready(function(){
+
+            $('#cphone').change(function(){
+                // alert('hwllo')
+                $.ajax({
+                    url:'/branchapp/custsearch',
+                    type:'GET',
+                    data:{
+                        'phone':$(this).val()
+                    },
+                    success:function(response){
+                        console.log(response)
+                        $('#cname').val(response.customer.name)
+                    }
+                })
+            })
+        })
+
+
     </script>
 {% endblock %}
