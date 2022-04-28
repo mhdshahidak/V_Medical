@@ -125,10 +125,9 @@ def staff(request):
     branch=Branch.objects.get(id=request.session['branch'])
     staffs=StaffBankDetails.objects.filter(staff__branch=request.session['branch'])
     active_staff=StaffBankDetails.objects.filter(staff__branch=request.session['branch'],staff__status='Active')
-    print(active_staff)
+    # print(active_staff)
     inactive_staff=StaffBankDetails.objects.filter(staff__branch=request.session['branch'],staff__status='InActive')
-    print(inactive_staff)
-    # print(staffs.staff)
+    # print(inactive_staff)
     context={"is_staff":True,
         "staffs":staffs,
         'branch':branch,
@@ -161,7 +160,7 @@ def add_staff(request):
         account_num=request.POST['accnum']
         ifsc=request.POST['ifsc']
         
-        if request.FILES['profile']:
+        if request.POST['profile']:
             profile=request.FILES['profile']
 
         staff_exist=Staff.objects.filter(name=Name,staff_id=staff_id,phone=phone).exists()
@@ -171,16 +170,15 @@ def add_staff(request):
             new_staff.save()
             new_staff_bank=StaffBankDetails(staff=new_staff,holder_name=holder_name,bank_name=bank_name,account_number=account_num,ifsc=ifsc,branch=branchname)
             new_staff_bank.save()
-        return render(request,'addstaff.html',{'status':1,})
-   
-    else:
-        context = {"is_addstaff": True,
-            "status":0,
-            "branch_id":staff_id
-        }
-        return render(request,'addstaff.html',context)
-
-    # return render(request,'addstaff.html',context)
+            return render(request,'addstaff.html',{'status':1,})
+        else:
+            context = {
+                "is_addstaff": True,
+                "status":0,
+                "branch_id":staff_id
+            }
+            return render(request,'addstaff.html',context)
+    return render(request,'addstaff.html')
 
 
 def edit_staff(request,sbid,sid):

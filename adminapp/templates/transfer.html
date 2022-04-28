@@ -40,11 +40,6 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>From:</label>
-                                        {% comment %} <select class="select cal-icon form-control" name="from" id="fbranch">
-                                        {% for fb in branch %}
-                                            <option value="{{fb.id}}">{{fb.branch_name}}</option>
-                                        {% endfor %}
-                                        </select> {% endcomment %}
                                         <input type="text" class="form-control" name="from"  list="branchlist" id="fbranch" >
                                         <datalist id="branchlist">
                                         {% for fb in branch %}
