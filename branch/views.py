@@ -15,7 +15,6 @@ def login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-
         admin_exist = AdminLogin.objects.filter(
             username=username, password=password).exists()
         branch_exist = Branch.objects.filter(branch_id=username, password=password).exists()
@@ -32,7 +31,6 @@ def login(request):
         else:
             msg = "user name or password incorrect"
             return render(request, 'login.html', {'msg':msg,})
-
     return render(request,'login.html')
 
 
@@ -48,7 +46,8 @@ def branch_home(request):
     branch=Branch.objects.get(id=request.session['branch'])
     # print(branch.brach_name)
     staff_transfer_request = Transfer.objects.filter(from_branch=branch)
-    context={"is_branchhome":True,
+    context={
+        "is_branchhome":True,
         'branch':branch,
         's_transfer':staff_transfer_request
     }
@@ -60,11 +59,13 @@ def branch_home(request):
 def customers(request):
     customers=Customers.objects.all().order_by('name')
     branch=Branch.objects.get(id=request.session['branch'])
-    context={"is_customers":True,
+    context={
+        "is_customers":True,
         'customers':customers,
         'branch':branch
     }
     return render(request,'customers.html',context)
+
 
 
 def addcustomers(request):
@@ -74,21 +75,20 @@ def addcustomers(request):
         email = request.POST['email']
         phone = request.POST['phone']
         place = request.POST['place']
-
         customer_exist=Customers.objects.filter(name=customer_name,phone=phone).exists()
-
         if not customer_exist:
             new_customer=Customers(name=customer_name,email=email,phone=phone,place=place)
             new_customer.save()
             return render(request,'addcustomers.html',{'status':1,})
-
         else:
-            context={"is_addcustomers":True,
+            context={
+                "is_addcustomers":True,
                 "status": 0,
                 'branch':branch
             }
             return render(request,'addcustomers.html',context)
     return render(request,'addcustomers.html')
+
 
 
 
@@ -101,16 +101,15 @@ def edit_customer(request,cid):
         place = request.POST['place']
         Customers.objects.filter(id=cid).update(name=customer_name,email=email,phone=phone,place=place)
         return redirect('branch:customers')
-
     else:
         customers=Customers.objects.get(id=cid)
-
     context={
         "is_editcustomer":True,
         "customers":customers,
         'branch':branch
         }
     return render(request,'editcustomer.html',context)
+
 
 
 def delete_customer(request,cust_delid):
@@ -128,7 +127,8 @@ def staff(request):
     # print(active_staff)
     inactive_staff=StaffBankDetails.objects.filter(staff__branch=request.session['branch'],staff__status='InActive')
     # print(inactive_staff)
-    context={"is_staff":True,
+    context={
+        "is_staff":True,
         "staffs":staffs,
         'branch':branch,
         'activestaff':active_staff,
@@ -142,7 +142,6 @@ def add_staff(request):
     rand=random.randint(10000,999999)
     staff_id='VMS'+str(rand)
     profile=""
-    
     if request.method == 'POST':
         Name = request.POST['name']
         staff_id = staff_id
@@ -159,12 +158,9 @@ def add_staff(request):
         branchname=request.POST['branchname']
         account_num=request.POST['accnum']
         ifsc=request.POST['ifsc']
-        
         if request.POST['profile']:
             profile=request.FILES['profile']
-
         staff_exist=Staff.objects.filter(name=Name,staff_id=staff_id,phone=phone).exists()
-
         if not staff_exist:
             new_staff=Staff(profile=profile,name=Name,staff_id=staff_id,email=email,phone=phone,place=place,state=state,address=address,pincode=pincode,date=date,branch=branch)
             new_staff.save()
@@ -176,14 +172,15 @@ def add_staff(request):
                 "is_addstaff": True,
                 "status":0,
                 "branch_id":staff_id
-            }
-            return render(request,'addstaff.html',context)
+                }
+        return render(request,'addstaff.html',context)
     return render(request,'addstaff.html')
 
 
+
 def edit_staff(request,sbid,sid):
-    print(sbid)
-    print(sid)
+    # print(sbid)
+    # print(sid)
     staff=request.session['branch']
     print(staff)
     if request.method == 'POST':
@@ -216,32 +213,32 @@ def edit_staff(request,sbid,sid):
     return render(request,'editstaff.html',context)
 
 
+
 def delete_staff(rquest,staff_delid):
     Staff.objects.filter(id=staff_delid).update(status='InActive')
     return redirect('branch:staff')
 
 
-def getstaffGet(request,sid):
-
-    staffs=StaffBankDetails.objects.get(id=sid)
-
+def GetStaffGet(request,id):
+    staffs=Staff.objects.get(id=id)
+    staffbank=StaffBankDetails.objects.get(staff__id=id)
+    print(staffs)
+    print(staffbank)
     data={
-        "profile":staffs.staff.profile,
-        "name":staffs.staff.name,
-        "sid":staffs.staff.staff_id,
-        "email":staffs.staff.email,
-        "phone":staffs.staff.phone,
-        # "city":staffs.staff.staff_id,
-        "place":staffs.staff.place,
-        "address":staffs.staff.address,
-        "joindate":staffs.staff.date,
-        "branchname":staffs.branch,
-        "bankname":staffs.bank_name,
-        "accnumber":staffs.account_number,
-        "ifsc":staffs.ifsc,
-
+        "profile":staffs.profile.url,
+        "name":staffs.name,
+        "staff_id":staffs.staff_id,
+        "email":staffs.email,
+        "phone":staffs.phone,
+        "place":staffs.place,
+        "address":staffs.address,
+        "date":staffs.date,
+        "branch":staffbank.branch,
+        "bank_name":staffbank.bank_name,
+        "account_number":staffbank.account_number,
+        "ifsc":staffbank.ifsc,
     }
-    return JsonResponse({'staff': data,})
+    return JsonResponse({'staffs': data,})
 
 
 ## Prdouct View functions
