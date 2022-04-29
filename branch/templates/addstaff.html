@@ -8,21 +8,18 @@
     <div class="page-wrapper">
         <div class="content container-fluid">
 
-            {% if status == 1 %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Successfully</strong> add the customer.
-            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                aria-label="Close"></button>
-        </div>
-        {% comment %} <div class="alert alert-success alert-dismissible fade show" role="alert">
-            Successfully added the <strong>customer</strong>
-        </div> {% endcomment %}
+        {% if status == 1 %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Successfully</strong> add the Staff.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+            </div>
         {% elif status == 0 %}
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>customer</strong>already exists
-            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                aria-label="Close"></button>
-        </div>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>customer</strong>already exists
+                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+            </div>
         {% endif %}
 
             <div class="page-header">

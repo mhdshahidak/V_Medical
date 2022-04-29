@@ -63,7 +63,6 @@ class MedicineTransfer(models.Model):
         db_table = 'medtransfer'
 
 
-<<<<<<< HEAD
 class Expense(models.Model):
     category=models.CharField(max_length=50)
     date=models.DateField(default=datetime.date.today)
@@ -73,7 +72,8 @@ class Expense(models.Model):
 
     class Meta:
         db_table='expense'
-=======
+
+
 class Invoive(models.Model):
     invoice_no = models.CharField(max_length=15,unique=True)
     customer = models.ForeignKey(Customers, on_delete=models.CASCADE)
@@ -85,4 +85,17 @@ class Invoive(models.Model):
 
     class Meta:
         db_table = 'invoice'
->>>>>>> e6cfe0a0477faeaf65344e1f7eeedcf27d953303
+
+
+class Income(models.Model):
+    category=models.CharField(max_length=50)
+    date=models.DateField(default=datetime.date.today)
+    note=models.CharField(max_length=500)
+    amount=models.FloatField()
+    criteria=models.CharField(max_length=250)
+    fromperson=models.CharField(max_length=25)
+    branch_id=models.ForeignKey(Branch,on_delete=models.CASCADE)
+    
+    class Meta:
+        db_table = 'income'
+

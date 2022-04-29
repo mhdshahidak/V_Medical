@@ -142,14 +142,14 @@
                             </a>
                         </li>
 
-                        <li {% if is_customers %} class="active" {% endif %} {% if is_addcustomers %} class="active" {% endif %}>
+                        <li {% if is_customers %} class="active" {% elif is_addcustomers %} class="active" {% elif is_editcustomer %} class="active" {% endif %}>
                             <a href="{% url 'branch:customers' %}">
                                 <i class="fa fa-user-circle"></i>
                                 <span>Customers</span>
                             </a>
                         </li>
 
-                        <li {% if is_staff %} class="active" {% endif %} {% if is_addstaff %} class="active" {% endif %}>
+                        <li {% if is_staff %} class="active" {% elif is_addstaff %} class="active" {% elif is_editstaff %} class="active" {% endif %}>
                             <a href="{% url 'branch:staff' %}">
                                 <i class="fa fa-users"></i>
                                 <span>Staff</span>
@@ -197,7 +197,7 @@
                             </a>
                         </li>
 
-                        <li {% if is_income %} class="active" {% endif %}>
+                        <li {% if is_income %} class="active" {% elif is_addincome%} class="active" {% endif %}>
                             <a href="{% url 'branch:income' %}">
                                 <i class="material-icons fa-md">monetization_on</i>
                                 <span>Income</span>

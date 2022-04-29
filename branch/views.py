@@ -6,11 +6,8 @@ from django.shortcuts import redirect
 
 
 from adminapp.models import AdminLogin, Branch, Staff, StaffBankDetails, Transfer
-<<<<<<< HEAD
-from branch.models import BranchBank, BranchProducts, Customers, Expense, MedicineTransfer, Product
-=======
+from branch.models import BranchBank, BranchProducts, Customers, Expense, Income, MedicineTransfer, Product
 from branch.models import BranchBank, BranchProducts, Customers, Invoive, MedicineTransfer, Product
->>>>>>> e6cfe0a0477faeaf65344e1f7eeedcf27d953303
 from v_med.decorators import auth_branch
 
 # Create your views here.
@@ -52,10 +49,12 @@ def branch_home(request):
     branch=Branch.objects.get(id=request.session['branch'])
     # print(branch.brach_name)
     staff_transfer_request = Transfer.objects.filter(from_branch=branch)
+    expenses=Expense.objects.filter(branch_id=request.session['branch']).all()
     context={
         "is_branchhome":True,
         'branch':branch,
-        's_transfer':staff_transfer_request
+        's_transfer':staff_transfer_request,
+        'expenses':expenses,
     }
     return render(request,'branch_home.html',context)
 
@@ -88,12 +87,15 @@ def addcustomers(request):
             return render(request,'addcustomers.html',{'status':1,})
         else:
             context={
-                "is_addcustomers":True,
                 "status": 0,
                 'branch':branch
             }
             return render(request,'addcustomers.html',context)
-    return render(request,'addcustomers.html')
+    else:
+        context={
+            "is_addcustomers":True,
+        }
+    return render(request,'addcustomers.html',context)
 
 
 
@@ -109,12 +111,12 @@ def edit_customer(request,cid):
         return redirect('branch:customers')
     else:
         customers=Customers.objects.get(id=cid)
-    context={
-        "is_editcustomer":True,
-        "customers":customers,
-        'branch':branch
-        }
-    return render(request,'editcustomer.html',context)
+        context={
+            "is_editcustomer":True,
+            "customers":customers,
+            'branch':branch
+            }
+        return render(request,'editcustomer.html',context)
 
 
 
@@ -145,8 +147,14 @@ def staff(request):
 
 
 def add_staff(request):
-    rand=random.randint(10000,999999)
-    staff_id='VMS'+str(rand)
+    # rand=random.randint(10000,999999)
+    # staff_id='VMS'+str(rand)
+    if Staff.objects.exists():
+        staff = Staff.objects.last().id
+        staff_id = 'VMS'+str(101234+staff)
+    else:
+        est=0
+        est_id = 'EST'+int(10+est)
     profile=""
     if request.method == 'POST':
         Name = request.POST['name']
@@ -175,12 +183,15 @@ def add_staff(request):
             return render(request,'addstaff.html',{'status':1,})
         else:
             context = {
-                "is_addstaff": True,
                 "status":0,
                 "branch_id":staff_id
                 }
         return render(request,'addstaff.html',context)
-    return render(request,'addstaff.html')
+    else:
+        context={
+            "is_addstaff": True,
+        }
+    return render(request,'addstaff.html',context)
 
 
 
@@ -221,7 +232,7 @@ def edit_staff(request,sbid,sid):
 
 
 def delete_staff(rquest,staff_delid):
-    Staff.objects.filter(id=staff_delid).update(status='InActive')
+    Staff.objects.filter(id=staff_delid).update(status='InActive')  
     return redirect('branch:staff')
 
 
@@ -322,14 +333,14 @@ def edit_product(request,bpid,prid):
         qproduct.save()
         BranchProducts.objects.filter(id=bpid).update(branch=branch)
         Product.objects.filter(id=prid).update(name=name,purchase_cost=p_cost,selling_cost=s_cost,description=description)
-        return redirect('branch:products')  
+        return render(request,'editproduct.html',{'status':1,})  
     else:
         edit_product=BranchProducts.objects.get(id=bpid)                                   
-    context={
-        "is_editproduct":True,
-        "editproduct":edit_product,
-        "status":0,
-    }
+        context={
+            "is_editproduct":True,
+            "editproduct":edit_product,
+            "status":0,
+        }
     return render(request,'editproduct.html',context)
 
 
@@ -438,25 +449,47 @@ def add_bank(request):
         branchname=request.POST['bname']
         ifsc=request.POST['ifsc']
         branch=Branch.objects.get(id=request.session['branch'])
+        # bankbalane=request.POST['balance']
 
         new_bank=BranchBank(Accholder_name=holdername,account_number=accountnum,bank_name=bankname,branch_name=branchname,ifsc=ifsc,branch=branch)
         new_bank.save()
         context={
-        "is_addbank":True,
-        "status":1,
+            "status":1,
         }
-        return render(request,'addbank.html',context)
+    context={
+    "is_addbank":True,
+    }
+    return render(request,'addbank.html',context)
     return render(request,'addbank.html')
 
 
 
-
+#income section
 def income(request):
-    context={"is_income":True}
+    income=Income.objects.filter(branch_id=request.session['branch']).all()
+    context={
+        "is_income":True,
+        "income":income,
+        }
     return render(request,'income.html',context)
 
 def add_income(request):
-    return render(request,'add_income.html')
+    if request.method=='POST':
+        category=request.POST['category']
+        date=request.POST['date']
+        amount=request.POST['amount']
+        criteria=request.POST['criteria']
+        # notes=request.POST['notes']
+        fromperson=request.POST['fromperson']
+        branch=Branch.objects.get(id=request.session['branch'])
+        new_income=Income(category=category,date=date,amount=amount,criteria=criteria,fromperson=fromperson,branch_id=branch)
+        new_income.save()
+        return render(request,'add_income.html',{'status':1,}) 
+    context={
+        "is_addincome":True,
+        "status":0
+    }
+    return render(request,'add_income.html',context)
 
 
 # search medicine
