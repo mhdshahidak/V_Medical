@@ -24,6 +24,8 @@ class BranchProducts(models.Model):
 
     class Meta:
         db_table = 'branchproducts'
+        unique_together = ('product','branch')
+    
 
 
 class Customers(models.Model):
@@ -57,3 +59,16 @@ class MedicineTransfer(models.Model):
 
     class Meta:
         db_table = 'medtransfer'
+
+
+class Invoive(models.Model):
+    invoice_no = models.CharField(max_length=15,unique=True)
+    customer = models.ForeignKey(Customers, on_delete=models.CASCADE)
+    date = models.DateField(default=datetime.date.today)
+    product = models.ForeignKey(BranchProducts, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    total = models.IntegerField()
+    payment_methode = models.CharField(max_length=30)
+
+    class Meta:
+        db_table = 'invoice'

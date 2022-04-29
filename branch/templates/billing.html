@@ -40,7 +40,8 @@
                 <div class="col-md-12">
                     <div class="card invoices-add-card">
                         <div class="card-body">
-                            <form action="#" class="invoices-form">
+                            <form action="#" class="invoices-form" method="POST">
+                                {% csrf_token %}
                                 <div class="invoices-main-form">
                                     <div class="row">
                                         <div class="col-xl-4 col-md-4 col-sm-12 col-12">
@@ -76,7 +77,7 @@
                                             <h4 class="invoice-details-title">Invoice details</h4>
                                             <div class="invoice-details-box">
                                                 <div class="invoice-inner-head">
-                                                    <span>Invoice No. <a href="view-invoice.html">IN093439#@09</a></span>
+                                                    <span>Invoice No. <input class="form-control" type=text value="{{invoice_id}}" name="invId" id="invId" readonly></span>
                                                 </div>
                                                 <div class="invoice-inner-footer">
                                                     <div class="row align-items-center">
@@ -84,9 +85,7 @@
                                                             <div class="invoice-inner-date">
                                                                 <span>
                                                                     Date
-                                                                    <input class="form-control datetimepicker"
-                                                                           type="text"
-                                                                           placeholder="15/02/2022">
+                                                                    <input class="form-control" type="date" name="invdate">              
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -107,6 +106,7 @@
                                                     806 Twin Willow Lane, Old Forge,
                                                     <br>
                                                     Newyork, USA
+                                                    {{msg}}
                                                     <br>
                                                 </p>
                                             </div>
@@ -116,7 +116,7 @@
                                 <div class="invoice-add-table">
                                     <h4>Item Details</h4>
                                     <div class="table-responsive">
-                                        <table class="table table-center add-table-items">
+                                        <table  class="table table-center add-table-items">
                                             <thead>
                                                 <tr>
                                                     <th>Sl no</th>
@@ -130,7 +130,7 @@
                                             <tbody>
                                                 <tr class="add-row">
                                                     <td>
-                                                        <input type="text" class="form-control" readonly value="1">
+                                                        <input type="text" class="form-control" readonly value="1" >
                                                     </td>
                                                     <td>
                                                         
@@ -140,17 +140,17 @@
                                                         </datalist>
                                                     </td>
                                                     <td>
-                                                        <input type="number" class="form-control" id="qty1" min="1" onchange=changedqty(1) >
+                                                        <input type="number" class="form-control" id="qty1" min="1" onchange=changedqty(1) name="qty">
                                                     </td>
                                                     <td>
                                                         <input type="text" class="form-control" id="price1">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control" id="itemtotal1" >
+                                                        <input type="text" class="form-control" id="itemtotal1" name="itemtotal" >
                                                     </td>
                                                     <td class="add-remove text-end">
                                                         <a href="javascript:void(0);" class="add-btn me-2"><i class="fas fa-plus-circle" ></i></a>
-                                                        <a href="javascript:void(0);" class="remove-btn"><i class="fas fa-trash" ></i></a>
+                                                        {% comment %} <a href="javascript:void(0);" class="remove-btn"><i class="fas fa-trash" ></i></a> {% endcomment %}
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -166,7 +166,7 @@
                                                     Payment Details
                                                 </p>
                                                 <div class="col-md-6">
-                                                    <select class="form-select" name="type">
+                                                    <select class="form-select" name="type" id="type">
                                                         <option>
                                                             CASH
                                                         </option>
@@ -227,7 +227,7 @@
                                         </div>
                                         <div class="upload-sign">
                                             <div class="form-group float-end mb-0">
-                                                <button class="btn btn-primary" type="submit">Generate bill</button>
+                                                <button class="btn btn-primary" type="submit" id="generatebutton">Generate bill</button>
                                             </div>
                                         </div>
                                     </div>

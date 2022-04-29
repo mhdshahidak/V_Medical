@@ -2,9 +2,11 @@ import random
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
+# from tomlkit import datetime
+
 
 from adminapp.models import AdminLogin, Branch, Staff, StaffBankDetails, Transfer
-from branch.models import BranchBank, BranchProducts, Customers, MedicineTransfer, Product
+from branch.models import BranchBank, BranchProducts, Customers, Invoive, MedicineTransfer, Product
 from v_med.decorators import auth_branch
 
 # Create your views here.
@@ -330,6 +332,10 @@ def edit_product(request,bpid,prid):
     return render(request,'editproduct.html',context)
 
 
+def data_adding(request):
+    pass
+
+
 def delete_product(request,pr_delid):
     Product.objects.filter(id=pr_delid).delete()
     return redirect('branch:products')
@@ -337,12 +343,53 @@ def delete_product(request,pr_delid):
 
 
 # billing section
+
+
 def billing(request):
+    msg = ""
+    if request.POST:
+      cust_phone = request.POST['cphone']  
+      inv_id = request.POST['invId']
+    #   inv_date = request.POST['invdate']
+      med_name = request.POST['medicinename']
+      print(med_name)
+      qty = request.POST['qty']
+      payment_type = request.POST['type']
+      item_total = request.POST['itemtotal']
+    #   branch = Branch.objects.get(id=request.session['branch'])
+    #   product = Product.objects.get()
+
+      cust_exists = Customers.objects.filter(phone=cust_phone).exists()
+      if cust_exists:
+        #   customer = Customers.objects.get(phone=cust_phone)
+          customer = Customers.objects.get(phone=cust_phone)
+          product = BranchProducts.objects.get(product__name=med_name,branch=request.session['branch'])
+          new_bill = Invoive(invoice_no=inv_id,customer=customer,product=product,quantity=qty,total=item_total,payment_methode=payment_type)
+          print(new_bill)
+          new_bill.save()
+          msg = "BILL GENERATED"
+
+          
+          
+    # else:
+    #     print('#'*10)
+
+    if Invoive.objects.exists():
+        est = Invoive.objects.last().id
+        est_id = 'VMINS'+str(102354+est)
+    else:
+        est=0
+        est_id = 'VMINS'+str(102354+est)
+    
+    # print(datetime.today())
+
     product = BranchProducts.objects.filter(branch=request.session['branch'])
     customer = Customers.objects.all()
     context={"is_billing":True,
         "product":product,
-        "customer":customer
+        "customer":customer,
+        "invoice_id":est_id,
+        "msg":msg,
     }
     return render(request,'billing.html',context)
 
