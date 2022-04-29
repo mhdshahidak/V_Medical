@@ -70,8 +70,42 @@ function changedqty(rowCount){
 }
 
 
+//multilple adding
+
+$('#generatebutton').click(function () {
+    var rowCount = $(".add-table-items tr").length;
+    for (var i = 1; i < rowCount; i++) {
+        var invoiceId = $('#invId' + i).val()
+        var customer_phone = $('#cphone' + i).val()
+        var medicinename= $('#medicinename' + i).val()
+        var qty = $('#qty' + i).val()
+        var itemtotal = $('#itemtotal' + i).val()
+        var type = $('#type' + i).val()
+
+        var data = {
+            "invoiceId": invoiceId,
+            "customer_phone": customer_phone,
+            "medicinename": medicinename,
+            "qty": qty,
+            "itemtotal": itemtotal,
+            "type": type,
+
+        }
+        // console.log(data)
+        $.ajax({
+            url: "billing",
+            type: 'POST',
+            data: data,
+            success: function (responce) {
 
 
-// function remove(rowCount){
 
-// }
+            }
+
+        })
+
+
+
+    }
+    return false;
+})
