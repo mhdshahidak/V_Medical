@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 
 from adminapp.models import AdminLogin, Branch, Staff, StaffBankDetails, Transfer
-from branch.models import BranchBank, BranchProducts, Customers, MedicineTransfer, Product
+from branch.models import BranchBank, BranchProducts, Customers, Expense, MedicineTransfer, Product
 from v_med.decorators import auth_branch
 
 # Create your views here.
@@ -390,11 +390,12 @@ def add_bank(request):
 
         new_bank=BranchBank(Accholder_name=holdername,account_number=accountnum,bank_name=bankname,branch_name=branchname,ifsc=ifsc,branch=branch)
         new_bank.save()
-    context={
+        context={
         "is_addbank":True,
         "status":1,
         }
-    return render(request,'addbank.html',context)
+        return render(request,'addbank.html',context)
+    return render(request,'addbank.html')
 
 
 
@@ -427,13 +428,58 @@ def search_medicine(request):
     }
     return render(request,'search.html',context)
 
+
+
+# Expenses
 def expenses(request):
-    context={"is_expenses":True}
+    expense=Expense.objects.filter(branch_id=request.session['branch'])
+    context={
+            "is_expenses":True,
+            "expense":expense,
+        }
     return render(request,'expenses.html',context)
 
+
 def add_expenses(request):
+    if request.method=='POST':
+        category=request.POST['category']
+        date=request.POST['date']
+        note=request.POST['note']
+        amount=request.POST['amount']
+        branch=Branch.objects.get(id=request.session['branch'])
+
+        new_expense=Expense(category=category,date=date,note=note,amount=amount,branch_id=branch)
+        new_expense.save()
+        return render(request,'add_expense.html',{'status':1,})
     context={"is_addexpenses":True}
     return render(request,'add_expense.html',context)
+
+def edit_expence(request,id):
+    if request.method=='POST':
+        category=request.POST['category']
+        date=request.POST['date']
+        note=request.POST['note']
+        amount=request.POST['amount']
+        branch=Branch.objects.get(id=request.session['branch'])
+        Expense.objects.filter(id=id).update(category=category,date=date,note=note,amount=amount,branch_id=branch)
+    else:
+        expense=Expense.objects.get(id=id)
+        context = {
+            'status':1,
+            'expense':expense,
+        }
+        return render(request,'editexpence.html',context)
+    return render(request,'editexpence.html')
+
+
+def delete_expense(request,eid):
+    Expense.objects.filter(id=eid).delete()
+    return redirect('branch:expenses')
+
+
+
+
+
 
 def invoices_list(request):
     context={"is_invoicelist":True}
@@ -497,7 +543,7 @@ def med_accept(request,pid):
     branch.quantity=medobj.avblbranch.quantity-int(qty)
     branch.save()
     medobj.status = "Accepted"
-    medobj.save()
+    medobj.save() 
     
 
     return redirect('branch:requests')
@@ -537,8 +583,7 @@ def profit_loss(request):
     context={"is_profitloss":True}
     return render(request,'profit_loss_report.html',context)
 
-def edit_expence(request):
-    return render(request,'editexpence.html')
+
 
 
 # Purchase list
