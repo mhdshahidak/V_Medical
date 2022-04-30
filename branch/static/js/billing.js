@@ -26,7 +26,7 @@ $(document).on("click", ".add-btn", function () {
         '</td>' +
         '<td class="add-remove text-end">' +
         '<a href="javascript:void(0);" class="add-btn me-2"><i class="fas fa-plus-circle"></i></a> ' +
-        '<a href="javascript:void(0);" class="remove-btn" onclick=remove()><i class="fas fa-trash"></i></a>' +
+        '<a href="javascript:void(0);" class="remove-btn" onclick="DeleteRow(' + rowCount + ')"><i class="fas fa-trash"></i></a>' +
         '</td>' +
         '</tr>';
 
@@ -111,3 +111,21 @@ $('#generatebutton').click(function () {
     }
     return false;
 })
+
+// deleting row
+
+function DeleteRow(id){
+
+    var completeTotal =0
+    var amount=parseInt($("#itemtotal" + id).val())  
+    var total=$("#total_amount" ).html()
+    var sub = $("#subtotal").html()
+    var gst = $("#gst").html()
+    sub_total = parseInt(sub) - amount
+    $("#subtotal").html(sub_total)
+    fgst = parseInt(gst) - amount*5/100;
+    $("#gst").html(fgst)
+    completeTotal =  sub_total + fgst
+    $("#total_amount").html(completeTotal)
+
+}
