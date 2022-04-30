@@ -400,8 +400,9 @@ def data_adding(request):
         new_bill = Invoive(invoice_no=inv_id,customer=customer,product=product,quantity=qty,total=item_total,payment_methode=payment_type)
         print(new_bill)
         new_bill.save()
-
-        # msg = "BILL GENERATED"
+        product.quantity = product.quantity - int(qty)
+        product.save()
+        return JsonResponse({'msg':'BILL GENERATED'})
     
     return JsonResponse({'msg':'BILL GENERATED'})
     # return redirect('branch:billing')
@@ -434,7 +435,26 @@ def med_price(request):
 
 def preview(request):
     # context
-    return render(request,'preview.html')
+   
+    prid = request.GET['prid']
+    print(prid)
+    items = Invoive.objects.filter(invoice_no=prid)
+    date = Invoive.objects.get(invoice_no=prid)
+    cust = Invoive.objects.select_related('customer','product').get(invoice_no=prid)
+    # date = Invoive.objects.select_related('product').get(invoice_no=prid)
+
+
+
+    print(items)
+    context={"is_billing":True,
+        "invid":prid,
+        'items':items,
+        'cust':cust,
+        'date':date
+
+        
+    }
+    return render(request,'preview.html',context)
 
 
 
@@ -468,7 +488,7 @@ def add_bank(request):
     "is_addbank":True,
     }
     return render(request,'addbank.html',context)
-    return render(request,'addbank.html')
+  
 
 
 
@@ -567,9 +587,6 @@ def edit_expence(request,id):
 def delete_expense(request,eid):
     Expense.objects.filter(id=eid).delete()
     return redirect('branch:expenses')
-
-
-
 
 
 

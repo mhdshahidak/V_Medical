@@ -36,7 +36,7 @@
                                         <div class="invoice-head">
                                             <h2 class="text-primary">Invoice</h2>
                                             <p>
-                                                Invoice Number : In983248782
+                                                Invoice Number : {{invid}}
                                             </p>
                                         </div>
                                     </div>
@@ -53,16 +53,16 @@
                                     <div class="invoice-info">
                                         <strong class="customer-text-one">Billed to</strong>
                                         <h6 class="invoice-name">
-                                            Customer Name
+                                            {{ cust.customer.name }}
                                         </h6>
                                         <p class="invoice-details invoice-details-two">
-                                            9087484288
+                                           {{ cust.customer.phone }}
                                             <br>
-                                            Address line 1,
+                                                {{ cust.customer.email }}
                                             <br>
-                                            Address line 2
-                                            <br>
-                                            Zip code ,City - Country
+                                            {{ cust.customer.place }}
+                                           
+                                          
                                         </p>
                                     </div>
                                 </div>
@@ -70,27 +70,26 @@
                                     <div class="invoice-info">
                                         <strong class="customer-text-one">Invoice From</strong>
                                         <h6 class="invoice-name">
-                                            Company Name
+                                            {{cust.product.branch.branch_name}}
                                         </h6>
                                         <p class="invoice-details invoice-details-two">
-                                            9087484288
+                                            {{cust.product.branch.phone}}
                                             <br>
-                                            Address line 1,
+                                            {{cust.product.branch.email}}
                                             <br>
-                                            Address line 2
+                                            {{cust.product.branch.address}}
                                             <br>
-                                            Zip code ,City - Country
+                                            {{cust.product.branch.place}}
+                                            
                                         </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-12">
                                     <div class="invoice-info invoice-info-one border-0">
                                         <p>
-                                            Issue Date : 27 Jul 2022
+                                            Issue Date : {{date.date}}
                                         </p>
-                                        <p class="mb-0">
-                                            PO Number : 54515454
-                                        </p>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -120,57 +119,26 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            {% for l in items %}
                                                 <tr>
                                                     <td>
-                                                        1
+                                                        
                                                     </td>
                                                     <td>
-                                                        Paracetamole-500
+                                                        {{l.product.product.name}}
                                                     </td>
                                                     <td>
-                                                        $1,110
+                                                        {{l.quantity}}
                                                     </td>
                                                     <th>
-                                                        2
+                                                        {{l.product.product.selling_cost}}
                                                     </th>
                                                     <td class="text-end">
-                                                        $400
+                                                        {{l.total}}
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        2
-                                                    </td>
-                                                    <td>
-                                                        Thyroxin
-                                                    </td>
-                                                    <td>
-                                                        $1,500
-                                                    </td>
-                                                    <th>
-                                                        3
-                                                    </th>
-                                                    <td class="text-end">
-                                                        $3,000
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Apple Ipad
-                                                    </td>
-                                                    <td>
-                                                        Ipad
-                                                    </td>
-                                                    <td>
-                                                        $11,500
-                                                    </td>
-                                                    <th>
-                                                        1
-                                                    </th>
-                                                    <td class="text-end">
-                                                        $11,000
-                                                    </td>
-                                                </tr>
+                                                
+                                            {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>

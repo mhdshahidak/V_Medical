@@ -18,10 +18,10 @@
                         <div class="invoices-create-btn">
                             
                             <a class="invoices-preview-link"
-                               href="{% url 'branch:preview' %}"
+                               href="/branchapp/preview?prid={{invoice_id}}"
                                data-bs-target="#invoices_preview"><i class="fa fa-eye"></i> Preview</a>
                             
-                            <a href="#"
+                            <!-- <a href="#"
                                data-bs-toggle="modal"
                                data-bs-target="#delete_invoices_details"
                                class="btn delete-invoice-btn">
@@ -30,7 +30,7 @@
                             <a href="#"
                                data-bs-toggle="modal"
                                data-bs-target="#save_invocies_details"
-                               class="btn save-invoice-btn">Save Draft</a>
+                               class="btn save-invoice-btn">Save Draft</a> -->
                         </div>
                     </div>
                 </div>
@@ -39,8 +39,8 @@
                 <div class="col-md-12">
                     <div class="card invoices-add-card">
                         <div class="card-body">
-                            <form action="#" class="invoices-form" method="POST">
-                                {% csrf_token %}
+                            <!-- <form action="#" class="invoices-form" method="POST"> -->
+                                <!-- {% csrf_token %} -->
                                 <div class="invoices-main-form">
                                     <div class="row">
                                         <div class="col-xl-4 col-md-4 col-sm-12 col-12">
@@ -230,7 +230,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            <!-- </form> -->
                         </div>
                     </div>
                 </div>

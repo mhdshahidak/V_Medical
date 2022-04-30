@@ -179,6 +179,8 @@ def transfer(request):
         tbranch = request.POST['to']
         fdate = request.POST['fdate']
         tdate = request.POST['tdate']
+        print(fdate)
+        print(tdate)
         tstaff = request.POST['sname']
         objfb = Branch.objects.get(branch_name=fbranch)
         objtb = Branch.objects.get(branch_name=tbranch)
