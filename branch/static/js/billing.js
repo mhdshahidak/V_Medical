@@ -73,14 +73,16 @@ function changedqty(rowCount){
 //multilple adding
 
 $('#generatebutton').click(function () {
+    var invoiceId = $('#invId').val()
+    var customer_phone = $('#cphone').val()
+    var type = $('#type').val()
+
     var rowCount = $(".add-table-items tr").length;
     for (var i = 1; i < rowCount; i++) {
-        var invoiceId = $('#invId' + i).val()
-        var customer_phone = $('#cphone' + i).val()
         var medicinename= $('#medicinename' + i).val()
         var qty = $('#qty' + i).val()
         var itemtotal = $('#itemtotal' + i).val()
-        var type = $('#type' + i).val()
+        
 
         var data = {
             "invoiceId": invoiceId,
@@ -93,12 +95,12 @@ $('#generatebutton').click(function () {
         }
         // console.log(data)
         $.ajax({
-            url: "billing",
+            url: "datadding",
             type: 'POST',
             data: data,
             success: function (responce) {
-
-
+                alert(responce.msg)
+                $(ducument).html(response)
 
             }
 

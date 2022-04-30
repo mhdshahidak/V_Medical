@@ -2,6 +2,7 @@ import random
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
 # from tomlkit import datetime
 
 
@@ -332,8 +333,6 @@ def edit_product(request,bpid,prid):
     return render(request,'editproduct.html',context)
 
 
-def data_adding(request):
-    pass
 
 
 def delete_product(request,pr_delid):
@@ -347,33 +346,7 @@ def delete_product(request,pr_delid):
 
 def billing(request):
     msg = ""
-    if request.POST:
-      cust_phone = request.POST['cphone']  
-      inv_id = request.POST['invId']
-    #   inv_date = request.POST['invdate']
-      med_name = request.POST['medicinename']
-      print(med_name)
-      qty = request.POST['qty']
-      payment_type = request.POST['type']
-      item_total = request.POST['itemtotal']
-    #   branch = Branch.objects.get(id=request.session['branch'])
-    #   product = Product.objects.get()
-
-      cust_exists = Customers.objects.filter(phone=cust_phone).exists()
-      if cust_exists:
-        #   customer = Customers.objects.get(phone=cust_phone)
-          customer = Customers.objects.get(phone=cust_phone)
-          product = BranchProducts.objects.get(product__name=med_name,branch=request.session['branch'])
-          new_bill = Invoive(invoice_no=inv_id,customer=customer,product=product,quantity=qty,total=item_total,payment_methode=payment_type)
-          print(new_bill)
-          new_bill.save()
-          msg = "BILL GENERATED"
-
-          
-          
-    # else:
-    #     print('#'*10)
-
+    
     if Invoive.objects.exists():
         est = Invoive.objects.last().id
         est_id = 'VMINS'+str(102354+est)
@@ -392,6 +365,33 @@ def billing(request):
         "msg":msg,
     }
     return render(request,'billing.html',context)
+
+
+
+@csrf_exempt
+def data_adding(request):
+    
+    cust_phone = request.POST['customer_phone']
+    inv_id = request.POST['invoiceId']
+    med_name = request.POST['medicinename']
+    qty = request.POST['qty']
+    payment_type = request.POST['type']
+    item_total = request.POST['itemtotal']
+
+    cust_exists = Customers.objects.filter(phone=cust_phone).exists()
+    if cust_exists:
+        customer = Customers.objects.get(phone=cust_phone)
+        product = BranchProducts.objects.get(product__name=med_name,branch=request.session['branch'])
+        new_bill = Invoive(invoice_no=inv_id,customer=customer,product=product,quantity=qty,total=item_total,payment_methode=payment_type)
+        print(new_bill)
+        new_bill.save()
+
+        # msg = "BILL GENERATED"
+    
+    # return JsonResponse({'msg':'BILL GENERATED'})
+    # return redirect('branch:billing')
+    # return render(request,)
+
 
 def cust_search(request):
     phone = request.GET['phone']
@@ -510,9 +510,6 @@ def med_requesting(request,pid):
     msg = ""
     qty = request.GET['qty']
     avbobj = BranchProducts.objects.get(id=pid)
-    # print('#'*20)
-    # print(request.session['branch'])
-    # branchobj = Branch.objects.get(id=request.session['branch'])
     reqobj = Branch.objects.get(id=request.session['branch'])
 
     new_req = MedicineTransfer(reqbranch=reqobj,avblbranch=avbobj,quantity=qty)
@@ -548,6 +545,22 @@ def med_accept(request,pid):
     branch.save()
     medobj.status = "Accepted"
     medobj.save()
+
+    product_exists_in_reqbranch = BranchProducts.objects.filter(product=medobj.avblbranch.product,branch=medobj.reqbranch).exists()
+    if not product_exists_in_reqbranch:
+        product = medobj.avblbranch.product
+        p_date = medobj.avblbranch.purchase_date
+        e_date = medobj.avblbranch.expiry_date
+        new_qty = medobj.quantity
+        req_branch = medobj.reqbranch
+        new_product = BranchProducts(product=product,purchase_date=p_date,expiry_date=e_date,quantity=new_qty,branch=req_branch)
+        new_product.save()
+        
+    else:
+        added_qty = BranchProducts.objects.get(product=medobj.avblbranch.product,branch=medobj.reqbranch)
+        added_qty.quantity = added_qty.quantity + int(qty)
+        added_qty.save()
+
     
 
     return redirect('branch:requests')

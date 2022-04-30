@@ -40,8 +40,8 @@
                 <div class="col-md-12">
                     <div class="card invoices-add-card">
                         <div class="card-body">
-                            <form action="#" class="invoices-form" method="POST">
-                                {% csrf_token %}
+                            {% comment %} <form action="#" class="invoices-form" method="POST">
+                                {% csrf_token %} {% endcomment %}
                                 <div class="invoices-main-form">
                                     <div class="row">
                                         <div class="col-xl-4 col-md-4 col-sm-12 col-12">
@@ -232,7 +232,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            {% comment %} </form> {% endcomment %}
                         </div>
                     </div>
                 </div>
