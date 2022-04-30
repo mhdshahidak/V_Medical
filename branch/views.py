@@ -270,7 +270,6 @@ def all_products(request):
 
 
 def add_medicine(request):
-    msg = ""
     rand=random.randint(10000,999999)
     product_id='VMP'+str(rand)
 
@@ -305,12 +304,14 @@ def add_medicine(request):
             new_product.save()
             branchproduct = BranchProducts(product=new_product,quantity=quantity,purchase_date=purchase_date,expiry_date=expiry_date,branch=branch)
             branchproduct.save()
-            msg = "Product Added Successfully"
-            return render(request,'addmedicine.html',{'status':1})
+            context={
+                'status':0,
 
-    context={"is_addmedicine":True,
-        'msg':msg,
-
+            }
+            return render(request,'addmedicine.html',context)
+    context={
+        "is_editproduct":True,
+        "editproduct":edit_product,
     }
     return render(request,'addmedicine.html',context)
 
@@ -338,10 +339,12 @@ def edit_product(request,bpid,prid):
     else:
         edit_product=BranchProducts.objects.get(id=bpid)                                   
         context={
-            "is_editproduct":True,
-            "editproduct":edit_product,
             "status":0,
         }
+    context={
+        "is_editproduct":True,
+        "editproduct":edit_product,
+    }
     return render(request,'editproduct.html',context)
 
 
