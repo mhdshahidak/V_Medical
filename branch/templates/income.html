@@ -86,18 +86,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for i in income %}
                                     <tr>
-                                        <td>Advertising</td>
-                                        <td>15 Nov 2020</td>
+                                        <td>{{i.category}}</td>
+                                        <td>{{i.date}}</td>
                                         <td>
                                             <h2 class="table-avatar">
-                                                 Barbara Moore
+                                                 {{i.fromperson}}
                                             </h2>
                                         </td>
-                                        <td>$145</td>
-                                        <td>Lorem ipsum dollar...</td>
+                                        <td>{{i.amount}}</td>
+                                        <td>{{i.criteria}}</td>
                                         
                                     </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>

@@ -1,4 +1,5 @@
 import datetime
+from unicodedata import category
 from django.db import models
 
 from adminapp.models import Branch
@@ -45,6 +46,7 @@ class BranchBank(models.Model):
     bank_name=models.CharField(max_length=50)
     branch_name=models.CharField(max_length=50)
     ifsc=models.CharField(max_length=30)
+    bankbalane=models.FloatField(default=0)
 
     class Meta:
         db_table = 'branchbank'
@@ -61,6 +63,17 @@ class MedicineTransfer(models.Model):
         db_table = 'medtransfer'
 
 
+class Expense(models.Model):
+    category=models.CharField(max_length=50)
+    date=models.DateField(default=datetime.date.today)
+    note=models.CharField(max_length=500)
+    amount=models.FloatField()
+    branch_id=models.ForeignKey(Branch,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table='expense'
+
+
 class Invoive(models.Model):
     invoice_no = models.CharField(max_length=15)
     customer = models.ForeignKey(Customers, on_delete=models.CASCADE)
@@ -72,3 +85,17 @@ class Invoive(models.Model):
 
     class Meta:
         db_table = 'invoice'
+
+
+class Income(models.Model):
+    category=models.CharField(max_length=50)
+    date=models.DateField(default=datetime.date.today)
+    note=models.CharField(max_length=500)
+    amount=models.FloatField()
+    criteria=models.CharField(max_length=250)
+    fromperson=models.CharField(max_length=25)
+    branch_id=models.ForeignKey(Branch,on_delete=models.CASCADE)
+    
+    class Meta:
+        db_table = 'income'
+

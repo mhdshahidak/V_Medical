@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 from adminapp.models import AdminLogin, Branch, Staff, StaffBankDetails, Transfer
+from branch.models import BranchBank, BranchProducts, Customers, Expense, Income, MedicineTransfer, Product
 from branch.models import BranchBank, BranchProducts, Customers, Invoive, MedicineTransfer, Product
 from v_med.decorators import auth_branch
 
@@ -18,7 +19,6 @@ def login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-
         admin_exist = AdminLogin.objects.filter(
             username=username, password=password).exists()
         branch_exist = Branch.objects.filter(branch_id=username, password=password).exists()
@@ -35,7 +35,6 @@ def login(request):
         else:
             msg = "user name or password incorrect"
             return render(request, 'login.html', {'msg':msg,})
-
     return render(request,'login.html')
 
 
@@ -51,9 +50,12 @@ def branch_home(request):
     branch=Branch.objects.get(id=request.session['branch'])
     # print(branch.brach_name)
     staff_transfer_request = Transfer.objects.filter(from_branch=branch)
-    context={"is_branchhome":True,
+    expenses=Expense.objects.filter(branch_id=request.session['branch']).all()
+    context={
+        "is_branchhome":True,
         'branch':branch,
-        's_transfer':staff_transfer_request
+        's_transfer':staff_transfer_request,
+        'expenses':expenses,
     }
     return render(request,'branch_home.html',context)
 
@@ -63,11 +65,13 @@ def branch_home(request):
 def customers(request):
     customers=Customers.objects.all().order_by('name')
     branch=Branch.objects.get(id=request.session['branch'])
-    context={"is_customers":True,
+    context={
+        "is_customers":True,
         'customers':customers,
         'branch':branch
     }
     return render(request,'customers.html',context)
+
 
 
 def addcustomers(request):
@@ -77,21 +81,23 @@ def addcustomers(request):
         email = request.POST['email']
         phone = request.POST['phone']
         place = request.POST['place']
-
         customer_exist=Customers.objects.filter(name=customer_name,phone=phone).exists()
-
         if not customer_exist:
             new_customer=Customers(name=customer_name,email=email,phone=phone,place=place)
             new_customer.save()
             return render(request,'addcustomers.html',{'status':1,})
-
         else:
-            context={"is_addcustomers":True,
+            context={
                 "status": 0,
                 'branch':branch
             }
             return render(request,'addcustomers.html',context)
-    return render(request,'addcustomers.html')
+    else:
+        context={
+            "is_addcustomers":True,
+        }
+    return render(request,'addcustomers.html',context)
+
 
 
 
@@ -104,16 +110,15 @@ def edit_customer(request,cid):
         place = request.POST['place']
         Customers.objects.filter(id=cid).update(name=customer_name,email=email,phone=phone,place=place)
         return redirect('branch:customers')
-
     else:
         customers=Customers.objects.get(id=cid)
+        context={
+            "is_editcustomer":True,
+            "customers":customers,
+            'branch':branch
+            }
+        return render(request,'editcustomer.html',context)
 
-    context={
-        "is_editcustomer":True,
-        "customers":customers,
-        'branch':branch
-        }
-    return render(request,'editcustomer.html',context)
 
 
 def delete_customer(request,cust_delid):
@@ -131,7 +136,8 @@ def staff(request):
     # print(active_staff)
     inactive_staff=StaffBankDetails.objects.filter(staff__branch=request.session['branch'],staff__status='InActive')
     # print(inactive_staff)
-    context={"is_staff":True,
+    context={
+        "is_staff":True,
         "staffs":staffs,
         'branch':branch,
         'activestaff':active_staff,
@@ -142,10 +148,15 @@ def staff(request):
 
 
 def add_staff(request):
-    rand=random.randint(10000,999999)
-    staff_id='VMS'+str(rand)
+    # rand=random.randint(10000,999999)
+    # staff_id='VMS'+str(rand)
+    if Staff.objects.exists():
+        staff = Staff.objects.last().id
+        staff_id = 'VMS'+str(101234+staff)
+    else:
+        est=0
+        est_id = 'EST'+int(10+est)
     profile=""
-    
     if request.method == 'POST':
         Name = request.POST['name']
         staff_id = staff_id
@@ -162,12 +173,9 @@ def add_staff(request):
         branchname=request.POST['branchname']
         account_num=request.POST['accnum']
         ifsc=request.POST['ifsc']
-        
         if request.POST['profile']:
             profile=request.FILES['profile']
-
         staff_exist=Staff.objects.filter(name=Name,staff_id=staff_id,phone=phone).exists()
-
         if not staff_exist:
             new_staff=Staff(profile=profile,name=Name,staff_id=staff_id,email=email,phone=phone,place=place,state=state,address=address,pincode=pincode,date=date,branch=branch)
             new_staff.save()
@@ -176,17 +184,21 @@ def add_staff(request):
             return render(request,'addstaff.html',{'status':1,})
         else:
             context = {
-                "is_addstaff": True,
                 "status":0,
                 "branch_id":staff_id
-            }
-            return render(request,'addstaff.html',context)
-    return render(request,'addstaff.html')
+                }
+        return render(request,'addstaff.html',context)
+    else:
+        context={
+            "is_addstaff": True,
+        }
+    return render(request,'addstaff.html',context)
+
 
 
 def edit_staff(request,sbid,sid):
-    print(sbid)
-    print(sid)
+    # print(sbid)
+    # print(sid)
     staff=request.session['branch']
     print(staff)
     if request.method == 'POST':
@@ -219,32 +231,32 @@ def edit_staff(request,sbid,sid):
     return render(request,'editstaff.html',context)
 
 
+
 def delete_staff(rquest,staff_delid):
-    Staff.objects.filter(id=staff_delid).update(status='InActive')
+    Staff.objects.filter(id=staff_delid).update(status='InActive')  
     return redirect('branch:staff')
 
 
-def getstaffGet(request,sid):
-
-    staffs=StaffBankDetails.objects.get(id=sid)
-
+def GetStaffGet(request,id):
+    staffs=Staff.objects.get(id=id)
+    staffbank=StaffBankDetails.objects.get(staff__id=id)
+    print(staffs)
+    print(staffbank)
     data={
-        "profile":staffs.staff.profile,
-        "name":staffs.staff.name,
-        "sid":staffs.staff.staff_id,
-        "email":staffs.staff.email,
-        "phone":staffs.staff.phone,
-        # "city":staffs.staff.staff_id,
-        "place":staffs.staff.place,
-        "address":staffs.staff.address,
-        "joindate":staffs.staff.date,
-        "branchname":staffs.branch,
-        "bankname":staffs.bank_name,
-        "accnumber":staffs.account_number,
-        "ifsc":staffs.ifsc,
-
+        "profile":staffs.profile.url,
+        "name":staffs.name,
+        "staff_id":staffs.staff_id,
+        "email":staffs.email,
+        "phone":staffs.phone,
+        "place":staffs.place,
+        "address":staffs.address,
+        "date":staffs.date,
+        "branch":staffbank.branch,
+        "bank_name":staffbank.bank_name,
+        "account_number":staffbank.account_number,
+        "ifsc":staffbank.ifsc,
     }
-    return JsonResponse({'staff': data,})
+    return JsonResponse({'staffs': data,})
 
 
 ## Prdouct View functions
@@ -322,14 +334,14 @@ def edit_product(request,bpid,prid):
         qproduct.save()
         BranchProducts.objects.filter(id=bpid).update(branch=branch)
         Product.objects.filter(id=prid).update(name=name,purchase_cost=p_cost,selling_cost=s_cost,description=description)
-        return redirect('branch:products')  
+        return render(request,'editproduct.html',{'status':1,})  
     else:
         edit_product=BranchProducts.objects.get(id=bpid)                                   
-    context={
-        "is_editproduct":True,
-        "editproduct":edit_product,
-        "status":0,
-    }
+        context={
+            "is_editproduct":True,
+            "editproduct":edit_product,
+            "status":0,
+        }
     return render(request,'editproduct.html',context)
 
 
@@ -437,24 +449,47 @@ def add_bank(request):
         branchname=request.POST['bname']
         ifsc=request.POST['ifsc']
         branch=Branch.objects.get(id=request.session['branch'])
+        # bankbalane=request.POST['balance']
 
         new_bank=BranchBank(Accholder_name=holdername,account_number=accountnum,bank_name=bankname,branch_name=branchname,ifsc=ifsc,branch=branch)
         new_bank.save()
-    context={
-        "is_addbank":True,
-        "status":1,
+        context={
+            "status":1,
         }
+    context={
+    "is_addbank":True,
+    }
     return render(request,'addbank.html',context)
+    return render(request,'addbank.html')
 
 
 
-
+#income section
 def income(request):
-    context={"is_income":True}
+    income=Income.objects.filter(branch_id=request.session['branch']).all()
+    context={
+        "is_income":True,
+        "income":income,
+        }
     return render(request,'income.html',context)
 
 def add_income(request):
-    return render(request,'add_income.html')
+    if request.method=='POST':
+        category=request.POST['category']
+        date=request.POST['date']
+        amount=request.POST['amount']
+        criteria=request.POST['criteria']
+        # notes=request.POST['notes']
+        fromperson=request.POST['fromperson']
+        branch=Branch.objects.get(id=request.session['branch'])
+        new_income=Income(category=category,date=date,amount=amount,criteria=criteria,fromperson=fromperson,branch_id=branch)
+        new_income.save()
+        return render(request,'add_income.html',{'status':1,}) 
+    context={
+        "is_addincome":True,
+        "status":0
+    }
+    return render(request,'add_income.html',context)
 
 
 # search medicine
@@ -477,13 +512,58 @@ def search_medicine(request):
     }
     return render(request,'search.html',context)
 
+
+
+# Expenses
 def expenses(request):
-    context={"is_expenses":True}
+    expense=Expense.objects.filter(branch_id=request.session['branch'])
+    context={
+            "is_expenses":True,
+            "expense":expense,
+        }
     return render(request,'expenses.html',context)
 
+
 def add_expenses(request):
+    if request.method=='POST':
+        category=request.POST['category']
+        date=request.POST['date']
+        note=request.POST['note']
+        amount=request.POST['amount']
+        branch=Branch.objects.get(id=request.session['branch'])
+
+        new_expense=Expense(category=category,date=date,note=note,amount=amount,branch_id=branch)
+        new_expense.save()
+        return render(request,'add_expense.html',{'status':1,})
     context={"is_addexpenses":True}
     return render(request,'add_expense.html',context)
+
+def edit_expence(request,id):
+    if request.method=='POST':
+        category=request.POST['category']
+        date=request.POST['date']
+        note=request.POST['note']
+        amount=request.POST['amount']
+        branch=Branch.objects.get(id=request.session['branch'])
+        Expense.objects.filter(id=id).update(category=category,date=date,note=note,amount=amount,branch_id=branch)
+    else:
+        expense=Expense.objects.get(id=id)
+        context = {
+            'status':1,
+            'expense':expense,
+        }
+        return render(request,'editexpence.html',context)
+    return render(request,'editexpence.html')
+
+
+def delete_expense(request,eid):
+    Expense.objects.filter(id=eid).delete()
+    return redirect('branch:expenses')
+
+
+
+
+
 
 def invoices_list(request):
     context={"is_invoicelist":True}
@@ -561,6 +641,7 @@ def med_accept(request,pid):
         added_qty.quantity = added_qty.quantity + int(qty)
         added_qty.save()
 
+    medobj.save() 
     
 
     return redirect('branch:requests')
@@ -600,8 +681,7 @@ def profit_loss(request):
     context={"is_profitloss":True}
     return render(request,'profit_loss_report.html',context)
 
-def edit_expence(request):
-    return render(request,'editexpence.html')
+
 
 
 # Purchase list

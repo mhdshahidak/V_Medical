@@ -9,7 +9,7 @@
 
         {% if status == 1 %}
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Successfully</strong> add the customer.
+                <strong>Successfully</strong> add the Bank.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"
                     aria-label="Close"></button>
             </div>
@@ -64,6 +64,12 @@
                                         </label>
                                         <input type="text" class="form-control" name="reaccnum">
                                     </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Bank Balance
+                                        </label>
+                                        <input type="text" class="form-control" name="balance">
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -101,23 +107,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script>
-//    toggle
 
-        $(document).on('click', '#toggle_btn', function () {
-            if ($('body').hasClass('mini-sidebar')) {
-                $('body').removeClass('mini-sidebar');
-                $('.subdrop + ul').slideDown();
-            } else {
-                $('body').addClass('mini-sidebar');
-                $('.subdrop + ul').slideUp();
-            }
-            setTimeout(function () {
-                mA.redraw();
-                mL.redraw();
-            }, 300);
-            return false;
-        });
-</script>
 
 {% endblock %}

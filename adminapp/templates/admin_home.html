@@ -6,15 +6,19 @@
         <div class="row">
 
             <!--  -->
-
+<!-- <style>
+    .dash-widget-icon{
+        color: {% cycle 'skyblue' 'lightgreen' 'lightpink' 'gold' %};" 
+    }
+</style> -->
             
             {% for branch in branches %}
                 <div class="col-xl-3 col-sm-6 col-12">
                     <div class="card ">
                         <div class="card-body ">
-                            <div class="dash-widget-header">
+                            <div class="dash-widget-header" >
                                 
-                                <span class="dash-widget-icon bg-2">
+                                <span class="dash-widget-icon" style="background-color: {% cycle 'rgb(143, 216, 245)' 'rgb(177, 238, 177)' 'rgb(251, 201, 231)' 'gold' %};color:{% cycle 'rgb(35, 143, 185)' 'rgb(97, 200, 97)' 'rgb(234, 130, 192)' 'rgb(255, 183, 0)' %}">
                                     <i class="fas fa-building"></i>
                                 </span>
                                 <div class="dash-count">
