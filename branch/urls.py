@@ -28,6 +28,7 @@ urlpatterns = [
     path('billing', views.billing, name='billing'),
     path('custsearch', views.cust_search, name='custsearch'),
     path('medprice', views.med_price, name='medprice'),
+    path('preview',views.preview,name='preview'),
     
     path('bank',views.bank,name="bank"),
     path('addbank', views.add_bank, name='addbank'),

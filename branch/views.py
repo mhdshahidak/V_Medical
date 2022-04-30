@@ -154,7 +154,7 @@ def add_staff(request):
         staff_id = 'VMS'+str(101234+staff)
     else:
         est=0
-        est_id = 'EST'+int(10+est)
+        est_id = 'EST'+str(101234+est)
     profile=""
     if request.method == 'POST':
         Name = request.POST['name']
@@ -427,6 +427,11 @@ def med_price(request):
         "maxqty":qtyavlbl.quantity
     }
     return JsonResponse({'product':data,})
+
+
+def preview(request):
+    # context
+    return render(request,'preview.html')
 
 
 
