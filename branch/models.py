@@ -75,7 +75,7 @@ class Expense(models.Model):
 
 
 class Invoive(models.Model):
-    invoice_no = models.CharField(max_length=15,unique=True)
+    invoice_no = models.CharField(max_length=15)
     customer = models.ForeignKey(Customers, on_delete=models.CASCADE)
     date = models.DateField(default=datetime.date.today)
     product = models.ForeignKey(BranchProducts, on_delete=models.CASCADE)

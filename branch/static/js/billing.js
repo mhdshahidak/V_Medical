@@ -26,7 +26,7 @@ $(document).on("click", ".add-btn", function () {
         '</td>' +
         '<td class="add-remove text-end">' +
         '<a href="javascript:void(0);" class="add-btn me-2"><i class="fas fa-plus-circle"></i></a> ' +
-        '<a href="javascript:void(0);" class="remove-btn" onclick=remove()><i class="fas fa-trash"></i></a>' +
+        '<a href="javascript:void(0);" class="remove-btn" onclick="DeleteRow(' + rowCount + ')"><i class="fas fa-trash"></i></a>' +
         '</td>' +
         '</tr>';
 
@@ -73,14 +73,16 @@ function changedqty(rowCount){
 //multilple adding
 
 $('#generatebutton').click(function () {
+    var invoiceId = $('#invId').val()
+    var customer_phone = $('#cphone').val()
+    var type = $('#type').val()
+
     var rowCount = $(".add-table-items tr").length;
     for (var i = 1; i < rowCount; i++) {
-        var invoiceId = $('#invId' + i).val()
-        var customer_phone = $('#cphone' + i).val()
         var medicinename= $('#medicinename' + i).val()
         var qty = $('#qty' + i).val()
         var itemtotal = $('#itemtotal' + i).val()
-        var type = $('#type' + i).val()
+        
 
         var data = {
             "invoiceId": invoiceId,
@@ -93,12 +95,12 @@ $('#generatebutton').click(function () {
         }
         // console.log(data)
         $.ajax({
-            url: "billing",
+            url: "datadding",
             type: 'POST',
             data: data,
             success: function (responce) {
-
-
+                alert(responce.msg)
+                $(ducument).html(response)
 
             }
 
@@ -109,3 +111,21 @@ $('#generatebutton').click(function () {
     }
     return false;
 })
+
+// deleting row
+
+function DeleteRow(id){
+
+    var completeTotal =0
+    var amount=parseInt($("#itemtotal" + id).val())  
+    var total=$("#total_amount" ).html()
+    var sub = $("#subtotal").html()
+    var gst = $("#gst").html()
+    sub_total = parseInt(sub) - amount
+    $("#subtotal").html(sub_total)
+    fgst = parseInt(gst) - amount*5/100;
+    $("#gst").html(fgst)
+    completeTotal =  sub_total + fgst
+    $("#total_amount").html(completeTotal)
+
+}
