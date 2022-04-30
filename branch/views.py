@@ -154,8 +154,8 @@ def add_staff(request):
         staff = Staff.objects.last().id
         staff_id = 'VMS'+str(101234+staff)
     else:
-        est=0
-        est_id = 'EST'+int(10+est)
+        staff=0
+        staff_id = 'EST'+str(101234+staff)
     profile=""
     if request.method == 'POST':
         Name = request.POST['name']
@@ -401,7 +401,8 @@ def data_adding(request):
         product.save()
         return JsonResponse({'msg':'BILL GENERATED'})
     
-    # return JsonResponse({'msg':'BILL GENERATED'})
+    return JsonResponse({'msg':'BILL GENERATED'})
+    # return redirect('branch:billing')
     # return render(request,)
 
 
@@ -427,6 +428,30 @@ def med_price(request):
         "maxqty":qtyavlbl.quantity
     }
     return JsonResponse({'product':data,})
+
+
+def preview(request):
+    # context
+   
+    prid = request.GET['prid']
+    print(prid)
+    items = Invoive.objects.filter(invoice_no=prid)
+    date = Invoive.objects.get(invoice_no=prid)
+    cust = Invoive.objects.select_related('customer','product').get(invoice_no=prid)
+    # date = Invoive.objects.select_related('product').get(invoice_no=prid)
+
+
+
+    print(items)
+    context={"is_billing":True,
+        "invid":prid,
+        'items':items,
+        'cust':cust,
+        'date':date
+
+        
+    }
+    return render(request,'preview.html',context)
 
 
 
