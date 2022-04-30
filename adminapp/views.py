@@ -36,11 +36,17 @@ def branch_details(request):
 
 def addbranch(request):
     msg=""
-    rand=random.randint(10000,999999)
-    branchid='VM'+str(rand)
+    # rand=random.randint(10000,999999)
+    # branchid='VM'+str(rand)
+    if Branch.objects.exists():
+        branch = Branch.objects.last().id
+        branch_id = 'VMID'+str(1000+branch)
+    else:
+        est=0
+        est_id = 'EST'+int(1000+est)
     if request.method == 'POST':
         Branch_Name=request.POST['bname']
-        branch_id=branchid
+        branch_id=branch_id
         email=request.POST['email']
         phone=request.POST['phone']
         place=request.POST['place']
@@ -51,12 +57,12 @@ def addbranch(request):
             new_branch=Branch(branch_name=Branch_Name,branch_id=branch_id,email=email,phone=phone,place=place,address=address,password=password)
             new_branch.save()
             return render(request, 'addbranch.html',{'status':1,})
-        else:
-            context = {
-                "is_addbranch": True,
-                "status":0,
-            }
-            return render(request, 'addbranch.html', context)
+    else:
+        context = {
+            "is_addbranch": True,
+            "status":0,
+        }
+        return render(request, 'addbranch.html', context)
     return render(request, 'addbranch.html')
     
 
@@ -138,8 +144,8 @@ def add_staff(request):
 def getStaffGet(request,id):
     staffs=Staff.objects.get(id=id)
     staffbank=StaffBankDetails.objects.get(staff__id=id)
-    print(staffs)
-    print(staffbank)
+    # print(staffs)
+    # print(staffbank)
     data={
         "profile":staffs.profile.url,
         "name":staffs.name,

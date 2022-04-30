@@ -382,44 +382,44 @@ Version      : 1.0
 
 	// Invoices Add More
 
-	$(".links-info-one").on('click', '.service-trash', function () {
-		$(this).closest('.links-cont').remove();
-		return false;
-	});
+	// $(".links-info-one").on('click', '.service-trash', function () {
+	// 	$(this).closest('.links-cont').remove();
+	// 	return false;
+	// });
 
-	$(document).on("click", ".add-links", function () {
-		var experiencecontent = '<div class="links-cont">' +
-			'<div class="service-amount">' +
-			'<a href="#" class="service-trash"><i class="fe fe-minus-circle me-1"></i>Service Charge</a> <span>$ 4</span' +
-			'</div>' +
-			'</div>';
+	// $(document).on("click", ".add-links", function () {
+	// 	var experiencecontent = '<div class="links-cont">' +
+	// 		'<div class="service-amount">' +
+	// 		'<a href="#" class="service-trash"><i class="fe fe-minus-circle me-1"></i>Service Charge</a> <span>$ 4</span' +
+	// 		'</div>' +
+	// 		'</div>';
 
-		$(".links-info-one").append(experiencecontent);
-		return false;
-	});
+	// 	$(".links-info-one").append(experiencecontent);
+	// 	return false;
+	// });
 
-	$(".links-info-discount").on('click', '.service-trash-one', function () {
-		$(this).closest('.links-cont-discount').remove();
-		return false;
-	});
+	// $(".links-info-discount").on('click', '.service-trash-one', function () {
+	// 	$(this).closest('.links-cont-discount').remove();
+	// 	return false;
+	// });
 
-	$(document).on("click", ".add-links-one", function () {
-		var experiencecontent = '<div class="links-cont-discount">' +
-			'<div class="service-amount">' +
-			'<a href="#" class="service-trash-one"><i class="fe fe-minus-circle me-1"></i>Offer new</a> <span>$ 4 %</span' +
-			'</div>' +
-			'</div>';
+	// $(document).on("click", ".add-links-one", function () {
+	// 	var experiencecontent = '<div class="links-cont-discount">' +
+	// 		'<div class="service-amount">' +
+	// 		'<a href="#" class="service-trash-one"><i class="fe fe-minus-circle me-1"></i>Offer new</a> <span>$ 4 %</span' +
+	// 		'</div>' +
+	// 		'</div>';
 
-		$(".links-info-discount").append(experiencecontent);
-		return false;
-	});
+	// 	$(".links-info-discount").append(experiencecontent);
+	// 	return false;
+	// });
 
 	// Invoices Table Add More
 
-	$(".add-table-items").on('click', '.remove-btn', function () {
-		$(this).closest('.add-row').remove();
-		return false;
-	});
+	// $(".add-table-items").on('click', '.remove-btn', function () {
+	// 	$(this).closest('.add-row').remove();
+	// 	return false;
+	// });
 
 	// $(document).on("click", ".add-btn", function () {
 	// 	var rowCount = $(".add-table-items tr").length;
