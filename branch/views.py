@@ -397,11 +397,11 @@ def data_adding(request):
         new_bill = Invoive(invoice_no=inv_id,customer=customer,product=product,quantity=qty,total=item_total,payment_methode=payment_type)
         print(new_bill)
         new_bill.save()
-
-        # msg = "BILL GENERATED"
+        product.quantity = product.quantity - int(qty)
+        product.save()
+        return JsonResponse({'msg':'BILL GENERATED'})
     
     # return JsonResponse({'msg':'BILL GENERATED'})
-    # return redirect('branch:billing')
     # return render(request,)
 
 
@@ -460,7 +460,7 @@ def add_bank(request):
     "is_addbank":True,
     }
     return render(request,'addbank.html',context)
-    return render(request,'addbank.html')
+  
 
 
 
@@ -559,9 +559,6 @@ def edit_expence(request,id):
 def delete_expense(request,eid):
     Expense.objects.filter(id=eid).delete()
     return redirect('branch:expenses')
-
-
-
 
 
 
