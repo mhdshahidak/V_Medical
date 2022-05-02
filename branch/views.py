@@ -464,15 +464,21 @@ def preview(request):
 # invoicelist details
 
 def invoices_list(request):
-    invoices=Invoive.objects.filter(product__branch=request.session['branch']).all()
+    invoices=Invoive.objects.values('invoice_no','customer__name','date').filter(product__branch=request.session['branch']).annotate(count=Count('invoice_no'),total=Sum('total')).order_by()
+
+    print(invoices.query)
     # billed = Invoive.objects.filter(id =invoices).all().count()
-    total=Invoive.objects.filter(product__branch=request.session['branch']).aggregate(Sum('total'))
-    totalamount=total['total__sum']
-    print(totalamount)
+
+    # for i in invoices:
+    #     print(i)
+    # print(invoices)
+    # total=Invoive.objects.filter(product__branch=request.session['branch']).aggregate(Sum('total'))
+    # totalamount=total['total__sum']
+    # print(totalamount)
     context={
         "is_invoicelist":True,
         "invoices":invoices,
-        "total":totalamount,
+        # "total":totalamount,
     }
     return render(request,'invoices_list.html',context)
 
