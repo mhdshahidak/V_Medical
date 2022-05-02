@@ -448,7 +448,7 @@ def preview(request):
         Gst = totalAmonut* 5/100
         final_total = totalAmonut + Gst
         # print(final_total)
-                                                
+                                               
         context={"is_billing":True,
             "invid":prid,
             'items':items,
@@ -456,9 +456,7 @@ def preview(request):
             'date':date,
             'itemtotal':total,
             'gst':Gst,
-            'total':final_total
-
-            
+            'total':final_total 
         }
         return render(request,'preview.html',context)
     else:
