@@ -443,7 +443,7 @@ def preview(request):
         items = Invoive.objects.filter(invoice_no=prid)
         date = Invoive.objects.filter(invoice_no=prid).last()
         cust = Invoive.objects.select_related('customer','product').filter(invoice_no=prid).last()
-        total = Invoive.objects.filter(invoice_no=prid).aggregate(Sum ('total'))
+        total = Invoive.objects.filter(invoice_no=prid).aggregate(Sum('total'))
         print(total)
         totalAmonut = total['total__sum']
         Gst = totalAmonut* 5/100
