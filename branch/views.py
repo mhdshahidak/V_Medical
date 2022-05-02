@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Sum, Avg, Min, Max, Count
 # from tomlkit import datetime
 
 
@@ -442,11 +443,21 @@ def preview(request):
         items = Invoive.objects.filter(invoice_no=prid)
         date = Invoive.objects.filter(invoice_no=prid).last()
         cust = Invoive.objects.select_related('customer','product').filter(invoice_no=prid).last()
+        total = Invoive.objects.filter(invoice_no=prid).aggregate(Sum ('total'))
+        print(total)
+        totalAmonut = total['total__sum']
+        Gst = totalAmonut* 5/100
+        final_total = totalAmonut + Gst
+        # print(final_total)
+                                                
         context={"is_billing":True,
             "invid":prid,
             'items':items,
             'cust':cust,
-            'date':date
+            'date':date,
+            'itemtotal':total,
+            'gst':Gst,
+            'total':final_total
 
             
         }
