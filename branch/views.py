@@ -461,7 +461,23 @@ def preview(request):
         return  redirect('branch:billing')
 
 
+# invoices details
 
+def invoices_list(request):
+    invoices=Invoive.objects.filter(product__branch=request.session['branch']).all()
+    context={
+        "is_invoicelist":True,
+        "invoices":invoices,
+    }
+    return render(request,'invoices_list.html',context)
+
+def edit_innvoice(request):
+    context={"is_editinnvoice":True}
+    return render(request,'edit_innvoice.html',context)
+
+def invoices_details(request):
+    context={"is_invoicedetails":True}
+    return render(request,'invoices_details.html',context)
 
 
 # Bank
@@ -594,17 +610,7 @@ def delete_expense(request,eid):
 
 
 
-def invoices_list(request):
-    context={"is_invoicelist":True}
-    return render(request,'invoices_list.html',context)
 
-def edit_innvoice(request):
-    context={"is_editinnvoice":True}
-    return render(request,'edit_innvoice.html',context)
-
-def invoices_details(request):
-    context={"is_invoicedetails":True}
-    return render(request,'invoices_details.html',context)
 
 
 
