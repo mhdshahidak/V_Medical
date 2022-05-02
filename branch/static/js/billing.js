@@ -7,7 +7,7 @@ $(document).on("click", ".add-btn", function () {
     var rowCount = $(".add-table-items tr ").length;
     var experiencecontent = '<tr class="add-row">' +
         '<td>' +
-        '<input type="text" class="form-control" readonly value=" '+ rowCount + '">' +
+        '<input type="text" class="form-control" readonly  value=" '+ rowCount + '">' +
         '</td>' +
         '<td>' +
         // '<input type="text" class="form-control" name="medicine" list="medicine"><datalist id="medicine">{% for p in product %}<option value="{{p.product.name}}">{% endfor %}</datalist>' +
