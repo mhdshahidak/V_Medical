@@ -410,6 +410,18 @@ def data_adding(request):
     # return render(request,)
 
 
+def income_adding_invoice(request):
+    grand_total = request.GET['total']
+    invoice_id = request.GET['invoice_id']
+    criteria = "Income from selling"
+    catagory = "selling"
+    branch = Branch.objects.get(id=request.session['branch'])
+    new_income = Income(category=catagory,amount=grand_total,criteria=criteria,branch_id=branch)
+    new_income.save()
+    # print(invoice_id)
+    
+
+
 def cust_search(request):
     phone = request.GET['phone']
     customer_ex = Customers.objects.filter(phone=phone).exists()
@@ -466,15 +478,6 @@ def preview(request):
 def invoices_list(request):
     invoices=Invoive.objects.values('invoice_no','customer__name','date').filter(product__branch=request.session['branch']).annotate(count=Count('invoice_no'),total=Sum('total')).order_by()
 
-    print(invoices.query)
-    # billed = Invoive.objects.filter(id =invoices).all().count()
-
-    # for i in invoices:
-    #     print(i)
-    # print(invoices)
-    # total=Invoive.objects.filter(product__branch=request.session['branch']).aggregate(Sum('total'))
-    # totalamount=total['total__sum']
-    # print(totalamount)
     context={
         "is_invoicelist":True,
         "invoices":invoices,

@@ -30,6 +30,11 @@ urlpatterns = [
     path('medprice', views.med_price, name='medprice'),
     path('preview',views.preview,name='preview'),
     path('datadding',views.data_adding, name='datadding'),
+
+    # income adding by invoice
+    
+    path('incomeadding',views.income_adding_invoice, name='incomeadding'),
+
     
     path('bank',views.bank,name="bank"),
     path('addbank', views.add_bank, name='addbank'),

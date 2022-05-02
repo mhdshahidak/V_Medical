@@ -70,6 +70,7 @@ function changedqty(rowCount){
 }
 
 
+
 //multilple adding
 
 $('#generatebutton').click(function () {
@@ -110,6 +111,24 @@ $('#generatebutton').click(function () {
 
     }
     return false;
+})
+
+// senting total
+
+$('#generatebutton').click(function(){
+    var itotal = $('#total_amount').html()
+    console.log(itotal)
+    $.ajax({
+        url:'/branchapp/incomeadding',
+        type:'GET',
+        data:{
+            'total': itotal,
+            'invoice_id':$('#invId').val()
+        },
+        success:function(response){
+            
+        }
+    })
 })
 
 // deleting row
