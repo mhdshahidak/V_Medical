@@ -475,7 +475,7 @@ def preview(request):
 def invoices_list(request):
     invoices=Invoive.objects.values('invoice_no','customer__name','date').filter(product__branch=request.session['branch']).annotate(count=Count('invoice_no'),total=Sum('total')).order_by()
 
-    print(invoices.query)
+    # print(invoices.query)
     # billed = Invoive.objects.filter(id =invoices).all().count()
 
     # for i in invoices:
@@ -492,9 +492,6 @@ def invoices_list(request):
     return render(request,'invoices_list.html',context)
 
 
-def edit_innvoice(request):
-    context={"is_editinnvoice":True}
-    return render(request,'edit_innvoice.html',context)
 
 def invoices_details(request):
     context={"is_invoicedetails":True}
