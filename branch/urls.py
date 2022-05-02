@@ -52,7 +52,6 @@ urlpatterns = [
 
     path('invoicelist', views.invoices_list, name='invoicelist'),
     path('invoicedetails', views.invoices_details, name='invoicedetails'),
-    path('editinnvoice',views.edit_innvoice,name="editinnvoice"),
     
     path('branchprofile', views.branch_profile, name='branchprofile'),
 

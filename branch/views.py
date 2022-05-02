@@ -1,3 +1,4 @@
+from datetime import date
 import random
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -11,6 +12,8 @@ from adminapp.models import AdminLogin, Branch, Staff, StaffBankDetails, Transfe
 from branch.models import BranchBank, BranchProducts, Customers, Expense, Income, MedicineTransfer, Product
 from branch.models import BranchBank, BranchProducts, Customers, Invoive, MedicineTransfer, Product
 from v_med.decorators import auth_branch
+
+from datetime import datetime, timedelta, time
 
 # Create your views here.
 
@@ -51,12 +54,18 @@ def branch_home(request):
     branch=Branch.objects.get(id=request.session['branch'])
     # print(branch.brach_name)
     staff_transfer_request = Transfer.objects.filter(from_branch=branch)
-    expenses=Expense.objects.filter(branch_id=request.session['branch']).all()
+    today = datetime.now().date()
+    today_start = datetime.combine(today, time())
+    recent_expenses=Expense.objects.filter(branch_id=request.session['branch'],date__gte=today_start)
+    
+    recent_invoices=Invoive.objects.filter(product__branch=request.session['branch'],date__gte=today_start)
+    # print(recent_invoices)
     context={
         "is_branchhome":True,
         'branch':branch,
         's_transfer':staff_transfer_request,
-        'expenses':expenses,
+        'expenses':recent_expenses,
+        'invoices':recent_invoices,
     }
     return render(request,'branch_home.html',context)
 
@@ -486,9 +495,6 @@ def invoices_list(request):
     return render(request,'invoices_list.html',context)
 
 
-def edit_innvoice(request):
-    context={"is_editinnvoice":True}
-    return render(request,'edit_innvoice.html',context)
 
 def invoices_details(request):
     context={"is_invoicedetails":True}
