@@ -270,7 +270,6 @@ def all_products(request):
 
 
 def add_medicine(request):
-    msg = ""
     rand=random.randint(10000,999999)
     product_id='VMP'+str(rand)
 
@@ -305,12 +304,14 @@ def add_medicine(request):
             new_product.save()
             branchproduct = BranchProducts(product=new_product,quantity=quantity,purchase_date=purchase_date,expiry_date=expiry_date,branch=branch)
             branchproduct.save()
-            msg = "Product Added Successfully"
-            return render(request,'addmedicine.html',{'status':1})
+            context={
+                'status':0,
 
-    context={"is_addmedicine":True,
-        'msg':msg,
-
+            }
+            return render(request,'addmedicine.html',context)
+    context={
+        "is_editproduct":True,
+        "editproduct":edit_product,
     }
     return render(request,'addmedicine.html',context)
 
@@ -338,10 +339,12 @@ def edit_product(request,bpid,prid):
     else:
         edit_product=BranchProducts.objects.get(id=bpid)                                   
         context={
-            "is_editproduct":True,
-            "editproduct":edit_product,
             "status":0,
         }
+    context={
+        "is_editproduct":True,
+        "editproduct":edit_product,
+    }
     return render(request,'editproduct.html',context)
 
 
@@ -399,6 +402,7 @@ def data_adding(request):
         new_bill.save()
         product.quantity = product.quantity - int(qty)
         product.save()
+
         return JsonResponse({'msg':'BILL GENERATED'})
     
     return JsonResponse({'msg':'BILL GENERATED'})
@@ -432,26 +436,29 @@ def med_price(request):
 
 def preview(request):
     # context
-   
-    prid = request.GET['prid']
-    print(prid)
-    items = Invoive.objects.filter(invoice_no=prid)
-    date = Invoive.objects.get(invoice_no=prid)
-    cust = Invoive.objects.select_related('customer','product').get(invoice_no=prid)
-    # date = Invoive.objects.select_related('product').get(invoice_no=prid)
+    try:
+        prid = request.GET['prid']
+        print(prid)
+        items = Invoive.objects.filter(invoice_no=prid)
+        date = Invoive.objects.get(invoice_no=prid)
+        cust = Invoive.objects.select_related('customer','product').get(invoice_no=prid)
+        # sum = Sale.objects.filter(type='Flour').aggregate(Sum('column'))['column__sum']
+        # total = Invoive.objects.filter(invoice_no=prid).aggregate(Sum('total'))
+        # print(total)
 
+      
+        print(items)
+        context={"is_billing":True,
+            "invid":prid,
+            'items':items,
+            'cust':cust,
+            'date':date
 
-
-    print(items)
-    context={"is_billing":True,
-        "invid":prid,
-        'items':items,
-        'cust':cust,
-        'date':date
-
-        
-    }
-    return render(request,'preview.html',context)
+            
+        }
+        return render(request,'preview.html',context)
+    except:
+        return  redirect('branch:billing')
 
 
 

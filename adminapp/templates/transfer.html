@@ -38,6 +38,7 @@
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6">
+
                                     <div class="form-group">
                                         <label>From:</label>
                                         <input type="text" class="form-control" name="from"  list="branchlist" id="fbranch" >
@@ -48,19 +49,18 @@
                                         </datalist>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>To:</label>
-                                        {% comment %} <select class="select cal-icon form-control" name="to" id="tbranch">
-                                        {% for fb in branch %}
-                                            <option value="{{fb.id}}">{{fb.branch_name}}</option>
-                                        {% endfor %}
-                                        </select> {% endcomment %}
                                         <input type="text" class="form-control" name="to" id="tbranch" list="tbranchlist" >
                                         <datalist id="tbranchlist">
-                                        {% for fb in branch %}
+                                            {% for fb in branch %}
                                             <option value="{{fb.branch_name}}" >{{fb.branch_name}} </option>    
-                                        {% endfor %}
+                                            {% endfor %}
+                                        {% comment %} {% for m in medicines  %}
+                                            <option value="{{m.branch_name}}" >{{m.branch_name}} </option>    
+                                        {% endfor %} {% endcomment %}
                                         </datalist>
                                     </div>
                                 </div>

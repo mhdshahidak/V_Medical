@@ -318,41 +318,6 @@
         $(document).on('click', '#filter_search', function () {
             $('#filter_inputs').show();
         });
-        //    add + in add invoice
-        // $(".add-table-items").on('click', '.remove-btn', function () {
-        //     $(this).closest('.add-row').remove();
-        //     return false;
-        // });
-
-        // $(document).on("click", ".add-btn", function () {
-        //     var experiencecontent = '<tr class="add-row">' +
-        //         '<td>' +
-        //         '<input type="text" class="form-control" readonly>' +
-        //         '</td>' +
-        //         '<td>' +
-        //         '<input type="text" class="form-control" name="medicine" list="medicine"><datalist id="medicine">{% for p in product %}<option value="{{p.product.name}}">{% endfor %}</datalist>' +
-                
-        //         '</td>' +
-        //         '<td>' +
-        //         '<input type="text" class="form-control">' +
-        //         '</td>' +
-        //         '<td>' +
-        //         '<input type="text" class="form-control">' +
-        //         '</td>' +
-
-        //         '<td>' +
-        //         '<input type="text" class="form-control">' +
-        //         '</td>' +
-        //         '<td class="add-remove text-end">' +
-        //         '<a href="javascript:void(0);" class="add-btn me-2"><i class="fas fa-plus-circle"></i></a> ' +
-        //         '<a href="javascript:void(0);" class="remove-btn"><i class="fas fa-trash"></i></a>' +
-        //         '</td>' +
-        //         '</tr>';
-
-        //     $(".add-table-items").append(experiencecontent);
-        //     return false;
-        // });
-        // end  + in add invoice
 
         // selectbox
         $('.app-listing .selectBox').on("click", function () {
@@ -364,7 +329,85 @@
             $(this).parent().find('#checkBoxes-one').fadeToggle();
             $(this).parent().parent().siblings().find('#checkBoxes-one').fadeOut();
         });
-        // end selectbox
+        
+
+        // Variables declarations
+
+	var $wrapper = $('.main-wrapper');
+	var $pageWrapper = $('.page-wrapper');
+	var $slimScrolls = $('.slimscroll');
+
+	// Sidebar
+	var Sidemenu = function () {
+		this.$menuItem = $('#sidebar-menu a');
+	};
+
+	function init() {
+		var $this = Sidemenu;
+		$('#sidebar-menu a').on('click', function (e) {
+			if ($(this).parent().hasClass('submenu')) {
+				e.preventDefault();
+			}
+			if (!$(this).hasClass('subdrop')) {
+				$('ul', $(this).parents('ul:first')).slideUp(350);
+				$('a', $(this).parents('ul:first')).removeClass('subdrop');
+				$(this).next('ul').slideDown(350);
+				$(this).addClass('subdrop');
+			} else if ($(this).hasClass('subdrop')) {
+				$(this).removeClass('subdrop');
+				$(this).next('ul').slideUp(350);
+			}
+		});
+		$('#sidebar-menu ul li.submenu a.active').parents('li:last').children('a:first').addClass('active').trigger('click');
+	}
+
+	// Sidebar Initiate
+	init();
+
+	// Mobile menu sidebar overlay
+	$('body').append('<div class="sidebar-overlay"></div>');
+	$(document).on('click', '#mobile_btn', function () {
+		$wrapper.toggleClass('slide-nav');
+		$('.sidebar-overlay').toggleClass('opened');
+		$('html').toggleClass('menu-opened');
+		return false;
+	});
+
+	// Sidebar overlay
+	$(".sidebar-overlay").on("click", function () {
+		$wrapper.removeClass('slide-nav');
+		$(".sidebar-overlay").removeClass("opened");
+		$('html').removeClass('menu-opened');
+	});
+
+	// Page Content Height
+	if ($('.page-wrapper').length > 0) {
+		var height = $(window).height();
+		$(".page-wrapper").css("min-height", height);
+	}
+
+	// Page Content Height Resize
+	$(window).resize(function () {
+		if ($('.page-wrapper').length > 0) {
+			var height = $(window).height();
+			$(".page-wrapper").css("min-height", height);
+		}
+	});
+
+	// Select 2
+	if ($('.select').length > 0) {
+		$('.select').select2({
+			minimumResultsForSearch: -1,
+			width: '100%'
+		});
+	}
+
+
+
+
+
+
+       
 
 
     </script>
