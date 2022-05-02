@@ -402,7 +402,6 @@ def data_adding(request):
         new_bill.save()
         product.quantity = product.quantity - int(qty)
         product.save()
-
         return JsonResponse({'msg':'BILL GENERATED'})
     
     return JsonResponse({'msg':'BILL GENERATED'})
@@ -436,18 +435,13 @@ def med_price(request):
 
 def preview(request):
     # context
-    try:
-        prid = request.GET['prid']
-        print(prid)
-        items = Invoive.objects.filter(invoice_no=prid)
-        date = Invoive.objects.get(invoice_no=prid)
-        cust = Invoive.objects.select_related('customer','product').get(invoice_no=prid)
-        # sum = Sale.objects.filter(type='Flour').aggregate(Sum('column'))['column__sum']
-        # total = Invoive.objects.filter(invoice_no=prid).aggregate(Sum('total'))
-        # print(total)
 
-      
-        print(items)
+    prid = request.GET['prid']
+    item_esists = Invoive.objects.filter(invoice_no=prid).exists()
+    if item_esists:
+        items = Invoive.objects.filter(invoice_no=prid)
+        date = Invoive.objects.filter(invoice_no=prid).last()
+        cust = Invoive.objects.select_related('customer','product').filter(invoice_no=prid).last()
         context={"is_billing":True,
             "invid":prid,
             'items':items,
@@ -457,8 +451,8 @@ def preview(request):
             
         }
         return render(request,'preview.html',context)
-    except:
-        return  redirect('branch:billing')
+    else:
+        return redirect('branch:billing')
 
 
 
