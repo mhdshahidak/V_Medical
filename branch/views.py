@@ -435,8 +435,6 @@ def med_price(request):
 
 
 def preview(request):
-    # context
-
     prid = request.GET['prid']
     item_esists = Invoive.objects.filter(invoice_no=prid).exists()
     if item_esists:
@@ -465,7 +463,29 @@ def preview(request):
         return redirect('branch:billing')
 
 
+# invoicelist details
 
+def invoices_list(request):
+    invoices=Invoive.objects.filter(product__branch=request.session['branch']).all()
+    # billed = Invoive.objects.filter(id =invoices).all().count()
+    total=Invoive.objects.filter(product__branch=request.session['branch']).aggregate(Sum('total'))
+    totalamount=total['total__sum']
+    print(totalamount)
+    context={
+        "is_invoicelist":True,
+        "invoices":invoices,
+        "total":totalamount,
+    }
+    return render(request,'invoices_list.html',context)
+
+
+def edit_innvoice(request):
+    context={"is_editinnvoice":True}
+    return render(request,'edit_innvoice.html',context)
+
+def invoices_details(request):
+    context={"is_invoicedetails":True}
+    return render(request,'invoices_details.html',context)
 
 
 # Bank
@@ -598,17 +618,6 @@ def delete_expense(request,eid):
 
 
 
-def invoices_list(request):
-    context={"is_invoicelist":True}
-    return render(request,'invoices_list.html',context)
-
-def edit_innvoice(request):
-    context={"is_editinnvoice":True}
-    return render(request,'edit_innvoice.html',context)
-
-def invoices_details(request):
-    context={"is_invoicedetails":True}
-    return render(request,'invoices_details.html',context)
 
 
 
