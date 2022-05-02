@@ -11,6 +11,8 @@ from branch.models import BranchBank, BranchProducts, Customers, Expense, Income
 from branch.models import BranchBank, BranchProducts, Customers, Invoive, MedicineTransfer, Product
 from v_med.decorators import auth_branch
 
+from django.db.models import Sum,Count
+
 # Create your views here.
 
 #login and related
@@ -402,6 +404,7 @@ def data_adding(request):
         new_bill.save()
         product.quantity = product.quantity - int(qty)
         product.save()
+
         return JsonResponse({'msg':'BILL GENERATED'})
     
     return JsonResponse({'msg':'BILL GENERATED'})
@@ -435,13 +438,18 @@ def med_price(request):
 
 def preview(request):
     # context
-
-    prid = request.GET['prid']
-    item_esists = Invoive.objects.filter(invoice_no=prid).exists()
-    if item_esists:
+    try:
+        prid = request.GET['prid']
+        print(prid)
         items = Invoive.objects.filter(invoice_no=prid)
-        date = Invoive.objects.filter(invoice_no=prid).last()
-        cust = Invoive.objects.select_related('customer','product').filter(invoice_no=prid).last()
+        date = Invoive.objects.get(invoice_no=prid)
+        cust = Invoive.objects.select_related('customer','product').get(invoice_no=prid)
+        # sum = Sale.objects.filter(type='Flour').aggregate(Sum('column'))['column__sum']
+        # total = Invoive.objects.filter(invoice_no=prid).aggregate(Sum('total'))
+        # print(total)
+
+      
+        print(items)
         context={"is_billing":True,
             "invid":prid,
             'items':items,
@@ -451,17 +459,24 @@ def preview(request):
             
         }
         return render(request,'preview.html',context)
-    else:
-        return redirect('branch:billing')
+    except:
+        return  redirect('branch:billing')
 
 
 # invoices details
 
 def invoices_list(request):
     invoices=Invoive.objects.filter(product__branch=request.session['branch']).all()
+    # billed = Invoive.objects.filter(id =invoices).all().count()
+    total=Invoive.objects.filter(product__branch=request.session['branch']).aggregate(Sum('total'))
+    totalamount=total['total__sum']
+    print(totalamount)
+
+    print(totalamount)
     context={
         "is_invoicelist":True,
         "invoices":invoices,
+        "total":totalamount,
     }
     return render(request,'invoices_list.html',context)
 
