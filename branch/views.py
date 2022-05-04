@@ -52,14 +52,14 @@ def forgotpassword(request):
 @auth_branch
 def branch_home(request):
     branch=Branch.objects.get(id=request.session['branch'])
-    # print(branch.brach_name)
     staff_transfer_request = Transfer.objects.filter(from_branch=branch)
     today = datetime.now().date()
     today_start = datetime.combine(today, time())
     recent_expenses=Expense.objects.filter(branch_id=request.session['branch'],date__gte=today_start)
-    
-    recent_invoices=Invoive.objects.filter(product__branch=request.session['branch'],date__gte=today_start)
-    # print(recent_invoices)
+    recent_invoices=Invoive.objects.values('invoice_no','customer__name').filter(product__branch=request.session['branch'],date__gte=today_start).annotate(count=Count('invoice_no')).order_by()
+    # recent_invoices=Invoive.objects.values('invoice_no').filter(product__branch=request.session['branch'],date__gte=today_start).order_by()
+    # recent_invoices=Invoive.objects.filter(product__branch=request.session['branch'],date__gte=today_start)
+    print(recent_invoices)
     context={
         "is_branchhome":True,
         'branch':branch,
