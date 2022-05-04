@@ -81,6 +81,8 @@ class Invoive(models.Model):
     product = models.ForeignKey(BranchProducts, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     total = models.IntegerField()
+    gst = models.FloatField(default=0)
+    grand_total = models.FloatField(default=0)
     payment_methode = models.CharField(max_length=30)
 
     class Meta:

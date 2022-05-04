@@ -1,3 +1,4 @@
+
 from datetime import date
 import random
 from django.http import JsonResponse
@@ -486,7 +487,8 @@ def preview(request):
 
 def invoices_list(request):
     invoices=Invoive.objects.values('invoice_no','customer__name','date').filter(product__branch=request.session['branch']).annotate(count=Count('invoice_no'),total=Sum('total')).order_by()
-
+    # totalamount = total
+    # print(total)
     context={
         "is_invoicelist":True,
         "invoices":invoices,
