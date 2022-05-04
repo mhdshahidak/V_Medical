@@ -58,15 +58,18 @@ def branch_home(request):
     today_start = datetime.combine(today, time())
     recent_expenses=Expense.objects.filter(branch_id=request.session['branch'],date__gte=today_start)
     recent_invoices=Invoive.objects.values('invoice_no','customer__name').filter(product__branch=request.session['branch'],date__gte=today_start).annotate(count=Count('invoice_no')).order_by()
-    # recent_invoices=Invoive.objects.values('invoice_no').filter(product__branch=request.session['branch'],date__gte=today_start).order_by()
-    # recent_invoices=Invoive.objects.filter(product__branch=request.session['branch'],date__gte=today_start)
-    print(recent_invoices)
+    # print(recent_invoices)
+    total_expense = Expense.objects.filter(branch_id=request.session['branch'],date__gte=today_start).aggregate(Sum('amount'))
+    print(total_expense)
+    
     context={
         "is_branchhome":True,
         'branch':branch,
         's_transfer':staff_transfer_request,
         'expenses':recent_expenses,
         'invoices':recent_invoices,
+        'totalexpense':total_expense,
+        
     }
     return render(request,'branch_home.html',context)
 

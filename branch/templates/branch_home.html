@@ -16,8 +16,8 @@
                             </span>
                             <div class="dash-count">
                                 <div class="dash-title"> Name </div>
-                                <div class="dash-counts counter">
-                                    <p>balance</p>
+                                <div class="dash-counts">
+                                    <h6 class="counter">balance</h6>
                                 </div>
                             </div>
                         </div>
@@ -34,8 +34,8 @@
                             </span>
                             <div class="dash-count">
                                 <div class="dash-title">Expence</div>
-                                <div class="dash-counts">
-                                    <p>3,642</p>
+                                <div class="dash-counts ">
+                                    <p class="counter">{{totalexpense.amount__sum}}</p>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                             <div class="dash-count">
                                 <div class="dash-title">Bank</div>
                                 <div class="dash-counts">
-                                    <p>1,041</p>
+                                    <p class="counter">1,041</p>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                             <div class="dash-count">
                                 <div class="dash-title">Cash</div>
                                 <div class="dash-counts">
-                                    <p>1,041</p>
+                                    <p class="counter">1,041</p>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                             <div class="dash-count">
                                 <div class="dash-title">UPI</div>
                                 <div class="dash-counts">
-                                    <p>2,150</p>
+                                    <p class="counter">2,150</p>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
                             <div class="dash-count">
                                 <div class="dash-title">Staff</div>
                                 <div class="dash-counts">
-                                    <p>2,150</p>
+                                    <p class="counter">2,150</p>
                                 </div>
                             </div>
                         </div>
@@ -243,24 +243,17 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'plugins/countup/jquery.counterup.min.js' %}"></script>
+<script src="{% static 'plugins/countup/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'plugins/countup/jquery.missofis-countdown.js' %}"></script>
 
-{% comment %} <script>
-//    toggle
-
-        $(document).on('click', '#toggle_btn', function () {
-            if ($('body').hasClass('mini-sidebar')) {
-                $('body').removeClass('mini-sidebar');
-                $('.subdrop + ul').slideDown();
-            } else {
-                $('body').addClass('mini-sidebar');
-                $('.subdrop + ul').slideUp();
-            }
-            setTimeout(function () {
-                mA.redraw();
-                mL.redraw();
-            }, 300);
-            return false;
-        });
-</script> {% endcomment %}
+<script>
+    if($('.counter').length > 0) {
+	   $('.counter').counterUp({
+			delay: 20,
+            time: 2000
+       });
+	}
+</script>
 
 {% endblock %}
