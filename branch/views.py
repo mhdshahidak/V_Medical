@@ -402,17 +402,21 @@ def data_adding(request):
     
     cust_phone = request.POST['customer_phone']
     inv_id = request.POST['invoiceId']
+    gst = request.POST['gst']
+    grand_total = request.POST['grand_total']
     med_name = request.POST['medicinename']
     qty = request.POST['qty']
     payment_type = request.POST['type']
     item_total = request.POST['itemtotal']
+    
+    print(gst)
 
     cust_exists = Customers.objects.filter(phone=cust_phone).exists()
     if cust_exists:
         customer = Customers.objects.get(phone=cust_phone)
         product = BranchProducts.objects.get(product__name=med_name,branch=request.session['branch'])
-        new_bill = Invoive(invoice_no=inv_id,customer=customer,product=product,quantity=qty,total=item_total,payment_methode=payment_type)
-        print(new_bill)
+        new_bill = Invoive(invoice_no=inv_id,customer=customer,product=product,quantity=qty,total=item_total,payment_methode=payment_type,gst=gst,grand_total=grand_total)
+        # print(new_bill)
         new_bill.save()
         product.quantity = product.quantity - int(qty)
         product.save()
@@ -431,6 +435,8 @@ def income_adding_invoice(request):
     branch = Branch.objects.get(id=request.session['branch'])
     new_income = Income(category=catagory,amount=grand_total,criteria=criteria,branch_id=branch)
     new_income.save()
+    return JsonResponse({'msg':'BILL GENERATED'})
+
     # print(invoice_id)
     
 
@@ -489,7 +495,7 @@ def preview(request):
 # invoicelist details
 
 def invoices_list(request):
-    invoices=Invoive.objects.values('invoice_no','customer__name','date').filter(product__branch=request.session['branch']).annotate(count=Count('invoice_no'),total=Sum('total')).order_by()
+    invoices=Invoive.objects.values('invoice_no','customer__name','date','grand_total').filter(product__branch=request.session['branch']).annotate(count=Count('invoice_no'),total=Sum('total')).order_by()
     # totalamount = total
     # print(total)
     context={

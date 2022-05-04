@@ -77,6 +77,8 @@ $('#generatebutton').click(function () {
     var invoiceId = $('#invId').val()
     var customer_phone = $('#cphone').val()
     var type = $('#type').val()
+    var gst = $('#gst').html()
+    var grand_total = $('#total_amount').html()
 
     var rowCount = $(".add-table-items tr").length;
     for (var i = 1; i < rowCount; i++) {
@@ -92,8 +94,11 @@ $('#generatebutton').click(function () {
             "qty": qty,
             "itemtotal": itemtotal,
             "type": type,
+            "gst": gst,
+            "grand_total": grand_total,
 
         }
+        
         // console.log(data)
         $.ajax({
             url: "datadding",
