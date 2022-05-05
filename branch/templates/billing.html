@@ -129,8 +129,7 @@
                                                     <td>
                                                         <input type="text" class="form-control" readonly value="1" style="border: 0;background-color: white;">
                                                     </td>
-                                                    <td>
-                                                        
+                                                    <td>              
                                                         <input type="text" class="form-control" name="medicinename" list="medicine" id="medicinename1" onchange=changedname(1)>
                                                         <datalist id="medicine">
                                                             {% for p in product %}<option value="{{ p.product.name }}">{% endfor %}
@@ -266,8 +265,7 @@
                 })
             })
         })
-
-
+        
     </script>
 
 {% endblock %}
