@@ -386,10 +386,12 @@ def billing(request):
     # print(datetime.today())
 
     product = BranchProducts.objects.filter(branch=request.session['branch'])
+    branch = Branch.objects.get(id=request.session['branch'])
     customer = Customers.objects.all()
     context={"is_billing":True,
         "product":product,
         "customer":customer,
+        "branch":branch,
         "invoice_id":est_id,
         "msg":msg,
     }
@@ -451,6 +453,13 @@ def cust_search(request):
             "name":customer.name
         }
         return JsonResponse({'customer':data})
+    elif not customer_ex:
+        new_cust = Customers(phone=phone)
+        new_cust.save()
+        data={
+            "name":new_cust
+        }
+        return JsonResponse({'customer':data})
     else:
         pass
 
@@ -506,9 +515,19 @@ def invoices_list(request):
     return render(request,'invoices_list.html',context)
 
 
-
-def invoices_details(request):
-    context={"is_invoicedetails":True}
+def invoices_details(request,id):
+    # print(id)
+    details = Invoive.objects.filter(invoice_no=id)
+    # print(details.invoice_no)
+    moredetails = Invoive.objects.filter(invoice_no=id).last()
+    sub_total = moredetails.grand_total - moredetails.gst
+    print(sub_total)
+   
+    context={"is_invoicedetails":True,
+        "details":details,
+        "moredetails":moredetails,
+        "sub_total":sub_total
+    }
     return render(request,'invoices_details.html',context)
 
 
