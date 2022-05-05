@@ -123,7 +123,7 @@
                                     {% for i in invoices %}
                                     <tr>
                                         <td>
-                                            <a href="{% url 'branch:invoicedetails' %}" class="invoice-link">{{i.invoice_no}}</a>
+                                            <a href="/branchapp/invoicedetails/{{i.invoice_no}}" class="invoice-link">{{i.invoice_no}}</a>
                                         </td>
                                         <td>{{i.customer__name}}</td>
                                         <td>{{i.date}}</td>
@@ -136,8 +136,8 @@
                                                         class="fas fa-ellipsis-v"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     
-                                                    <a class="dropdown-item" href="{% url 'branch:invoicedetails' %}"><i
-                                                            class="far fa-eye me-2"></i>View</a>
+                                                    <a class="dropdown-item" href="/branchapp/invoicedetails/{{i.invoice_no}}" ><i
+                                                            class="far fa-eye me-2"></i>View </a>
                                                     <a class="dropdown-item" href="javascript:void(0);"><i
                                                             class="far fa-trash-alt me-2"></i>Delete</a>
                                                 </div>

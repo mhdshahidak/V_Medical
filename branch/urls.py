@@ -49,7 +49,7 @@ urlpatterns = [
     path('deleteexp/<int:eid>',views.delete_expense,name="deleteexp"),
 
     path('invoicelist', views.invoices_list, name='invoicelist'),
-    path('invoicedetails', views.invoices_details, name='invoicedetails'),
+    path('invoicedetails/<str:id>', views.invoices_details, name='invoicedetails'),
     
     path('branchprofile', views.branch_profile, name='branchprofile'),
 
