@@ -11,7 +11,7 @@ from adminapp.models import Branch, Staff, StaffBankDetails, Transfer
 
 # Create your views here.
 
-@auth_admin
+# @auth_admin
 def admin_home(request):
     branches=Branch.objects.all()
     context = {"is_adminhome": True,
@@ -238,6 +238,9 @@ def stock_list(request,bid):
     return render(request, 'stock_list.html', context)
 
 def admin_logout(request):
-    del request.session['admin']
-    request.session.flush()
-    return redirect('branch:login')
+    try:
+        del request.session['admin']
+        request.session.flush()
+        return redirect('branch:login')
+    except:
+        return redirect('branch:login')
