@@ -15,9 +15,9 @@
                                 <i class="fas fa-dollar-sign"></i>
                             </span>
                             <div class="dash-count">
-                                <div class="dash-title"> Name </div>
+                                <div class="dash-title"> INCOME</div>
                                 <div class="dash-counts">
-                                    <h6 class="counter">balance</h6>
+                                    <h6 class="counter">{{totalincome.amount__sum}}</h6>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                             <div class="dash-count">
                                 <div class="dash-title">Bank</div>
                                 <div class="dash-counts">
-                                    <p class="counter">1,041</p>
+                                    <p class="counter">{{bankamount.grand_total__sum}}</p>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                             <div class="dash-count">
                                 <div class="dash-title">Cash</div>
                                 <div class="dash-counts">
-                                    <p class="counter">1,041</p>
+                                    <p class="counter">{{cash.grand_total__sum}}</p>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                             <div class="dash-count">
                                 <div class="dash-title">UPI</div>
                                 <div class="dash-counts">
-                                    <p class="counter">2,150</p>
+                                    <p class="counter">{{upi.grand_total__sum}}</p>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
                             <div class="dash-count">
                                 <div class="dash-title">Staff</div>
                                 <div class="dash-counts">
-                                    <p class="counter">2,150</p>
+                                    <p class="counter">{{staffcount}}</p>
                                 </div>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
                     <div class="card-body">
                         
                         <div class="table-responsive">
-                            <table class="table table-stripped table-hover">
+                            <table class="table table-stripped table-hover datatable">
                                 <thead class="thead-light">
                                     <tr>
                                         <th>Invoice ID</th>
@@ -150,7 +150,7 @@
                                         <td>{{i.invoice_no}}</td>
                                         <td>
                                             <h2 class="table-avatar">
-                                               {{i.customer.name}}
+                                               {{i.customer__name}}
                                             </h2>
                                         </td>
                                         <td>$118</td>
@@ -195,7 +195,7 @@
                     <div class="card-body">
                         
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover datatable">
                                 <thead class="thead-light">
                                     <tr>
                                         <th>Category</th>

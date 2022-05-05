@@ -32,14 +32,14 @@ class Branch(models.Model):
 
 
 class Staff(models.Model):
-    profile=models.ImageField(upload_to='staff/',default='default.png')
+    # profile=models.ImageField(upload_to='staff/',default='default.png')
     name = models.CharField(max_length=50)
     staff_id = models.CharField(max_length=20)
     email = models.CharField(max_length=30)
     phone = models.CharField(max_length=18)
     place = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
-    pincode = models.IntegerField()
+    pincode = models.CharField(max_length=15)
     address = models.CharField(max_length=200)
     date = models.DateField()
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)

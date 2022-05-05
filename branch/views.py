@@ -8,6 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Sum, Avg, Min, Max, Count
 # from tomlkit import datetime
 
+from django.db.models import F
+
 
 from adminapp.models import AdminLogin, Branch, Staff, StaffBankDetails, Transfer
 from branch.models import BranchBank, BranchProducts, Customers, Expense, Income, MedicineTransfer, Product
@@ -54,13 +56,29 @@ def forgotpassword(request):
 def branch_home(request):
     branch=Branch.objects.get(id=request.session['branch'])
     staff_transfer_request = Transfer.objects.filter(from_branch=branch)
+
     today = datetime.now().date()
     today_start = datetime.combine(today, time())
+
     recent_expenses=Expense.objects.filter(branch_id=request.session['branch'],date__gte=today_start)
-    recent_invoices=Invoive.objects.values('invoice_no','customer__name').filter(product__branch=request.session['branch'],date__gte=today_start).annotate(count=Count('invoice_no')).order_by()
-    # print(recent_invoices)
+    recent_invoices=Invoive.objects.select_related('customer').filter(product__branch=request.session['branch'],date__gte=today_start).values('invoice_no','customer__name','date').annotate(count=Count('invoice_no'))
+    print(recent_invoices)
+    total_income=Income.objects.filter(branch_id__id=request.session['branch'],date__gte=today_start).values('date').aggregate(Sum('amount'))
     total_expense = Expense.objects.filter(branch_id=request.session['branch'],date__gte=today_start).aggregate(Sum('amount'))
-    print(total_expense)
+    bank_amount= cash = Invoive.objects.filter(product__branch__id=request.session['branch'],payment_methode="BANK").values('invoice_no','customer__name','grand_total').distinct().aggregate(Sum('grand_total'))
+    cash = Invoive.objects.filter(product__branch__id=request.session['branch'],payment_methode="CASH").values('invoice_no','customer__name','grand_total').distinct().aggregate(Sum('grand_total'))
+    upi = Invoive.objects.filter(product__branch__id=request.session['branch'],payment_methode="GOOGLE PAY").values('invoice_no','customer__name','grand_total').distinct().aggregate(Sum('grand_total'))
+
+    staff_count = Staff.objects.filter(branch__id=request.session['branch'],status="Active").values('name','staff_id','status').count()
+
+    
+
+    
+    print(total_income)
+    # print(bank_amount)
+    # print(total_expense)
+    print(cash)
+    # print(total_cash)
     
     context={
         "is_branchhome":True,
@@ -69,6 +87,12 @@ def branch_home(request):
         'expenses':recent_expenses,
         'invoices':recent_invoices,
         'totalexpense':total_expense,
+        'bankamount':bank_amount,
+        'cash':cash,
+        'upi':upi,
+        'staffcount':staff_count,
+        'totalincome':total_income,
+        "today_start":today_start
         
     }
     return render(request,'branch_home.html',context)
@@ -169,8 +193,8 @@ def add_staff(request):
         staff_id = 'VMS'+str(101234+staff)
     else:
         staff=0
-        staff_id = 'EST'+str(101234+staff)
-    profile=""
+        staff_id = 'VMS'+str(101234+staff)
+    # profile=""
     if request.method == 'POST':
         Name = request.POST['name']
         staff_id = staff_id
@@ -187,11 +211,11 @@ def add_staff(request):
         branchname=request.POST['branchname']
         account_num=request.POST['accnum']
         ifsc=request.POST['ifsc']
-        if request.POST['profile']:
-            profile=request.FILES['profile']
+        # if request.POST['profile']:
+        #     profile=request.FILES['profile']
         staff_exist=Staff.objects.filter(name=Name,staff_id=staff_id,phone=phone).exists()
         if not staff_exist:
-            new_staff=Staff(profile=profile,name=Name,staff_id=staff_id,email=email,phone=phone,place=place,state=state,address=address,pincode=pincode,date=date,branch=branch)
+            new_staff=Staff(name=Name,staff_id=staff_id,email=email,phone=phone,place=place,state=state,address=address,pincode=pincode,date=date,branch=branch)
             new_staff.save()
             new_staff_bank=StaffBankDetails(staff=new_staff,holder_name=holder_name,bank_name=bank_name,account_number=account_num,ifsc=ifsc,branch=branchname)
             new_staff_bank.save()
