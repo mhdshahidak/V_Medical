@@ -87,7 +87,7 @@
                                         <table class="invoice-table table table-center mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
+                                                    <th>Sl.No</th>
                                                     <th>Name</th>
                                                     <th>Rate</th>
                                                     <th  class="text-center">Quantity</th>
@@ -144,6 +144,23 @@
     </div>
 </div>
 
+<style>
+    body
+        {
+            counter-reset: Serial;          
+        }
+
+        table
+        {
+            border-collapse: separate;
+        }
+
+        tr td:first-child:before
+        {
+          counter-increment: Serial;      
+          content: counter(Serial); 
+        }
+</style>
 
 
 {% endblock %}
