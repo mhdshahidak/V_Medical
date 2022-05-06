@@ -32,7 +32,6 @@ class Branch(models.Model):
 
 
 class Staff(models.Model):
-    # profile=models.ImageField(upload_to='staff/',default='default.png')
     name = models.CharField(max_length=50)
     staff_id = models.CharField(max_length=20)
     email = models.CharField(max_length=30)

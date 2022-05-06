@@ -194,7 +194,6 @@ def add_staff(request):
     else:
         staff=0
         staff_id = 'VMS'+str(101234+staff)
-    # profile=""
     if request.method == 'POST':
         Name = request.POST['name']
         staff_id = staff_id
@@ -211,8 +210,6 @@ def add_staff(request):
         branchname=request.POST['branchname']
         account_num=request.POST['accnum']
         ifsc=request.POST['ifsc']
-        # if request.POST['profile']:
-        #     profile=request.FILES['profile']
         staff_exist=Staff.objects.filter(name=Name,staff_id=staff_id,phone=phone).exists()
         if not staff_exist:
             new_staff=Staff(name=Name,staff_id=staff_id,email=email,phone=phone,place=place,state=state,address=address,pincode=pincode,date=date,branch=branch)
@@ -795,7 +792,8 @@ def profit_loss(request):
 
 # Purchase list
 def purchase_list(request):
-    productpurchase = BranchProducts.objects.filter(quantity__lte=100)
+
+    productpurchase = BranchProducts.objects.filter(branch__id=request.session['branch'],quantity__lte=100)
     context={
         "is_purchaselist":True,
         "prPurchase":productpurchase,
