@@ -64,7 +64,7 @@ def branch_home(request):
     recent_invoices=Invoive.objects.select_related('customer').filter(product__branch=request.session['branch'],date__gte=today_start).values('invoice_no','customer__name','date','grand_total').distinct()
     # print(recent_invoices)
 
-    total_income=Income.objects.filter(branch_id__id=request.session['branch'],date__gte=today_start).values('date').aggregate(Sum('amount'))
+    total_income=Income.objects.filter(branch_id__id=request.session['branch'],date__gte=today_start).values('date').aggregate(Sum('incomeamount'))
     # print(total_income)
     total_expense = Expense.objects.filter(branch_id=request.session['branch'],date__gte=today_start).aggregate(Sum('amount'))
     # print(total_expense)
@@ -449,7 +449,7 @@ def income_adding_invoice(request):
     criteria = "Income from selling"
     catagory = "selling"
     branch = Branch.objects.get(id=request.session['branch'])
-    new_income = Income(category=catagory,amount=grand_total,criteria=criteria,branch_id=branch)
+    new_income = Income(category=catagory,incomeamount=grand_total,criteria=criteria,branch_id=branch)
     new_income.save()
     return JsonResponse({'msg':'BILL GENERATED'})
     # print(invoice_id)
@@ -631,7 +631,7 @@ def add_income(request):
         # notes=request.POST['notes']
         fromperson=request.POST['fromperson']
         branch=branch
-        new_income=Income(category=category,date=date,amount=amount,criteria=criteria,fromperson=fromperson,branch_id=branch)
+        new_income=Income(category=category,date=date,incomeamount=amount,criteria=criteria,fromperson=fromperson,branch_id=branch)
         new_income.save()
         return render(request,'add_income.html',{'status':1,}) 
     context={
@@ -814,9 +814,9 @@ def net_profit(request):
     today = datetime.now().date()
     today_start = datetime.combine(today, time())
     print(today_start)
-    recent_expenses=Expense.objects.filter(branch_id__id=request.session['branch'],date__gte=today_start).values('id','category','date','amount')
+    recent_expenses=Expense.objects.filter(branch_id__id=request.session['branch'],date__gte=today_start).values('id','category','date','amount','expense_type')
     print(recent_expenses)
-    recent_income=Income.objects.filter(branch_id__id=request.session['branch'],date__gte=today_start).values('id','category','date','amount')
+    recent_income=Income.objects.filter(branch_id__id=request.session['branch'],date__gte=today_start).values('id','category','date','incomeamount','income_type')
     queryset = list(recent_income)+list(recent_expenses)
     print(queryset)
     return JsonResponse({'datas':queryset,})

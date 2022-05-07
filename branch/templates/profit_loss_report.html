@@ -111,9 +111,12 @@
                                             Category
                                         </th>
                                         <th>
+                                            Type
+                                        </th>
+                                        <th>
                                             Amount
                                         </th>
-                                        <th class="text-end">
+                                        <th class="text-start">
                                             Net Profit
                                         </th>
                                     </tr>
@@ -152,9 +155,9 @@
         }
 </style> -->
 
-
 <script>
     $(document).ready(function () {
+       
         incomeSum = []
         $.ajax({
             url: "/branchapp/netprofit/",
@@ -169,8 +172,8 @@
 
                     var income
                     var expence
-                    if (data[i].amount != null) {
-                        income = data[i].amount
+                    if (data[i].incomeamount != null) {
+                        income = data[i].incomeamount
                     }
                     else {
                         income = 0
@@ -190,16 +193,17 @@
                         return a + b
                     }, 0)
                     netprofit = sumIncome - sumExpense
+                    console.log(netprofit)
                     incomeSum = []
                     incomeSum.push(netprofit)
 
                     table = $("#netprofittable").DataTable();
-                    if (data[i].amount != null) {
-                        incomeData.push([data[i].date, data[i].category, data[i].amount, netprofit])
+                    if (data[i].incomeamount != null) {
+                        incomeData.push([data[i].date, data[i].category,data[i].income_type, data[i].incomeamount, netprofit])
                         table.rows.add(incomeData).draw()
                     }
-                    if (data[i].expencesasamount != null) {
-                        expenceData.push([data[i].date, data[i].category, data[i].amount, netprofit])
+                    if (data[i].amount != null) {
+                        expenceData.push([data[i].date, data[i].category,data[i].expense_type, data[i].amount, netprofit])
                         table.rows.add(expenceData).draw()
                     }
                     else {

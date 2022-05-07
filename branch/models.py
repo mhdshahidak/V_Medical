@@ -69,6 +69,7 @@ class Expense(models.Model):
     note=models.CharField(max_length=500)
     amount=models.FloatField()
     branch_id=models.ForeignKey(Branch,on_delete=models.CASCADE)
+    expense_type=models.CharField(max_length=10,default="Expense")
 
     class Meta:
         db_table='expense'
@@ -93,10 +94,11 @@ class Income(models.Model):
     category=models.CharField(max_length=50)
     date=models.DateField(default=datetime.date.today)
     note=models.CharField(max_length=500)
-    amount=models.FloatField()
+    incomeamount=models.FloatField()
     criteria=models.CharField(max_length=250)
     fromperson=models.CharField(max_length=25)
     branch_id=models.ForeignKey(Branch,on_delete=models.CASCADE)
+    income_type=models.CharField(max_length=10,default="Income")
     
     class Meta:
         db_table = 'income'
