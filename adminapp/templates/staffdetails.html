@@ -3,9 +3,7 @@
 {% load static %}
 
 
-
-
-    <div class="page-wrapper">
+<div class="page-wrapper">
         <div class="content container-fluid">
             <div class="page-header">
                 <div class="row align-items-center">
@@ -20,13 +18,9 @@
                     </div>
                     <div class="col-auto">
                         <a href="{% url 'adminapp:addstaff' %}" class="btn btn-primary me-1">
-                            <i class="fas fa-plus"></i>
+                            <i class="fas fa-plus"></i> Add Staff
                         </a>
-                        <a class="btn btn-primary filter-btn"
-                           href="javascript:void(0);"
-                           id="filter_search" >
-                            <i class="fas fa-filter"></i>
-                        </a>
+                        
                     </div>
                 </div>
             </div>
@@ -80,7 +74,6 @@
                                                             <th>branch Name</th>
                                                             <th>Email</th>
                                                             <th>Place</th>
-                                                            <th>Salary</th>
                                                             <th>Joined Date</th>
                                                             <th>Status</th>
                                                             <th class="text-center">Actions</th>
@@ -102,7 +95,6 @@
                                                             <td>{{s.branch.branch_name|capfirst}}</td>
                                                             <td>{{s.email}}</td>
                                                             <td>{{s.place}}</td>
-                                                            <td>$295</td>
                                                             <td>{{s.date}}</td>
                                                             <td>
                                                                 {% if s.status == 'Active'  %} <span class="badge badge-pill bg-success-light">{{  s.status }}</span>{% elif s.status == 'InActive' %} <span class="badge badge-pill bg-danger-light">{{  s.status }}</span> {% else %} <span class="badge badge-pill bg-danger-light">{{ s.status }}</span> {% endif %}
@@ -135,7 +127,6 @@
                                                             <th>branch Name</th>
                                                             <th>Email</th>
                                                             <th>Contact Number</th>
-                                                            <th>Salary</th>
                                                             <th>Joined Date</th>
                                                             <th>Status</th>
                                                             <th class="text-center">Actions</th>
@@ -157,7 +148,6 @@
                                                             <td>{{s.branch.branch_name|capfirst}}</td>
                                                             <td>{{s.email}}</td>
                                                             <td>{{s.place}}</td>
-                                                            <td>$295</td>
                                                             <td>{{s.date}}</td>
                                                             <td>
                                                                 {% if s.status == 'Active'  %} <span class="badge badge-pill bg-success-light">{{  s.status }}</span>{% elif s.status == 'InActive' %} <span class="badge badge-pill bg-danger-light">{{  s.status }}</span> {% else %} <span class="badge badge-pill bg-danger-light">{{ s.status }}</span> {% endif %}
@@ -191,7 +181,6 @@
                                                             <th>branch Name</th>
                                                             <th>Email</th>
                                                             <th>Contact Number</th>
-                                                            <th>Salary</th>
                                                             <th>Joined Date</th>
                                                             <th>Status</th>
                                                             <th class="text-center">Actions</th>
@@ -213,7 +202,6 @@
                                                             <td>{{s.branch.branch_name|capfirst}}</td>
                                                             <td>{{s.email}}</td>
                                                             <td>{{s.place}}</td>
-                                                            <td>$295</td>
                                                             <td>{{s.date}}</td>
                                                             <td>
                                                                 {% if s.status == 'Active'  %} <span class="badge badge-pill bg-success-light">{{  s.status }}</span>{% elif s.status == 'InActive' %} <span class="badge badge-pill bg-danger-light">{{  s.status }}</span> {% else %} <span class="badge badge-pill bg-danger-light">{{ s.status }}</span> {% endif %}
