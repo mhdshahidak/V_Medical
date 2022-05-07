@@ -9,6 +9,7 @@ urlpatterns = [
     path('editbranch/<int:bid>', views.edit_branch, name='editbranch'),
     path('deletebranch/<int:bid>', views.delete_branch, name='deletebranch'),
     path('add_branch', views.addbranch, name='addbranch'),
+    path('branchname', views.branch_name, name='branchname'),
     path('staffdetails', views.staff_details, name='staffdetails'),
     path('getStaffGet/<int:id>',views.getStaffGet,name="getStaffGet"),  
     path('deletestaff/<int:sid>', views.delete_staff, name='deletestaff'),

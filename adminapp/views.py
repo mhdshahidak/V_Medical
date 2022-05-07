@@ -11,7 +11,7 @@ from adminapp.models import Branch, Staff, StaffBankDetails, Transfer
 
 # Create your views here.
 
-# @auth_admin
+@auth_admin
 def admin_home(request):
     branches=Branch.objects.all()
     context = {"is_adminhome": True,
@@ -19,7 +19,7 @@ def admin_home(request):
     }
     return render(request, 'admin_home.html',context)
 
-
+@auth_admin
 def branch_details(request):
     branches=Branch.objects.all()
     active_branch=Branch.objects.filter(status="Active")
@@ -33,11 +33,8 @@ def branch_details(request):
     return render(request, 'branchdetails.html', context)
 
 
-
+@auth_admin
 def addbranch(request):
-    msg=""
-    # rand=random.randint(10000,999999)
-    # branchid='VM'+str(rand)
     if Branch.objects.exists():
         branch = Branch.objects.last().id
         branch_id = 'VMID'+str(1000+branch)
@@ -67,7 +64,7 @@ def addbranch(request):
     
 
 
-
+@auth_admin
 def edit_branch(request,bid):
     if request.method == 'POST':
         branch_Name=request.POST['bname']
@@ -86,7 +83,7 @@ def edit_branch(request,bid):
         }
     return render(request,'editbranch.html', context)
 
-
+@auth_admin
 def delete_branch(request,bid):
     status = "InActive"
     branch = Branch.objects.get(id=bid)
@@ -97,6 +94,7 @@ def delete_branch(request,bid):
 
 
 # staff details
+@auth_admin
 def staff_details(request):
     staffs = Staff.objects.all()
     print(staffs)
@@ -110,7 +108,7 @@ def staff_details(request):
     }
     return render(request, 'staffdetails.html', context)
 
-
+@auth_admin
 def add_staff(request):
     branch=Branch.objects.all()
     # rand=random.randint(10000,99999)
@@ -141,6 +139,13 @@ def add_staff(request):
         }
     return render(request, 'add_staff.html', context)
 
+def branch_name(request):
+    branchid = request.GET['id']
+    branch = Branch.objects.get(branch_id=branchid)
+    print(branchid)
+    pass
+
+@auth_admin
 def getStaffGet(request,id):
     staffs=Staff.objects.get(id=id)
     staffbank=StaffBankDetails.objects.get(staff__id=id)
@@ -162,6 +167,7 @@ def getStaffGet(request,id):
     }
     return JsonResponse({'staffs': data,})
 
+@auth_admin
 def delete_staff(request,sid):
     status = "InActive"
     staff = Staff.objects.get(id=sid)
@@ -172,6 +178,7 @@ def delete_staff(request,sid):
 
 
 # transfer Staff from one branch to another branch
+@auth_admin
 def transfer(request):
     if request.method == 'POST':
         fbranch = request.POST['from']
@@ -218,6 +225,7 @@ def staff_id(request):
 
 
 # branch stock list
+@auth_admin
 def stock(request):
     branch=Branch.objects.all()
     context = {
@@ -228,6 +236,7 @@ def stock(request):
 
 
 
+@auth_admin
 def stock_list(request,bid):
     branchproduct=BranchProducts.objects.filter(branch=bid)
     print(branchproduct)
@@ -237,10 +246,17 @@ def stock_list(request,bid):
     }
     return render(request, 'stock_list.html', context)
 
+# def admin_logout(request):
+#     try:
+#         del request.session['admin']
+#         request.session.flush()
+#         return redirect('branch:login')
+#     except:
+#         return redirect('branch:login')
+
+@auth_admin
 def admin_logout(request):
-    try:
-        del request.session['admin']
-        request.session.flush()
-        return redirect('branch:login')
-    except:
-        return redirect('branch:login')
+    del request.session['admin']
+    request.session.flush()
+    return redirect('branch:login')
+       
