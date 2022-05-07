@@ -33,7 +33,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Basic Info</h4>
-                            <form action="#" method="POST">
+                            <form action="#" method="POST" onsubmit="return validate()">
                                 {% csrf_token %}
 
                                 <div class="row">
@@ -63,11 +63,13 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input type="text" class="form-control" name="password" required>
+                                            <input type="text" class="form-control" name="password" required id="psw">
+                                            <span id="psw_error"></span>
                                         </div>
                                         <div class="form-group">
                                             <label>Confirm Password</label>
-                                            <input type="text" class="form-control" name="cpassword" required>
+                                            <input type="text" class="form-control" name="cpassword" required id="cpsw">
+                                            <span id="c_psw_error"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -78,34 +80,37 @@
                                 <div class="text-end mt-4">
                                     <button type="submit" id="btn" class="btn btn-primary">Add Branch</button>
                                 </div>
-                                {{msg}}
                             </form>
-                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-//    toggle
 
-  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+        function validate(){
+
+            var psw=document.getElementById("psw").value
+            var cpsw=document.getElementById("cpsw").value
+
+            if(document.getElementById("psw").value !== document.getElementById("cpsw").value){
+                document.getElementById("c_psw_error").innerHTML="re-enter the correct password"
+                document.getElementById("c_psw_error").style.color="red"
+                document.getElementById("cpsw").style.border="1px red solid"
+                return false
+            }
+            else{
+                document.getElementById("c_psw_error").innerHTML=""
+                document.getElementById("cpsw").style.border="1px black solid"
+            }
+
+        }
 
 
-    //alert
-    // $(document).ready(function(){
-    //     // $('.alert').hide()
-    //     $('button').click(function(){
-    //         $('.alert').hide().show()
-    //     }) 
-    // // });
-    // $(document).ready(function () {
-    //         $(".alert").hide()
-    //         $("#btn").click(function () {
-    //             $(".alert").show()
-    //         })
-    //     })
+        
     </script>
+
 {% endblock %}
