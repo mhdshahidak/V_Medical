@@ -21,9 +21,6 @@
                     </ul>
                 </div>
                 <div class="col-auto">
-                    <!-- <a href="#" class="btn btn-primary">
-                        <i class="fas fa-file-pdf"></i>
-                    </a> -->
                     <a class="btn btn-primary filter-btn" href="javascript:void(0);" id="filter_search">
                         <i class="fas fa-filter"></i>
                     </a>
@@ -100,12 +97,13 @@
                 <div class="card card-table">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-center table-hover datatable">
+                            <table class="table table-center table-hover datatable" id="netprofittable">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>
+                                        <!-- <th>  
                                             Sl.No
-                                        </th>
+                                        </th> -->
+                                      
                                         <th>
                                             Date
                                         </th>
@@ -121,57 +119,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            5 Jan 2021
-                                        </td>
-                                        <td>
-                                            income
-                                        </td>
-                                        <td>
-                                            $ 90000
-                                        </td>
-                                        <td class="text-end">
-                                            $70000
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            5 Jan 2021
-                                        </td>
-                                        <td>
-                                            income
-                                        </td>
-                                        <td>
-                                            $ 90000
-                                        </td>
-                                        <td class="text-end">
-                                            $70000
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            5 Jan 2021
-                                        </td>
-                                        <td>
-                                            Expense
-                                        </td>
-                                        <td>
-                                            $ 90000
-                                        </td>
-                                        <td class="text-end">
-                                            $70000
-                                        </td>
-                                    </tr>
+                                
                                 </tbody>
                             </table>
                         </div>
@@ -181,4 +129,97 @@
         </div>
     </div>
 </div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<!-- <style>
+    body
+        {
+            counter-reset: Serial;          
+        }
+
+        table
+        {
+            border-collapse: separate;
+        }
+
+        tr td:first-child:before
+        {
+          counter-increment: Serial;      
+          content: counter(Serial); 
+        }
+</style> -->
+
+
+<script>
+    $(document).ready(function () {
+        incomeSum = []
+        $.ajax({
+            url: "/branchapp/netprofit/",
+            type: 'GET',
+            success: function (responce) {
+
+                var data = responce['datas']
+                for (var i = 0; i < data.length; i++) {
+                    expenceSum = []
+                    incomeData = []
+                    expenceData = []
+
+                    var income
+                    var expence
+                    if (data[i].amount != null) {
+                        income = data[i].amount
+                    }
+                    else {
+                        income = 0
+                    }
+                    incomeSum.push(income)
+                    if (data[i].amount != null) {
+                        expence = data[i].amount
+                    }
+                    else {
+                        expence = 0
+                    }
+                    expenceSum.push(expence)
+                    var sumIncome = incomeSum.reduce(function (a, b) {
+                        return a + b
+                    }, 0)
+                    var sumExpense = expenceSum.reduce(function (a, b) {
+                        return a + b
+                    }, 0)
+                    netprofit = sumIncome - sumExpense
+                    incomeSum = []
+                    incomeSum.push(netprofit)
+
+                    table = $("#netprofittable").DataTable();
+                    if (data[i].amount != null) {
+                        incomeData.push([data[i].date, data[i].category, data[i].amount, netprofit])
+                        table.rows.add(incomeData).draw()
+                    }
+                    if (data[i].expencesasamount != null) {
+                        expenceData.push([data[i].date, data[i].category, data[i].amount, netprofit])
+                        table.rows.add(expenceData).draw()
+                    }
+                    else {
+
+                    }
+
+                }
+                // console.log(data.length)
+
+
+                // console.log(responce)
+
+            },
+
+
+        })
+
+    })
+
+</script>
+
+
 {% endblock %}

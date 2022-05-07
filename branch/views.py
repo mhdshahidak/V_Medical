@@ -810,6 +810,18 @@ def profit_loss(request):
     return render(request,'profit_loss_report.html',context)
 
 
+def net_profit(request):
+    today = datetime.now().date()
+    today_start = datetime.combine(today, time())
+    print(today_start)
+    recent_expenses=Expense.objects.filter(branch_id__id=request.session['branch'],date__gte=today_start).values('id','category','date','amount')
+    print(recent_expenses)
+    recent_income=Income.objects.filter(branch_id__id=request.session['branch'],date__gte=today_start).values('id','category','date','amount')
+    queryset = list(recent_income)+list(recent_expenses)
+    print(queryset)
+    return JsonResponse({'datas':queryset,})
+
+
 
 
 # Purchase list

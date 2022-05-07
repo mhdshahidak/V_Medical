@@ -69,6 +69,7 @@ urlpatterns = [
 
 
     path('profitloss',views.profit_loss,name="profitloss"),
+    path('netprofit/',views.net_profit,name="netprofit"),
    
     path('purchaselist',views.purchase_list,name="purchaselist"),
     path('branchlogout', views.branch_logout, name='branchlogout'),
