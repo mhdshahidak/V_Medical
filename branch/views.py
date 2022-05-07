@@ -98,6 +98,7 @@ def branch_home(request):
 
 
 # Customers adding , edit and delete
+@auth_branch
 def customers(request):
     customers=Customers.objects.all().order_by('name')
     branch=Branch.objects.get(id=request.session['branch'])
@@ -109,6 +110,7 @@ def customers(request):
     return render(request,'customers.html',context)
 
 
+@auth_branch
 def addcustomers(request):
     branch=Branch.objects.get(id=request.session['branch'])
     if request.method == 'POST':
@@ -136,7 +138,7 @@ def addcustomers(request):
 
 
 
-
+@auth_branch
 def edit_customer(request,cid):
     branch=Branch.objects.get(id=request.session['branch'])
     if request.method == 'POST':
@@ -156,7 +158,7 @@ def edit_customer(request,cid):
         return render(request,'editcustomer.html',context)
 
 
-
+@auth_branch
 def delete_customer(request,cust_delid):
     Customers.objects.filter(id=cust_delid).delete()
     return redirect('branch:customers')
@@ -165,6 +167,7 @@ def delete_customer(request,cust_delid):
 
 
 # Staff adding,edit,modal viewing and delete
+@auth_branch
 def staff(request):
     branch=Branch.objects.get(id=request.session['branch'])
     staffs=StaffBankDetails.objects.filter(staff__branch=request.session['branch'])
@@ -182,7 +185,7 @@ def staff(request):
     return render(request,'staff.html',context)
 
 
-
+@auth_branch
 def add_staff(request):
     branch=Branch.objects.get(id=request.session['branch'])
     if Staff.objects.exists():
@@ -228,7 +231,7 @@ def add_staff(request):
     return render(request,'addstaff.html',context)
 
 
-
+@auth_branch
 def edit_staff(request,sbid,sid):
     # print(sbid)
     # print(sid)
@@ -266,7 +269,7 @@ def edit_staff(request,sbid,sid):
     return render(request,'editstaff.html',context)
 
 
-
+@auth_branch
 def delete_staff(rquest,staff_delid):
     Staff.objects.filter(id=staff_delid).update(status='InActive')  
     return redirect('branch:staff')
@@ -295,6 +298,7 @@ def GetStaffGet(request,id):
 
 
 ## Prdouct View functions
+@auth_branch
 def all_products(request):
     branch = Branch.objects.get(id=request.session['branch'])
     products=BranchProducts.objects.filter(branch_id=request.session['branch']).order_by('product__name')
@@ -305,7 +309,7 @@ def all_products(request):
     return render(request,'products.html',context)
 
 
-
+@auth_branch
 def add_medicine(request):
     branch = Branch.objects.get(id=request.session['branch'])
     if Product.objects.exists():
@@ -359,6 +363,7 @@ def add_medicine(request):
     return render(request,'addmedicine.html',context)
 
 
+@auth_branch
 def edit_product(request,bpid,prid):
     # print(bpid)
     # print(prid)
@@ -391,6 +396,7 @@ def edit_product(request,bpid,prid):
     return render(request,'editproduct.html',context)
 
 
+@auth_branch
 def delete_product(request,pr_delid):
     Product.objects.filter(id=pr_delid).delete()
     return redirect('branch:products')
@@ -398,6 +404,7 @@ def delete_product(request,pr_delid):
 
 
 # billing section
+@auth_branch
 def billing(request):
     if Invoive.objects.exists():
         est = Invoive.objects.last().id
@@ -447,9 +454,9 @@ def data_adding(request):
     return JsonResponse({'msg':'BILL GENERATED'})
 
 
+@auth_branch
 def income_adding_invoice(request):
     grand_total = request.GET['total']
-    invoice_id = request.GET['invoice_id']
     criteria = "Income from selling"
     catagory = "selling"
     branch = Branch.objects.get(id=request.session['branch'])
@@ -491,6 +498,7 @@ def med_price(request):
     return JsonResponse({'product':data,})
 
 
+@auth_branch
 def preview(request):
     branch = Branch.objects.get(id=request.session['branch'])
     prid = request.GET['prid']
@@ -522,6 +530,7 @@ def preview(request):
 
 
 # invoicelist details
+@auth_branch
 def invoices_list(request):
     branch = Branch.objects.get(id=request.session['branch'])
     invoices=Invoive.objects.values('invoice_no','customer__name','date','grand_total').filter(product__branch=request.session['branch']).annotate(count=Count('invoice_no'),total=Sum('total')).order_by()
@@ -535,6 +544,8 @@ def invoices_list(request):
     return render(request,'invoices_list.html',context)
 
 
+
+@auth_branch
 def invoices_details(request,id):
     # print(id)
     branch = Branch.objects.get(id=request.session['branch'])
@@ -556,6 +567,7 @@ def invoices_details(request,id):
 
 # search medicine
 
+@auth_branch
 def search_medicine(request):
     branch = Branch.objects.get(id=request.session['branch'])
     if request.POST :
@@ -580,6 +592,7 @@ def search_medicine(request):
 
 
 # Bank
+@auth_branch
 def bank(request):
     branch=Branch.objects.get(id=request.session['branch'])
     banks=BranchBank.objects.filter(branch=request.session['branch'])
@@ -590,6 +603,8 @@ def bank(request):
         }
     return render(request,'bank.html',context)
 
+
+@auth_branch
 def add_bank(request):
     branch=Branch.objects.get(id=request.session['branch'])
     if request.method=='POST':
@@ -615,6 +630,7 @@ def add_bank(request):
 
 
 #income section
+@auth_branch
 def income(request):
     branch=Branch.objects.get(id=request.session['branch'])
     income=Income.objects.filter(branch_id=request.session['branch']).all()
@@ -625,6 +641,8 @@ def income(request):
         }
     return render(request,'income.html',context)
 
+
+@auth_branch
 def add_income(request):
     branch=Branch.objects.get(id=request.session['branch'])
     if request.method=='POST':
@@ -651,6 +669,7 @@ def add_income(request):
 
 
 # Expenses
+@auth_branch
 def expenses(request):
     branch=Branch.objects.get(id=request.session['branch'])
     expense=Expense.objects.filter(branch_id=request.session['branch'])
@@ -662,6 +681,7 @@ def expenses(request):
     return render(request,'expenses.html',context)
 
 
+@auth_branch
 def add_expenses(request):
     branch=Branch.objects.get(id=request.session['branch'])
     if request.method=='POST':
@@ -680,6 +700,8 @@ def add_expenses(request):
         }
     return render(request,'add_expense.html',context)
 
+
+@auth_branch
 def edit_expence(request,id):
     branch=Branch.objects.get(id=request.session['branch'])
     if request.method=='POST':
@@ -702,6 +724,7 @@ def edit_expence(request,id):
     return render(request,'editexpence.html',context)
 
 
+@auth_branch
 def delete_expense(request,eid):
     Expense.objects.filter(id=eid).delete()
     return redirect('branch:expenses')
@@ -709,13 +732,13 @@ def delete_expense(request,eid):
 
 
 
-
-
+@auth_branch
 def branch_profile(request):
     return render(request,'branchprofile.html')
 
 # medicine requesting
 
+@auth_branch
 def med_requesting(request,pid):
 
     # avblbranch = request.POST['avblbranch']
@@ -743,11 +766,13 @@ def medicine_requested(request):
     return render(request,'medicine_requested.html',context)
     
 
+@auth_branch
 def med_requests(request):
     status = "Requested"
     reqformed = MedicineTransfer.objects.filter(avblbranch__branch=request.session['branch'],status=status)
     return render(request,'med_request.html',{'reqformed':reqformed,})
 
+@auth_branch
 def med_accept(request,pid):
     medobj = MedicineTransfer.objects.get(id=pid)
     qty = medobj.quantity
@@ -778,20 +803,22 @@ def med_accept(request,pid):
 
     return redirect('branch:requests')
 
-# def med_decline(request,pid):
-#     status = "Rejected"
-#     medobj = MedicineTransfer.objects.get(id=pid)
-#     medobj.status =  status 
-#     medobj.save()
+def med_decline(request,pid):
+    status = "Rejected"
+    medobj = MedicineTransfer.objects.get(id=pid)
+    medobj.status =  status 
+    medobj.save()
+    return redirect('branch:requests')
 
 
-
+@auth_branch
 def staff_request(request):
     status = "requested"
     branch=Branch.objects.get(id=request.session['branch'])
     staff_transfer_request = Transfer.objects.filter(from_branch=branch,status=status)
     return render(request,'staff_request.html',{'s_transfer':staff_transfer_request,})
 
+@auth_branch
 def staff_transfer_accept(request,sid):
     status = "accpeted"
     staff_transfer = Transfer.objects.get(id=sid)
@@ -808,7 +835,7 @@ def staff_transfer_accept(request,sid):
     return redirect('branch:staffrequest')
     
 
-
+@auth_branch
 def profit_loss(request):
     context={"is_profitloss":True}
     return render(request,'profit_loss_report.html',context)
@@ -829,6 +856,7 @@ def net_profit(request):
 
 
 # Purchase list
+@auth_branch
 def purchase_list(request):
     productpurchase = BranchProducts.objects.filter(quantity__lte=100)
     context={
@@ -840,7 +868,7 @@ def purchase_list(request):
 
 
 
-
+@auth_branch
 def branch_logout(request):
     del request.session['branch']
     request.session.flush()

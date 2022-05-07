@@ -111,7 +111,7 @@
                                                         {{req.quantity}}
                                                     </td>
                                                     <td class="text-center">
-                                                    <a href=""
+                                                    <a href="{% url 'branch:medecline' req.id %}"
                                                            class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i>Decline</a>
                                                         <a href="{% url 'branch:medaccept' req.id %}"
                                                            class="btn btn-sm btn-white text-success me-2"><i class="fa fa-check me-1"></i>Accept</a>

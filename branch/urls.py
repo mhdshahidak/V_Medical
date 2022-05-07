@@ -64,7 +64,7 @@ urlpatterns = [
     path('medreq/<int:pid>/', views.med_requesting, name='medreq'),
     path('medicinerequested', views.medicine_requested, name='medicinerequested'),
     path('medaccept/<int:pid>', views.med_accept, name='medaccept'),
-    # path('medecline/<int:pid>', views.med_decline, name='medecline'),
+    path('medecline/<int:pid>', views.med_decline, name='medecline'),
 
 
 
