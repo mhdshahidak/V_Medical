@@ -50,22 +50,5 @@
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-//    toggle
 
-        $(document).on('click', '#toggle_btn', function () {
-            if ($('body').hasClass('mini-sidebar')) {
-                $('body').removeClass('mini-sidebar');
-                $('.subdrop + ul').slideDown();
-            } else {
-                $('body').addClass('mini-sidebar');
-                $('.subdrop + ul').slideUp();
-            }
-            setTimeout(function () {
-                mA.redraw();
-                mL.redraw();
-            }, 300);
-            return false;
-        });
-    </script>
 {% endblock %}

@@ -141,6 +141,12 @@ def add_staff(request):
         }
     return render(request, 'add_staff.html', context)
 
+def branch_name(request):
+    branchid = request.GET['id']
+    branch = Branch.objects.get(branch_id=branchid)
+    print(branchid)
+    pass
+
 def getStaffGet(request,id):
     staffs=Staff.objects.get(id=id)
     staffbank=StaffBankDetails.objects.get(staff__id=id)

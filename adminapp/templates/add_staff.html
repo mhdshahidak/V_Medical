@@ -39,26 +39,26 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Staff Name</label>
-                                            <input type="text" class="form-control" name="name">
+                                            <input type="text" class="form-control" name="name" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" class="form-control" name="email">
+                                            <input type="email" class="form-control" name="email" required>
                                         </div>
                                         <div class="form-group">
                                             <label>City</label>
-                                            <input type="text" class="form-control" name="city">
+                                            <input type="text" class="form-control" name="city" required>
                                         </div>
                                         <div class="form-group">
                                             <label>State</label>
-                                            <input type="text" class="form-control" name="state">
+                                            <input type="text" class="form-control" name="state" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Branch Name</label>
-                                            <input type="text" class="form-control" name="bname"  list="branchlist" id="fbranch" >
+                                            <label for="">Branch id</label>
+                                            <input type="text" class="form-control" name="bname"  list="branchlist" id="branch" >
                                             <datalist id="branchlist">
                                                 {% for fb in branch %}
-                                                    <option value="{{fb.branch_name}}" >{{fb.branch_id}} </option>    
+                                                    <option value="{{fb.branch_id}}" > {{fb.branch_name}} </option>    
                                                 {% endfor %}
                                             </datalist>
                                         </div>
@@ -70,11 +70,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Phone</label>
-                                            <input type="text" class="form-control" name="phone">
+                                            <input type="text" class="form-control" name="phone" required>
                                         </div>
                                         <div class="form-group">
                                             <label>District</label>
-                                            <input type="text" class="form-control" name="dist">
+                                            <input type="text" class="form-control" name="dist" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Join Date</label>
@@ -83,9 +83,9 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label>Branch ID</label>
+                                            <label>Branch Name</label>
                                             
-                                            <input class="form-control" id="bid" value="{{fb.branch_id}}" type="text" readonly>
+                                            <input class="form-control" id="bname"  type="text" readonly>
                                             
                                         </div>
                                     </div>
@@ -104,4 +104,30 @@
             </div>
         </div>
     </div>
+
+    <script>
+
+    // for branch id
+
+        // $(document).ready(function(){
+
+        //     $('#branch').change(function(){
+        //         // alert('hwllo')
+        //         $.ajax({
+        //             url:'/branchapp/branchname',
+        //             type:'GET',
+        //             data:{
+        //                 'id':$(this).val()  
+        //             },
+        //             success:function(response){
+        //                 console.log(response)
+        //                 $('#bname').val(response.customer.name)
+        //             }
+        //         })
+        //     })
+        // })
+        
+    </script>
+
+
 {% endblock %}

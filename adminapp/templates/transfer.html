@@ -41,7 +41,7 @@
 
                                     <div class="form-group">
                                         <label>From:</label>
-                                        <input type="text" class="form-control" name="from"  list="branchlist" id="fbranch" >
+                                        <input type="text" class="form-control" name="from"  list="branchlist" id="fbranch" required>
                                         <datalist id="branchlist">
                                         {% for fb in branch %}
                                             <option value="{{fb.branch_name}}" >{{fb.branch_name}} </option>    
@@ -53,7 +53,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>To:</label>
-                                        <input type="text" class="form-control" name="to" id="tbranch" list="tbranchlist" >
+                                        <input type="text" class="form-control" name="to" id="tbranch" list="tbranchlist" required >
                                         <datalist id="tbranchlist">
                                             {% for fb in branch %}
                                             <option value="{{fb.branch_name}}" >{{fb.branch_name}} </option>    
@@ -85,7 +85,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Staff Name:</label>
-                                        <select class="select cal-icon form-control" id="sname" name="sname">
+                                        <select class="select cal-icon form-control" id="sname" name="sname" required>
                                             {% for s in staff_data %}
                                                 <option value="{{s.id}}">{{s.name}}</option>
                                             {% endfor %}
