@@ -40,7 +40,7 @@ def addbranch(request):
         branch_id = 'VMID'+str(1000+branch)
     else:
         est=0
-        est_id = 'EST'+int(1000+est)
+        branch_id = 'VMID'+int(1000+est)
     if request.method == 'POST':
         Branch_Name=request.POST['bname']
         branch_id=branch_id

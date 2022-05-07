@@ -367,6 +367,7 @@ def add_medicine(request):
 def edit_product(request,bpid,prid):
     # print(bpid)
     # print(prid)
+    branch=Branch.objects.get(id=request.session['branch'])
     staff=request.session['branch']
     # print(staff)
     # products=BranchProducts.objects.filter(branch_id=request.session['branch'])
@@ -392,6 +393,7 @@ def edit_product(request,bpid,prid):
     context={
         "is_editproduct":True,
         "editproduct":edit_product,
+        "branch":branch
     }
     return render(request,'editproduct.html',context)
 
@@ -721,7 +723,7 @@ def edit_expence(request,id):
     context={
         "branch":branch
     }
-    return render(request,'editexpence.html',context)
+    return render(request,'editexpence.html',context)  
 
 
 @auth_branch
@@ -752,16 +754,20 @@ def med_requesting(request,pid):
     msg = "Requested"
 
     medicines = Product.objects.all()
-    context={"is_searchmedicine":True,
+    context={
+        "is_searchmedicine":True,
         'medicines':medicines,
         'msg':msg
     }
     return render(request,'search.html',context)
 
 def medicine_requested(request):
+    branch=Branch.objects.get(id=request.session['branch'])
     req_list = MedicineTransfer.objects.filter(reqbranch=request.session['branch'])
-    context={"is_medicinerequested":True,
-        'reqlist':req_list
+    context={
+        "is_medicinerequested":True,
+        'reqlist':req_list,
+        "branch":branch
     }
     return render(request,'medicine_requested.html',context)
     
@@ -837,7 +843,11 @@ def staff_transfer_accept(request,sid):
 
 @auth_branch
 def profit_loss(request):
-    context={"is_profitloss":True}
+    branch=Branch.objects.get(id=request.session['branch'])
+    context={
+        "is_profitloss":True,
+        "branch":branch
+        }
     return render(request,'profit_loss_report.html',context)
 
 
@@ -858,10 +868,12 @@ def net_profit(request):
 # Purchase list
 @auth_branch
 def purchase_list(request):
+    branch=Branch.objects.get(id=request.session['branch'])
     productpurchase = BranchProducts.objects.filter(quantity__lte=100)
     context={
         "is_purchaselist":True,
         "prPurchase":productpurchase,
+        "branch":branch
     }
     return render(request,'purchaselist.html',context)
 

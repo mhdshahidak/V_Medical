@@ -22,12 +22,13 @@
     <div class="main-wrapper login-body">
         <div class="login-wrapper">
             <div class="container">
-                <img class="img-fluid logo-dark mb-2" src="img/logo.png" alt="Logo">
+                
                 <div class="loginbox">
                     <div class="login-right">
                         <div class="login-right-wrap">
-                            <h1>Login</h1>
-                            <p class="account-subtitle">Access to our dashboard</p>
+                            <img class="img-fluid logo-dark mb-2" src="{% static 'img/logo.png' %}" alt="Logo">
+                            <br>
+                            
                             <form action="" method="POST">
                             {% csrf_token %}
                                 <div class="form-group">
@@ -55,20 +56,6 @@
                                     </div>
                                 </div>
                                 <button class="btn btn-lg btn-block btn-primary w-100" type="submit">Login</button>
-                                <div class="login-or">
-                                    <span class="or-line"></span>
-                                    <span class="span-or">or</span>
-                                </div>
-
-                                <div class="social-login mb-3">
-                                    <span>Login with</span>
-                                    <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a><a href="#"
-                                        class="google"><i class="fab fa-google"></i></a>
-                                </div>
-
-                                <div class="text-center dont-have">Don't have an account yet? <a
-                                        href="register.html">Register</a></div>
-                                <div class="text-center ">{{msg}}</div>
                             </form>
                         </div>
                     </div>
@@ -78,26 +65,9 @@
     </div>
 
 
-    <script src="assets/js/jquery-3.6.0.min.js"></script>
-
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-
-    <script src="assets/js/feather.min.js"></script>
-
-    <script src="assets/js/script.js"></script>
-    <script>
-        if($('.toggle-password').length > 0) {
-		$(document).on('click', '.toggle-password', function() {
-			$(this).toggleClass("fa-eye fa-eye-slash");
-			var input = $(".pass-input");
-			if (input.attr("type") == "password") {
-				input.attr("type", "text");
-			} else {
-				input.attr("type", "password");
-			}
-		});
-	}
-    </script>
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
 </body>
 
 </html>
