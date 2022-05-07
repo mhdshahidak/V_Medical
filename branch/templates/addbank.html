@@ -13,6 +13,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert"
                     aria-label="Close"></button>
             </div>
+        {% elif status == 0 %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>verify your account number</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                aria-label="Close"></button>
+        </div>
         {% endif %}
 
         <div class="page-header">
@@ -65,10 +71,10 @@
                                         <input type="text" class="form-control" name="reaccnum">
                                     </div>
                                     <div class="form-group">
-                                        <label>
+                                        <label hidden>
                                             Bank Balance
                                         </label>
-                                        <input type="text" class="form-control" name="balance">
+                                        <input type="text" class="form-control" name="balance" hidden>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

@@ -61,23 +61,19 @@ def branch_home(request):
     today_start = datetime.combine(today, time())
 
     recent_expenses=Expense.objects.filter(branch_id=request.session['branch'],date__gte=today_start)
-    recent_invoices=Invoive.objects.select_related('customer').filter(product__branch=request.session['branch'],date__gte=today_start).values('invoice_no','customer__name','date').annotate(count=Count('invoice_no'))
-    print(recent_invoices)
+    recent_invoices=Invoive.objects.select_related('customer').filter(product__branch=request.session['branch'],date__gte=today_start).values('invoice_no','customer__name','date','grand_total').distinct()
+    # print(recent_invoices)
+
     total_income=Income.objects.filter(branch_id__id=request.session['branch'],date__gte=today_start).values('date').aggregate(Sum('amount'))
+    # print(total_income)
     total_expense = Expense.objects.filter(branch_id=request.session['branch'],date__gte=today_start).aggregate(Sum('amount'))
-    bank_amount= cash = Invoive.objects.filter(product__branch__id=request.session['branch'],payment_methode="BANK").values('invoice_no','customer__name','grand_total').distinct().aggregate(Sum('grand_total'))
-    cash = Invoive.objects.filter(product__branch__id=request.session['branch'],payment_methode="CASH").values('invoice_no','customer__name','grand_total').distinct().aggregate(Sum('grand_total'))
-    upi = Invoive.objects.filter(product__branch__id=request.session['branch'],payment_methode="GOOGLE PAY").values('invoice_no','customer__name','grand_total').distinct().aggregate(Sum('grand_total'))
-
-    staff_count = Staff.objects.filter(branch__id=request.session['branch'],status="Active").values('name','staff_id','status').count()
-
-    
-
-    
-    print(total_income)
-    # print(bank_amount)
     # print(total_expense)
-    print(cash)
+    bank_amount= cash = Invoive.objects.filter(product__branch__id=request.session['branch'],payment_methode="BANK").values('invoice_no','customer__name','grand_total').distinct().aggregate(Sum('grand_total'))
+    # print(bank_amount)
+    cash = Invoive.objects.filter(product__branch__id=request.session['branch'],payment_methode="CASH").values('invoice_no','customer__name','grand_total').distinct().aggregate(Sum('grand_total'))
+    # print(cash)
+    upi = Invoive.objects.filter(product__branch__id=request.session['branch'],payment_methode="GOOGLE PAY").values('invoice_no','customer__name','grand_total').distinct().aggregate(Sum('grand_total'))
+    staff_count = Staff.objects.filter(branch__id=request.session['branch'],status="Active").values('name','staff_id','status').count()
     # print(total_cash)
     
     context={
@@ -92,14 +88,12 @@ def branch_home(request):
         'upi':upi,
         'staffcount':staff_count,
         'totalincome':total_income,
-        "today_start":today_start
-        
     }
     return render(request,'branch_home.html',context)
 
 
 
-# Customers
+# Customers adding , edit and delete
 def customers(request):
     customers=Customers.objects.all().order_by('name')
     branch=Branch.objects.get(id=request.session['branch'])
@@ -109,7 +103,6 @@ def customers(request):
         'branch':branch
     }
     return render(request,'customers.html',context)
-
 
 
 def addcustomers(request):
@@ -133,6 +126,7 @@ def addcustomers(request):
     else:
         context={
             "is_addcustomers":True,
+            "branch":branch
         }
     return render(request,'addcustomers.html',context)
 
@@ -166,7 +160,7 @@ def delete_customer(request,cust_delid):
     
 
 
-# Staff 
+# Staff adding,edit,modal viewing and delete
 def staff(request):
     branch=Branch.objects.get(id=request.session['branch'])
     staffs=StaffBankDetails.objects.filter(staff__branch=request.session['branch'])
@@ -186,8 +180,7 @@ def staff(request):
 
 
 def add_staff(request):
-    # rand=random.randint(10000,999999)
-    # staff_id='VMS'+str(rand)
+    branch=Branch.objects.get(id=request.session['branch'])
     if Staff.objects.exists():
         staff = Staff.objects.last().id
         staff_id = 'VMS'+str(101234+staff)
@@ -204,7 +197,7 @@ def add_staff(request):
         address = request.POST['address']
         pincode = request.POST['pincode']
         date = request.POST['date']
-        branch = Branch.objects.get(id=request.session['branch'])
+        branch = branch
         holder_name=request.POST['hname']
         bank_name=request.POST['bname']
         branchname=request.POST['branchname']
@@ -226,6 +219,7 @@ def add_staff(request):
     else:
         context={
             "is_addstaff": True,
+            "branch":branch
         }
     return render(request,'addstaff.html',context)
 
@@ -234,6 +228,7 @@ def add_staff(request):
 def edit_staff(request,sbid,sid):
     # print(sbid)
     # print(sid)
+    branch=Branch.objects.get(id=request.session['branch'])
     staff=request.session['branch']
     print(staff)
     if request.method == 'POST':
@@ -262,6 +257,7 @@ def edit_staff(request,sbid,sid):
         context={
             "is_editstaff":True,
             "editstaff":edit_staff,
+            "branch":branch
         }
     return render(request,'editstaff.html',context)
 
@@ -296,17 +292,24 @@ def GetStaffGet(request,id):
 
 ## Prdouct View functions
 def all_products(request):
+    branch = Branch.objects.get(id=request.session['branch'])
     products=BranchProducts.objects.filter(branch_id=request.session['branch']).order_by('product__name')
     context={"is_products":True,
         'products':products,
+        "branch":branch
     }
     return render(request,'products.html',context)
 
 
 
 def add_medicine(request):
-    rand=random.randint(10000,999999)
-    product_id='VMP'+str(rand)
+    branch = Branch.objects.get(id=request.session['branch'])
+    if Product.objects.exists():
+        product = Product.objects.last().id
+        product_id = 'VMSMED'+str(11111+product)
+    else:
+        product=0
+        product_id = 'VMS'+str(101234+staff)
 
     if request.method == 'POST':
         name = request.POST['name']
@@ -317,7 +320,7 @@ def add_medicine(request):
         description = request.POST['description']
         purchase_date = request.POST['pdate']
         expiry_date = request.POST['edate']
-        branch = Branch.objects.get(id=request.session['branch'])
+        branch = branch
 
         medicine_exists = Product.objects.filter(name=name).exists()
         if medicine_exists:
@@ -347,6 +350,7 @@ def add_medicine(request):
     context={
         "is_editproduct":True,
         "editproduct":edit_product,
+        "branch":branch
     }
     return render(request,'addmedicine.html',context)
 
@@ -383,8 +387,6 @@ def edit_product(request,bpid,prid):
     return render(request,'editproduct.html',context)
 
 
-
-
 def delete_product(request,pr_delid):
     Product.objects.filter(id=pr_delid).delete()
     return redirect('branch:products')
@@ -392,11 +394,7 @@ def delete_product(request,pr_delid):
 
 
 # billing section
-
-
 def billing(request):
-    msg = ""
-    
     if Invoive.objects.exists():
         est = Invoive.objects.last().id
         est_id = 'VMINS'+str(102354+est)
@@ -409,12 +407,12 @@ def billing(request):
     product = BranchProducts.objects.filter(branch=request.session['branch'])
     branch = Branch.objects.get(id=request.session['branch'])
     customer = Customers.objects.all()
-    context={"is_billing":True,
+    context={
+        "is_billing":True,
         "product":product,
         "customer":customer,
         "branch":branch,
         "invoice_id":est_id,
-        "msg":msg,
     }
     return render(request,'billing.html',context)
 
@@ -422,7 +420,6 @@ def billing(request):
 
 @csrf_exempt
 def data_adding(request):
-    
     cust_phone = request.POST['customer_phone']
     inv_id = request.POST['invoiceId']
     gst = request.POST['gst']
@@ -431,8 +428,7 @@ def data_adding(request):
     qty = request.POST['qty']
     payment_type = request.POST['type']
     item_total = request.POST['itemtotal']
-    
-    print(gst)
+    # print(gst)
 
     cust_exists = Customers.objects.filter(phone=cust_phone).exists()
     if cust_exists:
@@ -444,10 +440,7 @@ def data_adding(request):
         product.quantity = product.quantity - int(qty)
         product.save()
         return JsonResponse({'msg':'BILL GENERATED'})
-    
     return JsonResponse({'msg':'BILL GENERATED'})
-    # return redirect('branch:billing')
-    # return render(request,)
 
 
 def income_adding_invoice(request):
@@ -459,7 +452,6 @@ def income_adding_invoice(request):
     new_income = Income(category=catagory,amount=grand_total,criteria=criteria,branch_id=branch)
     new_income.save()
     return JsonResponse({'msg':'BILL GENERATED'})
-
     # print(invoice_id)
     
 
@@ -496,6 +488,7 @@ def med_price(request):
 
 
 def preview(request):
+    branch = Branch.objects.get(id=request.session['branch'])
     prid = request.GET['prid']
     item_esists = Invoive.objects.filter(invoice_no=prid).exists()
     if item_esists:
@@ -508,14 +501,16 @@ def preview(request):
         final_total = totalAmonut + Gst
         # print(final_total)
                                                
-        context={"is_billing":True,
+        context={
+            "is_billing":True,
             "invid":prid,
             'items':items,
             'cust':cust,
             'date':date,
             'itemtotal':total,
             'gst':Gst,
-            'total':final_total 
+            'total':final_total ,
+            "branch":branch
         }
         return render(request,'preview.html',context)
     else:
@@ -523,21 +518,22 @@ def preview(request):
 
 
 # invoicelist details
-
 def invoices_list(request):
+    branch = Branch.objects.get(id=request.session['branch'])
     invoices=Invoive.objects.values('invoice_no','customer__name','date','grand_total').filter(product__branch=request.session['branch']).annotate(count=Count('invoice_no'),total=Sum('total')).order_by()
     # totalamount = total
     # print(total)
     context={
         "is_invoicelist":True,
         "invoices":invoices,
-        # "total":totalamount,
+        "branch":branch,
     }
     return render(request,'invoices_list.html',context)
 
 
 def invoices_details(request,id):
     # print(id)
+    branch = Branch.objects.get(id=request.session['branch'])
     details = Invoive.objects.filter(invoice_no=id)
     # print(details.invoice_no)
     moredetails = Invoive.objects.filter(invoice_no=id).last()
@@ -547,74 +543,17 @@ def invoices_details(request,id):
     context={"is_invoicedetails":True,
         "details":details,
         "moredetails":moredetails,
-        "sub_total":sub_total
+        "sub_total":sub_total,
+        "branch":branch,
     }
     return render(request,'invoices_details.html',context)
 
-
-# Bank
-def bank(request):
-    banks=BranchBank.objects.filter(branch=request.session['branch'])
-    context={
-        "is_bank":True,
-        "banks":banks,
-        }
-    return render(request,'bank.html',context)
-
-def add_bank(request):
-    if request.method=='POST':
-        holdername=request.POST['accholdername']
-        accountnum=request.POST['accnum']
-        bankname=request.POST['bankname']
-        branchname=request.POST['bname']
-        ifsc=request.POST['ifsc']
-        branch=Branch.objects.get(id=request.session['branch'])
-        # bankbalane=request.POST['balance']
-
-        new_bank=BranchBank(Accholder_name=holdername,account_number=accountnum,bank_name=bankname,branch_name=branchname,ifsc=ifsc,branch=branch)
-        new_bank.save()
-        context={
-            "status":1,
-        }
-    context={
-    "is_addbank":True,
-    }
-    return render(request,'addbank.html',context)
-  
-
-
-
-#income section
-def income(request):
-    income=Income.objects.filter(branch_id=request.session['branch']).all()
-    context={
-        "is_income":True,
-        "income":income,
-        }
-    return render(request,'income.html',context)
-
-def add_income(request):
-    if request.method=='POST':
-        category=request.POST['category']
-        date=request.POST['date']
-        amount=request.POST['amount']
-        criteria=request.POST['criteria']
-        # notes=request.POST['notes']
-        fromperson=request.POST['fromperson']
-        branch=Branch.objects.get(id=request.session['branch'])
-        new_income=Income(category=category,date=date,amount=amount,criteria=criteria,fromperson=fromperson,branch_id=branch)
-        new_income.save()
-        return render(request,'add_income.html',{'status':1,}) 
-    context={
-        "is_addincome":True,
-        "status":0
-    }
-    return render(request,'add_income.html',context)
 
 
 # search medicine
 
 def search_medicine(request):
+    branch = Branch.objects.get(id=request.session['branch'])
     if request.POST :
         med_name = request.POST['name']
         medicines = Product.objects.all()
@@ -627,38 +566,118 @@ def search_medicine(request):
 
         return render(request,'search.html',context)
     medicines = Product.objects.all()
-    context={"is_searchmedicine":True,
-        'medicines':medicines
+    context={
+        "is_searchmedicine":True,
+        'medicines':medicines,
+        "branch":branch,
     }
     return render(request,'search.html',context)
 
 
 
+# Bank
+def bank(request):
+    branch=Branch.objects.get(id=request.session['branch'])
+    banks=BranchBank.objects.filter(branch=request.session['branch'])
+    context={
+        "is_bank":True,
+        "banks":banks,
+        "branch":branch,
+        }
+    return render(request,'bank.html',context)
+
+def add_bank(request):
+    branch=Branch.objects.get(id=request.session['branch'])
+    if request.method=='POST':
+        holdername=request.POST['accholdername']
+        accountnum=request.POST['accnum']
+        bankname=request.POST['bankname']
+        branchname=request.POST['bname']
+        ifsc=request.POST['ifsc']
+        branch=branch
+
+        new_bank=BranchBank(Accholder_name=holdername,account_number=accountnum,bank_name=bankname,branch_name=branchname,ifsc=ifsc,branch=branch)
+        new_bank.save()
+        context={
+            "status":1,
+        }
+    context={
+    "is_addbank":True,
+    "branch":branch,
+    }
+    return render(request,'addbank.html',context)
+  
+
+
+
+#income section
+def income(request):
+    branch=Branch.objects.get(id=request.session['branch'])
+    income=Income.objects.filter(branch_id=request.session['branch']).all()
+    context={
+        "is_income":True,
+        "income":income,
+        "branch":branch,
+        }
+    return render(request,'income.html',context)
+
+def add_income(request):
+    branch=Branch.objects.get(id=request.session['branch'])
+    if request.method=='POST':
+        category=request.POST['category']
+        date=request.POST['date']
+        amount=request.POST['amount']
+        criteria=request.POST['criteria']
+        # notes=request.POST['notes']
+        fromperson=request.POST['fromperson']
+        branch=branch
+        new_income=Income(category=category,date=date,amount=amount,criteria=criteria,fromperson=fromperson,branch_id=branch)
+        new_income.save()
+        return render(request,'add_income.html',{'status':1,}) 
+    context={
+        "is_addincome":True,
+        "status":0,
+        "branch":branch,
+    }
+    return render(request,'add_income.html',context)
+
+
+
+
+
+
 # Expenses
 def expenses(request):
+    branch=Branch.objects.get(id=request.session['branch'])
     expense=Expense.objects.filter(branch_id=request.session['branch'])
     context={
             "is_expenses":True,
             "expense":expense,
+            "branch":branch,
         }
     return render(request,'expenses.html',context)
 
 
 def add_expenses(request):
+    branch=Branch.objects.get(id=request.session['branch'])
     if request.method=='POST':
         category=request.POST['category']
         date=request.POST['date']
         note=request.POST['note']
         amount=request.POST['amount']
-        branch=Branch.objects.get(id=request.session['branch'])
+        branch=branch
 
         new_expense=Expense(category=category,date=date,note=note,amount=amount,branch_id=branch)
         new_expense.save()
         return render(request,'add_expense.html',{'status':1,})
-    context={"is_addexpenses":True}
+    context={
+            "is_addexpenses":True,
+            "branch":branch
+        }
     return render(request,'add_expense.html',context)
 
 def edit_expence(request,id):
+    branch=Branch.objects.get(id=request.session['branch'])
     if request.method=='POST':
         category=request.POST['category']
         date=request.POST['date']
@@ -673,7 +692,10 @@ def edit_expence(request,id):
             'expense':expense,
         }
         return render(request,'editexpence.html',context)
-    return render(request,'editexpence.html')
+    context={
+        "branch":branch
+    }
+    return render(request,'editexpence.html',context)
 
 
 def delete_expense(request,eid):
@@ -792,8 +814,7 @@ def profit_loss(request):
 
 # Purchase list
 def purchase_list(request):
-
-    productpurchase = BranchProducts.objects.filter(branch__id=request.session['branch'],quantity__lte=100)
+    productpurchase = BranchProducts.objects.filter(quantity__lte=100)
     context={
         "is_purchaselist":True,
         "prPurchase":productpurchase,

@@ -117,17 +117,11 @@
                                                             <td>
                                                                 <h2 class="table-avatar">
                                                                     <a href="profile.html" class="avatar avatar-sm me-2">
-                                                                        {% if staff.satff.profile.url %}
-                                                                        <img class="avatar-img rounded-circle img-fluid"
-                                                                            src="{{staff.profile.url}}"
+                                                                        <img class="avatar-img rounded-circle img-fluid" 
+                                                                        src="{% static 'default.png' %}"
                                                                             alt="User Image">
-                                                                        {% elif staff.staff.profile %}
-                                                                        <img class="avatar-img rounded-circle img-fluid"
-                                                                            src="{% static 'default.png' %}"
-                                                                            alt="User Image">
-                                                                        {% endif %}
                                                                     </a>
-                                                                    <a href="profile.html">{{staff.staff.name|title}} <span>{{staff.staff.phone}}</span></a>
+                                                                    <a href="">{{staff.staff.name|title}} <span>{{staff.staff.phone}}</span></a>
                                                                 </h2>
                                                             </td>
                                                             <td>
@@ -210,13 +204,11 @@
                                                             <td>
                                                                 <h2 class="table-avatar">
                                                                     <a href="profile.html" class="avatar avatar-sm me-2">
-                                                                        {% if staff.satff.profile %}
-                                                                        <img class="avatar-img rounded-circle img-fluid"
-                                                                            src="{{staff.profile.url}}"
+                                                                        <img class="avatar-img rounded-circle img-fluid" 
+                                                                        src="{% static 'default.png' %}"
                                                                             alt="User Image">
-                                                                        {% endif %}
                                                                     </a>
-                                                                    <a href="profile.html">{{active.staff.name|title}} <span>{{active.staff.phone}}</span></a>
+                                                                    <a href="">{{staff.staff.name|title}} <span>{{staff.staff.phone}}</span></a>
                                                                 </h2>
                                                             </td>
                                                             <td>
@@ -297,13 +289,11 @@
                                                             <td>
                                                                 <h2 class="table-avatar">
                                                                     <a href="profile.html" class="avatar avatar-sm me-2">
-                                                                        {% if staff.satff.profile %}
-                                                                        <img class="avatar-img rounded-circle img-fluid"
-                                                                            src="{{staff.profile.url}}"
+                                                                        <img class="avatar-img rounded-circle img-fluid" 
+                                                                        src="{% static 'default.png' %}"
                                                                             alt="User Image">
-                                                                        {% endif %}
                                                                     </a>
-                                                                    <a href="profile.html">{{inactive.staff.name|title}} <span>{{inactive.staff.phone}}</span></a>
+                                                                    <a href="">{{staff.staff.name|title}} <span>{{staff.staff.phone}}</span></a>
                                                                 </h2>
                                                             </td>
                                                             <td>
