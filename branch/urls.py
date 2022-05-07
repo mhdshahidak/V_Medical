@@ -57,6 +57,8 @@ urlpatterns = [
 
     path('staffrequest', views.staff_request, name='staffrequest'),
     path('staffaccept/<int:sid>', views.staff_transfer_accept, name='staffaccept'),
+    path('staffdecline/<int:sid>', views.staff_transfer_decline, name='staffdecline'),
+
 
     # medicine request
 

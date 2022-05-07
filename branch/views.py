@@ -839,7 +839,16 @@ def staff_transfer_accept(request,sid):
     # print(staff_transfer)
     # print(staff)
     return redirect('branch:staffrequest')
+
+
+def staff_transfer_decline(request,sid):
+    status = "Rejected"
+    staff_transfer_obj = Transfer.objects.get(id=sid)
+    staff_transfer_obj.status=status
+    staff_transfer_obj.save()
+    return redirect('branch:staffrequest')
     
+
 
 @auth_branch
 def profit_loss(request):

@@ -111,25 +111,38 @@ def staff_details(request):
 @auth_admin
 def add_staff(request):
     branch=Branch.objects.all()
-    # rand=random.randint(10000,99999)
-    # staffid='VMS'+str(rand)
-    # if request.method == 'POST':
-    #     name=request.POST['name']
-    #     email=request.POST['email']
-    #     city=request.POST['city']
-    #     state=request.POST['state']
-    #     branchname=Branch.objects.get(id=request.session['branch'])
-    #     phone=request.POST['phone']
-    #     district=request.POST['dist']
-    #     date=request.POST['joindate']
-    #     address=request.POST['address']
-    #     staffid=staffid
-
-    #     staff_exist= Staff.objects.filter(name=name,phone=phone).exists()
-    #     if not staff_exist:
-    #         new_staff=Staff(name=name,staff_id=staffid,email=email,phone=phone,place=city,state=state,address=address,date=date,branch=branchname)
-    #         new_staff.save()
-    #         return render(request, 'add_staff.html',{'status':1,})
+    if Staff.objects.exists():
+        staff = Staff.objects.last().id
+        staff_id = 'VMS'+str(101234+staff)
+    else:
+        staff=0
+        staff_id = 'VMS'+str(101234+staff)
+   
+    if request.method == 'POST':
+        name=request.POST['name']
+        email=request.POST['email']
+        city=request.POST['city']
+        state=request.POST['state']
+        branch_id=request.POST['bname']
+        phone=request.POST['phone']
+        # district=request.POST['dist']
+        pincode=request.POST['pincode']
+        date=request.POST['joindate']
+        address=request.POST['address']
+        staffid=staff_id
+    
+        branch = Branch.objects.get(branch_id=branch_id)
+        staff_exist= Staff.objects.filter(name=name,phone=phone).exists()
+        if not staff_exist:
+            new_staff=Staff(name=name,staff_id=staffid,email=email,phone=phone,place=city,state=state,address=address,date=date,branch=branch,pincode=pincode)
+            new_staff.save()
+            return render(request, 'add_staff.html',{'status':1,})
+        else:
+            context = {
+            "is_addstaff": True,
+            "branch":branch,
+            }
+            return render(request, 'add_staff.html', context)
 
 
 
@@ -142,8 +155,11 @@ def add_staff(request):
 def branch_name(request):
     branchid = request.GET['id']
     branch = Branch.objects.get(branch_id=branchid)
-    print(branchid)
-    pass
+    data = {
+        "name":branch.branch_name
+    }
+    return JsonResponse({'staffs': data,})
+
 
 @auth_admin
 def getStaffGet(request,id):
