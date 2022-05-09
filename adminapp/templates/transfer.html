@@ -118,6 +118,7 @@
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     
     // for name list 
@@ -125,7 +126,7 @@
         $(document).ready(function(){
            $('#fbranch').change(function(){
             $.ajax({
-                url:'http://127.0.0.1:8000/namesearch',
+                url:'namesearch',
                 data:{
                     'name':$(this).val()
                 },
@@ -143,7 +144,7 @@
         $(document).ready(function(){
            $('#sname').change(function(){
             $.ajax({
-                url:'http://127.0.0.1:8000/staffid',
+                url:'staffid',
                 data:{
                     'id':$(this).val()
                 },
