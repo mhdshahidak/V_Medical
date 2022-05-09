@@ -9,6 +9,7 @@ from django.db.models import Sum, Avg, Min, Max, Count
 # from tomlkit import datetime
 
 from django.db.models import F
+from django.db.models import Q
 
 
 from adminapp.models import AdminLogin, Branch, Decline, Staff, StaffBankDetails, Transfer
@@ -175,6 +176,23 @@ def staff(request):
     # print(active_staff)
     inactive_staff=StaffBankDetails.objects.filter(staff__branch=request.session['branch'],staff__status='InActive')
     # print(inactive_staff)
+    # if request.method=='POST':
+    #     name=request.POST['name']
+    #     email=request.POST['email']
+    #     phone=request.POST['phone']
+        
+    #     srch_date=Staff.objects.filter(Q(name__icontains=name) & Q(email__icontains=email) & Q(phone__icontains=phone))
+    #     if srch_date.exists():
+    #         context={
+    #         "is_staff":True,
+    #         'srch_date':srch_date
+    #         }
+        # else:
+        #     estimates = Staff.objects.filter(branch__id=branch,status=True).all()
+        #     context={
+        #     "is_staff":True,
+        #     'estimateList':estimates
+        #     }
     context={
         "is_staff":True,
         "staffs":staffs,
@@ -501,7 +519,7 @@ def med_price(request):
 
 
 @auth_branch
-def preview(request):
+def preview(request,):
     branch = Branch.objects.get(id=request.session['branch'])
     prid = request.GET['prid']
     item_esists = Invoive.objects.filter(invoice_no=prid).exists()
@@ -529,6 +547,9 @@ def preview(request):
         return render(request,'preview.html',context)
     else:
         return redirect('branch:billing')
+
+
+
 
 
 # invoicelist details

@@ -3,6 +3,57 @@
 {% load static %}
 
 
+<style>
+    body
+        {
+            counter-reset: Serial;          
+        }
+
+        table
+        {
+            border-collapse: separate;
+        }
+
+        tr td:first-child:before
+        {
+          counter-increment: Serial;      
+          content: counter(Serial); 
+        }
+        @media screen and (min-width:336px) and (max-width:626px) {
+
+            #invoicefrom,
+            #payment {
+                font-size: 13px;
+            }
+    
+        
+            .invoice-issues-date {
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+    
+            .imgsign,.logo {
+               max-width: 10%;
+            }
+            .height{
+                height: 10%;
+            }
+            .invoice-total-card{
+               height:10px ; 
+            }
+            .page-wrapper{
+                margin-top: 0px;
+                /* padding: 0px; */
+            }
+          
+            #content{
+                margin: 0px;
+                padding: 0px;
+            }
+        }
+    
+</style>
+
 
 <div class="page-wrapper">
     <div class="content container-fluid">
@@ -186,9 +237,7 @@
                                 <div class="col-lg-4 col-md-4">
                                     <div class="invoice-sign text-end">
                                         <div class="form-group float-end mb-0">
-                                            <button class="btn btn-primary" type="submit">
-                                                PRINT
-                                            </button>
+                                            <button class="btn btn-primary" onclick="makeprint()" type="submit"><i class="fas fa-download me-1"></i>Print </button>
                                         </div>
                                     </div>
                                 </div>
@@ -201,24 +250,12 @@
 </div>
 </div>
 
+<script>
+    function makeprint(prid){
+        window.print();
+    }
+</script>
 
-<style>
-        body
-            {
-                counter-reset: Serial;          
-            }
-    
-            table
-            {
-                border-collapse: separate;
-            }
-    
-            tr td:first-child:before
-            {
-              counter-increment: Serial;      
-              content: counter(Serial); 
-            }
-    </style>
 
 
 {% endblock content %}
