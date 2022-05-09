@@ -860,6 +860,7 @@ def profit_loss(request):
     return render(request,'profit_loss_report.html',context)
 
 
+
 def net_profit(request):
     today = datetime.now().date()
     today_start = datetime.combine(today, time())

@@ -298,9 +298,9 @@
 
 
         // filters
-        $(document).on('click', '#filter_search', function () {
-            $('#filter_inputs').show();
-        });
+        {% comment %} $(document).on('click', '#filter_search', function () {
+            $('#filter_inputs').slideToggle("slow");
+        }); {% endcomment %}
 
         // selectbox
         $('.app-listing .selectBox').on("click", function () {
