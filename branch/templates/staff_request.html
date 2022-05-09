@@ -113,14 +113,15 @@
                                                     <td>
                                                         {{s.to_date}}
                                                     </td>
+                                                    <input hidden id="tid" type="number" value="{{s.id}}">
                                                     <td>
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" class="form-control" id="message">
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="{% url 'branch:staffaccept' s.id %}"
                                                             class="btn btn-sm btn-white text-success me-2"><i class="fa fa-check me-1"></i>Accept</a>
-                                                        <a href="javascript:void(0);"
-                                                            class="btn btn-sm btn-white text-danger me-2"><i class="fa fa-times me-1"></i>Decline</a>
+                                                        <a
+                                                            class="btn btn-sm btn-white text-danger me-2"  id="decline"><i class="fa fa-times me-1"></i>Decline</a>
                                                             
                                                     </td>
                                                 </tr>
@@ -135,5 +136,29 @@
                 </div>
             </div>
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        // function decline(){
+
+        // }
+        $(document).ready(function(){
+           $('#decline').on("click",function(){
+            // alert('hwllo')
+            $.ajax({
+                url:'transfermessage',
+                data:{
+                    'msg':$('#message').val(),
+                    'id':$('#tid').val()
+                },
+                type:'get',
+                success:function(response){
+                    // var staff_id = response
+
+                    alert(response.msg)
+                }
+            })
+           })
+        })
+    </script>
 
 {% endblock %}
