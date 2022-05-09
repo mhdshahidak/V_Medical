@@ -7,7 +7,7 @@ from branch.models import BranchProducts
 
 from v_med.decorators import auth_admin
 
-from adminapp.models import Branch, Staff, StaffBankDetails, Transfer
+from adminapp.models import Branch, Decline, Staff, StaffBankDetails, Transfer
 
 # Create your views here.
 
@@ -97,7 +97,7 @@ def delete_branch(request,bid):
 @auth_admin
 def staff_details(request):
     staffs = Staff.objects.all()
-    print(staffs)
+    # print(staffs)
     active_staff=Staff.objects.filter(status="Active")
     inactive_staff=Staff.objects.filter(status="InActive")
     context = {
@@ -152,13 +152,13 @@ def add_staff(request):
         }
     return render(request, 'add_staff.html', context)
 
-def branch_name(request):
-    branchid = request.GET['id']
-    branch = Branch.objects.get(branch_id=branchid)
-    data = {
-        "name":branch.branch_name
-    }
-    return JsonResponse({'staffs': data,})
+# def branch_name(request):
+#     branchid = request.GET['id']
+#     branch = Branch.objects.get(branch_id=branchid)
+#     data = {
+#         "name":branch.branch_name
+#     }
+#     return JsonResponse({'staffs': data,})
 
 
 @auth_admin
@@ -237,6 +237,11 @@ def staff_id(request):
     # staffid = staff_data.staff_id
     # return render(request,'staffid.html',{'staffid':staffid})
     return render(request,'staffid.html',{'staff_data':staff_data,})
+
+
+def transfer_history(request):
+    message = Decline.objects.all()
+    return render(request,'transfer_history.html',{'message':message,})
   
 
 

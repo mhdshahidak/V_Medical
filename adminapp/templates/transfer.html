@@ -11,8 +11,8 @@
                 </div>
             {% endif %}
         <div class="page-header">
-            <div class="row">
-                <div class="col-sm-12">
+            <div class="row align-items-center">
+                <div class="col">
                     <h3 class="page-title">
                         Staff Transfer
                     </h3>
@@ -24,6 +24,11 @@
                             Transfer
                         </li>
                     </ul>
+                </div>
+                <div class="col-auto">
+                    <a href="{% url 'adminapp:transferhistory' %}" class="btn btn-primary me-1">
+                        Transfer History
+                    </a>
                 </div>
             </div>
         </div>

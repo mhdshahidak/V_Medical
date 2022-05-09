@@ -11,7 +11,7 @@ from django.db.models import Sum, Avg, Min, Max, Count
 from django.db.models import F
 
 
-from adminapp.models import AdminLogin, Branch, Staff, StaffBankDetails, Transfer
+from adminapp.models import AdminLogin, Branch, Decline, Staff, StaffBankDetails, Transfer
 from branch.models import BranchBank, BranchProducts, Customers, Expense, Income, MedicineTransfer, Product
 from branch.models import BranchBank, BranchProducts, Customers, Invoive, MedicineTransfer, Product
 from v_med.decorators import auth_branch
@@ -841,13 +841,22 @@ def staff_transfer_accept(request,sid):
     return redirect('branch:staffrequest')
 
 
-def staff_transfer_decline(request,sid):
+def staff_transfer_decline(request):
+    msg = request.GET['msg']
+    id = request.GET['id']
     status = "Rejected"
-    staff_transfer_obj = Transfer.objects.get(id=sid)
+    staff_transfer_obj = Transfer.objects.get(id=id)
     staff_transfer_obj.status=status
     staff_transfer_obj.save()
-    return redirect('branch:staffrequest')
+    # print(staff_transfer_obj.status)
+    print(id)
+    # return redirect('branch:staffrequest')
     
+    transfer_obj = Transfer.objects.get(id=id)
+    decline = Decline(transfer_id=transfer_obj,msg=msg)
+    decline.save()
+    return JsonResponse({'msg':'Staff Transfer Declined'})
+
 
 
 @auth_branch

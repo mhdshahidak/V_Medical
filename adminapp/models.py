@@ -66,3 +66,9 @@ class Transfer(models.Model):
     class Meta:
         db_table='transfer'
 
+class Decline(models.Model):
+    transfer_id = models.ForeignKey(Transfer,on_delete=models.PROTECT)
+    msg = models.CharField(max_length=500)
+
+    class Meta:
+        db_table='decline'

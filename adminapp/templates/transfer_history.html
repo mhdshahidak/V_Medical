@@ -1,0 +1,86 @@
+{% extends "index.html" %}
+
+{% block content %}
+{% load static %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                <div class="col">
+                    <h3 class="page-title">
+                        Staff Transfer
+                    </h3>
+                    <ul class="breadcrumb">
+                        <li class="">
+                            <a href="{% url 'adminapp:adminhome' %}">Dashboard /</a>
+                        </li>
+                        <li class="{% url 'adminapp:transfer' %}">
+                            <a href="">Transfer /</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Transfer History
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-stripped table-hover datatable">
+                                <thead class="thead-light">
+                                    <tr>
+                                         <th>
+                                            Date
+                                        </th>
+                                        <th>
+                                            Staff
+                                        </th>
+                                        <th>
+                                            From Branch
+                                        </th>
+                                        <th>
+                                            To Branch
+                                        </th>
+                                        <th>
+                                            Reason for Rejection
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for m in message %}
+                                    <tr>
+                                        <td>
+                                            {{m.transfer_id.from_date}}
+                                        </td>
+                                        <td>
+                                            {{m.transfer_id.staff.name}}
+                                        </td>
+                                        <td>
+                                            {{m.transfer_id.from_branch.branch_name}}
+                                        </td>
+                                        <td>
+                                            {{m.transfer_id.to_branch.branch_name}}
+                                        </td>
+                                        <td style="color: rgb(13, 13, 128);">{{m.msg}}</td>
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
