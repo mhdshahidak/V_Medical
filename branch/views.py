@@ -335,7 +335,7 @@ def add_medicine(request):
         product_id = 'VMSMED'+str(11111+product)
     else:
         product=0
-        product_id = 'VMS'+str(101234+staff)
+        product_id = 'VMSMED'+str(101234+product)
 
     if request.method == 'POST':
         name = request.POST['name']
