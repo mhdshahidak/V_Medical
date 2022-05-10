@@ -4,54 +4,74 @@
 
 
 <style>
-    body
-        {
-            counter-reset: Serial;          
-        }
-
-        table
-        {
-            border-collapse: separate;
-        }
-
-        tr td:first-child:before
+    body{
+        counter-reset: Serial;          
+    }
+    table{
+        border-collapse: separate;
+    }
+    tr td:first-child:before
         {
           counter-increment: Serial;      
           content: counter(Serial); 
         }
-        @media screen and (min-width:336px) and (max-width:626px) {
-
-            #invoicefrom,
-            #payment {
-                font-size: 13px;
-            }
-    
-        
-            .invoice-issues-date {
-                padding-top: 5px;
-                padding-bottom: 5px;
-            }
-    
-            .imgsign,.logo {
-               max-width: 10%;
-            }
-            .height{
-                height: 10%;
-            }
-            .invoice-total-card{
-               height:10px ; 
-            }
-            .page-wrapper{
-                margin-top: 0px;
-                /* padding: 0px; */
-            }
-          
-            #content{
-                margin: 0px;
-                padding: 0px;
-            }
+    @media print {
+        #header,.sidebar,.navbar-toggler,.a,.button{
+            display: none !important;
+            content: none !important;
         }
+        .page-titles ,h1,h2,h3{
+            display: none;
+
+        }
+        
     
+    }  
+    @media screen and (min-width:336px) and (max-width:626px) {
+
+        #invoicefrom,
+        #payment {
+            font-size: 13px;
+        }
+
+    
+        .invoice-issues-date {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .imgsign,.logo {
+           max-width: 10%;
+        }
+        .height{
+            height: 10%;
+        }
+        .invoice-total-card{
+           height:10px ; 
+        }
+        .page-wrapper{
+            margin-top: 0px;
+            /* padding: 0px; */
+        }
+      
+        #content{
+            margin: 0px;
+            padding: 0px;
+        }
+    }
+
+    @media print {
+        #header,.sidebar,.navbar-toggler,.a,.button{
+            display: none !important;
+            content: none !important;
+        }
+        .page-titles ,h1,h2,h3{
+            display: none;
+
+        }
+        
+    
+    }
 </style>
 
 
