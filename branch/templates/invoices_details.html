@@ -3,26 +3,102 @@
 {% load static %}
 
 
+<style>
+    body{
+        counter-reset: Serial;          
+    }
+    table{
+        border-collapse: separate;
+    }
+    tr td:first-child:before
+        {
+          counter-increment: Serial;      
+          content: counter(Serial); 
+        }
+    @media print {
+        #header,.sidebar,.navbar-toggler,.a,.button{
+            display: none !important;
+            content: none !important;
+        }
+        .page-titles ,h1,h2,h3{
+            display: none;
 
-<div class="page-wrapper">
-    <div class="content container-fluid">
+        }
+        
+    
+    }  
+    @media screen and (min-width:336px) and (max-width:626px) {
+
+        #invoicefrom,
+        #payment {
+            font-size: 13px;
+        }
+
+    
+        .invoice-issues-date {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .imgsign,.logo {
+           max-width: 10%;
+        }
+        .height{
+            height: 10%;
+        }
+        .invoice-total-card{
+           height:10px ; 
+        }
+        .page-wrapper{
+            margin-top: 0px;
+            /* padding: 0px; */
+        }
+      
+        #content{
+            margin: 0px;
+            padding: 0px;
+        }
+    }
+
+    @media print {
+        #header,.sidebar,.navbar-toggler,.a,.button{
+            display: none !important;
+            content: none !important;
+        }
+        .page-titles ,h1,h2,h3{
+            display: none;
+
+        }
+        
+    
+    }
+</style>
+
+<div class="page-wrapper"  >
+    <div class="content container-fluid" id="content" >
         <div class="row justify-content-center">
-            <div class="col-xl-10">
+            <div class="col-xl-10" >
                 <div class="card invoice-info-card">
                     <div class="card-body">
                         <div class="invoice-item invoice-item-one">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-12">
                                     <div class="invoice-logo">
                                         <img src="{% static 'img/logo.png' %}" alt="logo">
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="row inv">
+                                <div class="col-md-6 col-sm-6 col-6">
                                     <div class="invoice-head">
                                         <h2>Invoice</h2>
                                         <p>Invoice Number : {{moredetails.invoice_no}}</p>
+                                        <p style="font-size: medium;">{{date}}</p>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="invoice-info">
+                                <div class="col-md-6 col-sm-6 col-6" id="height">
+                                    <div class="invoice-info" id="invoicefrom">
                                         <strong class="customer-text-one">Invoice From</strong>
                                         <h6 class="invoice-name">{{moredetails.product.branch.branch_name}}</h6>
                                         <p class="invoice-details">
@@ -37,7 +113,7 @@
 
                         <div class="invoice-item invoice-item-two">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6  col-sm-6 col-6">
                                     <div class="invoice-info">
                                         <strong class="customer-text-one">Billed to</strong>
                                         <h6 class="invoice-name">{{moredetails.customer.name}}</h6>
@@ -48,16 +124,201 @@
                                         </p>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="invoice-info invoice-info2">
+                                <div class="col-md-6  col-sm-6 col-6">
+                                    <div class="invoice-info invoice-info2" id="payment">
                                         <strong class="customer-text-one">Payment Details</strong>
                                         <p class="invoice-details">
                                             {{moredetails.payment_methode}} <br>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="invoice-issues-box">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-6">
+                                    <div class="invoice-issues-date">
+                                        <p>Issue Date : {{moredetails.date}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-6">
+                                    <div class="invoice-issues-date">
+                                        <p>Due Amount : ₹ {{moredetails.grand_total}} </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="invoice-item invoice-table-wrap">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="invoice-table table table-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sl.No</th>
+                                                    <th>Name</th>
+                                                    <th>Rate</th>
+                                                    <th  class="text-center">Quantity</th>
+                                                    
+                                                    <th class="text-end">Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for d in details %}
+                                                <tr>
+                                                    <td></td>
+                                                    <td>{{d.product.product.name}}</td>
+                                                    <td>{{d.product.product.selling_cost}}</td>
+                                    
+                                                    <th class="text-center">{{d.quantity}}</th>
+                                                    
+                                                    <td class="text-end">{{d.total}}</td>
+                                                </tr>
+                                            {% endfor %}  
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-lg-6 col-md-6">
+                                
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="invoice-total-card">
+                                    <div class="invoice-total-box">
+                                        <div class="invoice-total-inner">
                                             
+                                            <p>GST<span>₹ {{moredetails.gst}} </span></p>
+                                            <p class="mb-0">Sub total <span>₹{{sub_total}}</span></p>
+                                        </div>
+                                        <div class="invoice-total-footer">
+                                            <h4>Total Amount <span>₹{{moredetails.grand_total}}</span></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="invoice-sign text-end">
+                            <img class="img-fluid d-inline-block imgsign" src="{% static '/img/signature.png' %}"
+                                alt="sign">
+                            <span class="d-block name">VMEDICAL</span>
+                        </div>
+                        <div class="form-group float-end mb-0">
+                            <button class="btn btn-primary" onclick="makeprint()" type="submit"><i class="fas fa-download me-1"></i>Print </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    function makeprint(prid){
+        window.print();
+    }
+</script>
+{% endblock %}
+
+
+
+
+
+
+<!-- 
+
+<style>
+    body{
+        counter-reset: Serial;          
+    }
+    table{
+        border-collapse: separate;
+    }
+    tr td:first-child:before
+        {
+          counter-increment: Serial;      
+          content: counter(Serial); 
+        }
+    @media print {
+        #header,.sidebar,.navbar-toggler,.a,.button{
+            display: none !important;
+            content: none !important;
+        }
+        .page-titles ,h1,h2,h3{
+            display: none;
+
+        }
+        
+    
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                <div class="card invoice-info-card">
+                    <div class="card-body">
+                        <div class="invoice-item invoice-item-one">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="invoice-logo">
+                                        <img src="{% static 'img/logo.png' %}" alt="logo">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="invoice-head">
+                                        <h2>Invoice</h2>
+                                        <p>Invoice Number : {{moredetails.invoice_no}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="invoice-item invoice-item-two">
+                            <div class="row">
+                                <div class="col-md-6 col-6">
+                                    <div class="invoice-info">
+                                        <strong class="customer-text-one">Billed to</strong>
+                                        <h6 class="invoice-name">{{moredetails.customer.name}}</h6>
+                                        <p class="invoice-details invoice-details-two">
+                                            {{moredetails.customer.phone}} <br>
+                                            {{moredetails.customer.place}}  <br>
                                             
                                         </p>
-                                       
                                     </div>
+                                </div>
+                                <div class="col-md-6 col-6">
+                                    <div class="invoice-info">
+                                        <strong class="customer-text-one">Invoice From</strong>
+                                        <h6 class="invoice-name">{{moredetails.product.branch.branch_name}}</h6>
+                                        <p class="invoice-details">
+                                            {{moredetails.product.branch.phone}}<br>
+                                            {{moredetails.product.branch.place}}<br>
+                                            {{moredetails.product.branch.address}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="invoice-item invoice-item-two">
+                            <div class="col-md-6">
+                                <div class="invoice-info invoice-info2">
+                                    <strong class="customer-text-one">Payment Details</strong>
+                                    <p class="invoice-details">
+                                        {{moredetails.payment_methode}} <br>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -134,8 +395,21 @@
                             </div>
                         </div>
                         <div class="invoice-sign text-end">
-                            
-                            <span class="d-block">VMED</span>
+                            <div class="invoice-sign-box">
+                                <div class="row">
+                                    <div class="col-lg-8 col-md-8">
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="invoice-sign text-end">
+                                            <img class="img-fluid d-inline-block" src="{% static '/img/signature.png' %}" alt="sign">
+                                            <span class="d-block">VMED</span><br>
+                                            <div class="form-group float-end mb-0">
+                                                <button class="btn btn-primary" onclick="makeprint()" type="submit"><i class="fas fa-download me-1"></i>Print </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -144,23 +418,11 @@
     </div>
 </div>
 
-<style>
-    body
-        {
-            counter-reset: Serial;          
-        }
-
-        table
-        {
-            border-collapse: separate;
-        }
-
-        tr td:first-child:before
-        {
-          counter-increment: Serial;      
-          content: counter(Serial); 
-        }
-</style>
 
 
-{% endblock %}
+<script>
+    function makeprint(prid){
+        window.print();
+    }
+</script>
+ -->
